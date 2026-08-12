@@ -1,0 +1,16 @@
+Vondel Plugin Catalog
+Copyright 2026 Vondel Media
+
+This repository incorporates source from the Silo Plugin Catalog:
+https://github.com/Silo-Server/silo-plugins
+
+Imported revision:
+934b867f69e6b140dcaf90efe56c43da63893f3f
+
+The imported Apache-2.0 license is preserved byte-for-byte. Vondel modifications
+include repository and Go module identity changes, use of the private Vondel SDK,
+an allowlisted fail-closed catalog updater, an empty private staging catalog, and
+private-only continuous integration and update automation.
+
+Vondel Media is independent from Silo. This fork is not affiliated with,
+endorsed by, or sponsored by the Silo project or its contributors.
