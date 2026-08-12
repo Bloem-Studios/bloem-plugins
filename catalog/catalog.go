@@ -14,7 +14,9 @@ import (
 type SourceManifest = pluginv1.PluginManifest
 
 type Asset struct {
+	ID                 int64  `json:"id"`
 	Name               string `json:"name"`
+	URL                string `json:"url"`
 	BrowserDownloadURL string `json:"browser_download_url"`
 }
 
@@ -27,7 +29,8 @@ type Release struct {
 }
 
 type PlatformBinary struct {
-	URL string `json:"url"`
+	URL      string `json:"url"`
+	Checksum string `json:"checksum"`
 }
 
 type CatalogPackage struct {

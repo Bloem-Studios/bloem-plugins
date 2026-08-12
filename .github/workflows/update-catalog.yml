@@ -23,59 +23,87 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  prefetch-private-sdk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-go@v6
+        with:
+          go-version: "1.26"
+          cache: false
+      - name: Prefetch fixed private SDK without repository checkout
+        env:
+          VONDEL_MODULES_TOKEN: ${{ secrets.VONDEL_MODULES_TOKEN }}
+          GOPRIVATE: github.com/Vondel-Media/*
+          GONOSUMDB: github.com/Vondel-Media/*
+        run: |
+          set +x
+          test -n "$VONDEL_MODULES_TOKEN"
+          sdk_cache="${RUNNER_TEMP}/vondel-sdk-cache"
+          askpass="${RUNNER_TEMP}/vondel-module-askpass.sh"
+          cleanup() { rm -f "$askpass"; }
+          trap cleanup EXIT
+          printf '%s\n' '#!/bin/sh' \
+            'case "$1" in' \
+            '  *Username*) printf "%s\\n" "x-access-token" ;;' \
+            '  *Password*) printf "%s\\n" "$VONDEL_MODULES_TOKEN" ;;' \
+            'esac' > "$askpass"
+          chmod 0700 "$askpass"
+          GIT_ASKPASS="$askpass" GIT_TERMINAL_PROMPT=0 GOMODCACHE="$sdk_cache" \
+            GOWORK=off GO111MODULE=on go mod download github.com/Vondel-Media/vondel-plugin-sdk@v0.13.3
+          cleanup
+          trap - EXIT
+          if grep -RIlF -- "$VONDEL_MODULES_TOKEN" "$sdk_cache" | grep -q .; then
+            echo '::error::sanitized SDK cache contains credential material'
+            exit 1
+          fi
+          unset VONDEL_MODULES_TOKEN
+          tar -czf "${RUNNER_TEMP}/vondel-plugin-sdk-v0.13.3.tgz" -C "$sdk_cache" .
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sanitized-vondel-plugin-sdk-v0.13.3
+          path: ${{ runner.temp }}/vondel-plugin-sdk-v0.13.3.tgz
+          if-no-files-found: error
+          retention-days: 1
+
   update:
+    needs: prefetch-private-sdk
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
         with:
           persist-credentials: false
-
       - uses: actions/setup-go@v6
         with:
           go-version: "1.26"
           cache: false
-
-      - name: Install temporary private module credentials
+      - uses: actions/download-artifact@v4
+        with:
+          name: sanitized-vondel-plugin-sdk-v0.13.3
+          path: ${{ runner.temp }}/sdk-artifact
+      - name: Install sanitized private SDK cache
         run: |
-          askpass="${RUNNER_TEMP}/vondel-module-askpass.sh"
-          printf '%s\n' '#!/bin/sh' \
-            'case "$1" in' \
-            '  *Username*) printf "%s\\n" "x-access-token" ;;' \
-            '  *Password*) printf "%s\\n" "$VONDEL_MODULES_TOKEN" ;;' \
-            'esac' > "${askpass}"
-          chmod 0700 "${askpass}"
-
-      - name: Clear module cache
-        run: go clean -modcache
-
+          mkdir -p "$(go env GOMODCACHE)"
+          tar -xzf "${RUNNER_TEMP}/sdk-artifact/vondel-plugin-sdk-v0.13.3.tgz" -C "$(go env GOMODCACHE)"
       - name: Test before update
         env:
-          GIT_ASKPASS: ${{ runner.temp }}/vondel-module-askpass.sh
-          GIT_TERMINAL_PROMPT: "0"
           GOPRIVATE: github.com/Vondel-Media/*
           GONOSUMDB: github.com/Vondel-Media/*
-          VONDEL_MODULES_TOKEN: ${{ secrets.VONDEL_MODULES_TOKEN }}
         run: GOWORK=off go test ./...
-
       - name: Update catalog manifest
         env:
           GITHUB_TOKEN: ${{ secrets.VONDEL_CATALOG_SOURCE_TOKEN }}
-          GIT_ASKPASS: ${{ runner.temp }}/vondel-module-askpass.sh
-          GIT_TERMINAL_PROMPT: "0"
-          GOPRIVATE: github.com/Vondel-Media/*
-          GONOSUMDB: github.com/Vondel-Media/*
           PLUGIN_REPO: ${{ inputs.repo || github.event.client_payload.repo }}
           PLUGIN_TAG: ${{ inputs.tag || github.event.client_payload.tag }}
-          VONDEL_MODULES_TOKEN: ${{ secrets.VONDEL_MODULES_TOKEN }}
+          GOPRIVATE: github.com/Vondel-Media/*
+          GONOSUMDB: github.com/Vondel-Media/*
         run: |
           test -n "$PLUGIN_REPO"
           test -n "$PLUGIN_TAG"
-          go run ./cmd/update-catalog -repo "$PLUGIN_REPO" -tag "$PLUGIN_TAG"
-
-      - name: Remove private module credentials
-        if: always()
-        run: rm -f "${RUNNER_TEMP}/vondel-module-askpass.sh"
-
+          GOWORK=off go run ./cmd/update-catalog -repo "$PLUGIN_REPO" -tag "$PLUGIN_TAG"
+          cp manifest.json "${RUNNER_TEMP}/catalog-first.json"
+          GOWORK=off go run ./cmd/update-catalog -repo "$PLUGIN_REPO" -tag "$PLUGIN_TAG"
+          cmp manifest.json "${RUNNER_TEMP}/catalog-first.json"
+          jq -e . manifest.json >/dev/null
       - name: Commit and push catalog changes
         env:
           PLUGIN_REPO: ${{ inputs.repo || github.event.client_payload.repo }}

@@ -1,3 +1,600 @@
 {
-  "plugins": []
+  "plugins": [
+    {
+      "manifest": {
+        "plugin_id": "silo.audiobook-metadata",
+        "version": "0.1.6",
+        "silo_api_version": "v1",
+        "supported_platforms": [
+          {
+            "os": "darwin",
+            "arch": "arm64"
+          },
+          {
+            "os": "linux",
+            "arch": "amd64"
+          },
+          {
+            "os": "linux",
+            "arch": "arm64"
+          }
+        ],
+        "capabilities": [
+          {
+            "type": "metadata_provider.v1",
+            "id": "audiobook-metadata",
+            "display_name": "Audiobook Metadata",
+            "description": "Metadata provider for audiobook items. Wraps Audnexus, AudiMeta, iTunes, Audible, Storytel, BookBeat, Audioteka, and AudiobookCovers.",
+            "metadata": {
+              "default_priority": {
+                "audiobook": 2
+              }
+            }
+          }
+        ],
+        "presentation": {
+          "display_name": "Audiobook Metadata",
+          "summary": "Fetch audiobook metadata and artwork from multiple book and audiobook sources.",
+          "description_markdown": "Matches audiobook items across Audnexus, AudiMeta, iTunes, Audible, Storytel, BookBeat, Audioteka, and AudiobookCovers. It combines those sources into metadata and artwork for Silo audiobook libraries.",
+          "setup_markdown": "Install the plugin and add **Audiobook Metadata** to the metadata provider chain for an audiobook library. The default sources need no plugin configuration; upstream availability and rate limits still apply.",
+          "homepage_url": "https://github.com/Vondel-Media/vondel-plugin-audiobook-metadata",
+          "source_url": "https://github.com/Vondel-Media/vondel-plugin-audiobook-metadata",
+          "support_url": "https://github.com/Vondel-Media/vondel-plugin-audiobook-metadata/issues",
+          "changelog_url": "https://github.com/Vondel-Media/vondel-plugin-audiobook-metadata/releases",
+          "publisher_name": "Vondel",
+          "publisher_url": "https://github.com/Vondel-Media",
+          "license_spdx": "AGPL-3.0-only"
+        }
+      },
+      "repo_url": "https://github.com/Vondel-Media/vondel-plugin-audiobook-metadata",
+      "checksums_url": "https://github.com/Vondel-Media/vondel-plugin-audiobook-metadata/releases/download/v0.1.6/checksums.txt",
+      "binaries": {
+        "darwin/arm64": {
+          "url": "https://github.com/Vondel-Media/vondel-plugin-audiobook-metadata/releases/download/v0.1.6/plugin-darwin-arm64",
+          "checksum": "dd03570b6dda52660d6697b80159172634e8c4e56cf780c9f8e91e8e5a428646"
+        },
+        "linux/amd64": {
+          "url": "https://github.com/Vondel-Media/vondel-plugin-audiobook-metadata/releases/download/v0.1.6/plugin-linux-amd64",
+          "checksum": "c9e91fcd3c433669c8b1dc446910dbe403cf70cf9825bba92e7c474c222371c3"
+        },
+        "linux/arm64": {
+          "url": "https://github.com/Vondel-Media/vondel-plugin-audiobook-metadata/releases/download/v0.1.6/plugin-linux-arm64",
+          "checksum": "ed5b1fe9ae172d928ee30c6b9e38de44ec8242fc0a2045d326c69530d99160d7"
+        }
+      }
+    },
+    {
+      "manifest": {
+        "plugin_id": "silo.autoscan.arr",
+        "version": "0.1.4",
+        "silo_api_version": "v1",
+        "supported_platforms": [
+          {
+            "os": "linux",
+            "arch": "amd64"
+          },
+          {
+            "os": "linux",
+            "arch": "arm64"
+          },
+          {
+            "os": "darwin",
+            "arch": "arm64"
+          }
+        ],
+        "capabilities": [
+          {
+            "type": "scan_source.v1",
+            "id": "arr",
+            "display_name": "Sonarr / Radarr",
+            "description": "Triggers Silo rescans from Sonarr/Radarr import and rename history."
+          }
+        ],
+        "presentation": {
+          "display_name": "Sonarr \u0026 Radarr Autoscan",
+          "summary": "Detect imports and renames in Sonarr or Radarr and queue targeted Silo scans.",
+          "description_markdown": "Polls recent Sonarr and Radarr history for completed imports and file renames. It returns the affected paths to Silo so the host can apply path rewrites, deduplicate work, and scan only the relevant library locations.",
+          "setup_markdown": "Install the plugin, then create an Autoscan source in Silo using a Sonarr or Radarr connection. Configure any path rewrites on the Silo source. The plugin stores no credentials and has no separate global configuration.",
+          "homepage_url": "https://github.com/Vondel-Media/vondel-plugin-autoscan-arr",
+          "source_url": "https://github.com/Vondel-Media/vondel-plugin-autoscan-arr",
+          "support_url": "https://github.com/Vondel-Media/vondel-plugin-autoscan-arr/issues",
+          "changelog_url": "https://github.com/Vondel-Media/vondel-plugin-autoscan-arr/releases",
+          "publisher_name": "Vondel",
+          "publisher_url": "https://github.com/Vondel-Media",
+          "license_spdx": "AGPL-3.0-or-later"
+        }
+      },
+      "repo_url": "https://github.com/Vondel-Media/vondel-plugin-autoscan-arr",
+      "checksums_url": "https://github.com/Vondel-Media/vondel-plugin-autoscan-arr/releases/download/v0.1.4/checksums.txt",
+      "binaries": {
+        "darwin/arm64": {
+          "url": "https://github.com/Vondel-Media/vondel-plugin-autoscan-arr/releases/download/v0.1.4/plugin-darwin-arm64",
+          "checksum": "8c60acfc01242d815c7ecc98987f998db08c3af2eef834c1a30d9fa6dd30739c"
+        },
+        "linux/amd64": {
+          "url": "https://github.com/Vondel-Media/vondel-plugin-autoscan-arr/releases/download/v0.1.4/plugin-linux-amd64",
+          "checksum": "8e353a06fc951c21a6573dddfa5db824bf0dcfdc9fc800a687281e0be42b158d"
+        },
+        "linux/arm64": {
+          "url": "https://github.com/Vondel-Media/vondel-plugin-autoscan-arr/releases/download/v0.1.4/plugin-linux-arm64",
+          "checksum": "e3a1652640dcf0360c6e414c8b1021c21b38ceef3feaa401fca8c838354be2fb"
+        }
+      }
+    },
+    {
+      "manifest": {
+        "plugin_id": "silo.ebook-metadata",
+        "version": "0.1.3",
+        "silo_api_version": "v1",
+        "supported_platforms": [
+          {
+            "os": "darwin",
+            "arch": "arm64"
+          },
+          {
+            "os": "linux",
+            "arch": "amd64"
+          },
+          {
+            "os": "linux",
+            "arch": "arm64"
+          }
+        ],
+        "capabilities": [
+          {
+            "type": "metadata_provider.v1",
+            "id": "ebook-metadata",
+            "display_name": "Ebook Metadata",
+            "description": "Metadata provider for ebook items. Wraps OpenLibrary, Google Books, ISBNdb, Hardcover, Goodreads, Amazon, Anna's Archive, Project Gutenberg, BookBrainz, FantasticFiction, ISFDB, LibraryThing, Internet Archive, WorldCat, and Douban.",
+            "metadata": {
+              "default_priority": {
+                "ebook": 2
+              }
+            }
+          }
+        ],
+        "global_config_schema": [
+          {
+            "key": "enabled_sources",
+            "title": "Enabled sources",
+            "description": "Comma-separated source IDs to search. Empty uses the default source set.",
+            "json_schema": "{\"type\":\"object\",\"properties\":{\"value\":{\"type\":\"string\"}}}",
+            "admin_form": {
+              "fields": [
+                {
+                  "key": "value",
+                  "label": "Source IDs",
+                  "control": 1
+                }
+              ]
+            }
+          },
+          {
+            "key": "google_books_api_key",
+            "title": "Google Books API key",
+            "description": "Optional API key for Google Books.",
+            "json_schema": "{\"type\":\"object\",\"properties\":{\"value\":{\"type\":\"string\"}}}",
+            "admin_form": {
+              "fields": [
+                {
+                  "key": "value",
+                  "label": "API key",
+                  "control": 3
+                }
+              ]
+            }
+          },
+          {
+            "key": "isbndb_api_key",
+            "title": "ISBNdb API key",
+            "description": "Optional API key for ISBNdb.",
+            "json_schema": "{\"type\":\"object\",\"properties\":{\"value\":{\"type\":\"string\"}}}",
+            "admin_form": {
+              "fields": [
+                {
+                  "key": "value",
+                  "label": "API key",
+                  "control": 3
+                }
+              ]
+            }
+          },
+          {
+            "key": "hardcover_api_key",
+            "title": "Hardcover API key",
+            "description": "Optional API key for Hardcover.",
+            "json_schema": "{\"type\":\"object\",\"properties\":{\"value\":{\"type\":\"string\"}}}",
+            "admin_form": {
+              "fields": [
+                {
+                  "key": "value",
+                  "label": "API key",
+                  "control": 3
+                }
+              ]
+            }
+          },
+          {
+            "key": "default_region",
+            "title": "Default region",
+            "description": "Optional region hint used by sources that support regional catalogs.",
+            "json_schema": "{\"type\":\"object\",\"properties\":{\"value\":{\"type\":\"string\"}}}",
+            "admin_form": {
+              "fields": [
+                {
+                  "key": "value",
+                  "label": "Region code",
+                  "control": 1
+                }
+              ]
+            }
+          }
+        ],
+        "presentation": {
+          "display_name": "Ebook Metadata",
+          "summary": "Enrich ebook libraries with book metadata from public and credentialed sources.",
+          "description_markdown": "Searches OpenLibrary, Google Books, ISBNdb, Hardcover, Goodreads, Amazon, Anna's Archive, Project Gutenberg, BookBrainz, FantasticFiction, ISFDB, LibraryThing, Internet Archive, WorldCat, and Douban. Results include book identity, descriptions, contributors, and artwork.",
+          "setup_markdown": "Install the plugin and add **Ebook Metadata** to an ebook library's metadata provider chain. Optionally limit `enabled_sources`, set a regional hint, or add API keys for Google Books, ISBNdb, and Hardcover. Sources that require a key are skipped until one is configured.",
+          "homepage_url": "https://github.com/Vondel-Media/vondel-plugin-ebook-metadata",
+          "source_url": "https://github.com/Vondel-Media/vondel-plugin-ebook-metadata",
+          "support_url": "https://github.com/Vondel-Media/vondel-plugin-ebook-metadata/issues",
+          "changelog_url": "https://github.com/Vondel-Media/vondel-plugin-ebook-metadata/releases",
+          "publisher_name": "Vondel",
+          "publisher_url": "https://github.com/Vondel-Media",
+          "license_spdx": "AGPL-3.0-or-later"
+        }
+      },
+      "repo_url": "https://github.com/Vondel-Media/vondel-plugin-ebook-metadata",
+      "checksums_url": "https://github.com/Vondel-Media/vondel-plugin-ebook-metadata/releases/download/v0.1.3/checksums.txt",
+      "binaries": {
+        "darwin/arm64": {
+          "url": "https://github.com/Vondel-Media/vondel-plugin-ebook-metadata/releases/download/v0.1.3/plugin-darwin-arm64",
+          "checksum": "30763cffd528d8b2187e5155fe8faf8eb51f25069eb403916b1b156dbdc522fd"
+        },
+        "linux/amd64": {
+          "url": "https://github.com/Vondel-Media/vondel-plugin-ebook-metadata/releases/download/v0.1.3/plugin-linux-amd64",
+          "checksum": "f171c5ebb20f1d8756a7a290c6b42222677b9a7a3f819fb80a2ed99dbd3fd864"
+        },
+        "linux/arm64": {
+          "url": "https://github.com/Vondel-Media/vondel-plugin-ebook-metadata/releases/download/v0.1.3/plugin-linux-arm64",
+          "checksum": "81da1c08cd67ce67bf814d724ba7e7f16ee100fd2f58b24154fc7840eba39f92"
+        }
+      }
+    },
+    {
+      "manifest": {
+        "plugin_id": "silo.manga-metadata",
+        "version": "0.1.3",
+        "silo_api_version": "v1",
+        "supported_platforms": [
+          {
+            "os": "darwin",
+            "arch": "arm64"
+          },
+          {
+            "os": "linux",
+            "arch": "amd64"
+          },
+          {
+            "os": "linux",
+            "arch": "arm64"
+          }
+        ],
+        "capabilities": [
+          {
+            "type": "metadata_provider.v1",
+            "id": "manga-metadata",
+            "display_name": "Manga Metadata (MangaBaka)",
+            "description": "Rich manga metadata from MangaBaka — covers, synopsis, authors, genres, publication status, publisher, and cross-provider IDs — aggregating AniList, MyAnimeList, MangaUpdates, Kitsu, Anime-Planet, and Shikimori, with a MangaDex deep fallback and AniList banner backdrops. Optional offline mode downloads MangaBaka's database for fast, rate-limit-free matching on large libraries.",
+            "metadata": {
+              "default_priority": {
+                "manga": 1
+              }
+            }
+          }
+        ],
+        "global_config_schema": [
+          {
+            "key": "enabled_sources",
+            "title": "Enabled sources",
+            "description": "Comma-separated source IDs to search (mangabaka, mangadex). Empty uses the default set.",
+            "json_schema": "{\"type\":\"object\",\"properties\":{\"value\":{\"type\":\"string\"}}}",
+            "admin_form": {
+              "fields": [
+                {
+                  "key": "value",
+                  "label": "Source IDs",
+                  "control": 1
+                }
+              ]
+            }
+          },
+          {
+            "key": "enable_local_dump",
+            "title": "Use local MangaBaka dump",
+            "description": "Download MangaBaka's database (~335MB, ~1.5GB on disk) for offline, rate-limit-free matching. Recommended for large libraries. Default off.",
+            "json_schema": "{\"type\":\"object\",\"properties\":{\"value\":{\"type\":\"boolean\"}}}",
+            "admin_form": {
+              "fields": [
+                {
+                  "key": "value",
+                  "label": "Enable local dump",
+                  "control": 5
+                }
+              ]
+            }
+          },
+          {
+            "key": "dump_path",
+            "title": "Dump storage path",
+            "description": "Override where the dump is stored. Default: OS cache dir. Point at a roomy volume if needed.",
+            "json_schema": "{\"type\":\"object\",\"properties\":{\"value\":{\"type\":\"string\"}}}",
+            "admin_form": {
+              "fields": [
+                {
+                  "key": "value",
+                  "label": "Path",
+                  "control": 1
+                }
+              ]
+            }
+          },
+          {
+            "key": "dump_refresh_hours",
+            "title": "Dump refresh interval (hours)",
+            "description": "How often to re-download the dump. Default 168 (weekly).",
+            "json_schema": "{\"type\":\"object\",\"properties\":{\"value\":{\"type\":\"integer\"}}}",
+            "admin_form": {
+              "fields": [
+                {
+                  "key": "value",
+                  "label": "Hours",
+                  "control": 4,
+                  "default_value": 168
+                }
+              ]
+            }
+          },
+          {
+            "key": "enable_anilist_banners",
+            "title": "AniList banner backdrops",
+            "description": "MangaBaka has no banner art. When on, fetch a hero backdrop from AniList by id for matched series. Default on.",
+            "json_schema": "{\"type\":\"object\",\"properties\":{\"value\":{\"type\":\"boolean\"}}}",
+            "admin_form": {
+              "fields": [
+                {
+                  "key": "value",
+                  "label": "Enable banners",
+                  "control": 5,
+                  "default_value": true
+                }
+              ]
+            }
+          }
+        ],
+        "presentation": {
+          "display_name": "Manga Metadata",
+          "summary": "Match manga and add rich metadata, covers, contributors, and publication details.",
+          "description_markdown": "Uses MangaBaka as the primary source, with MangaDex as a deep fallback and optional AniList banner artwork. It can also keep a local MangaBaka database for fast, rate-limit-free matching on large libraries.",
+          "setup_markdown": "Install the plugin and add **Manga Metadata** to a manga library's provider chain. The defaults use live sources. For large libraries, enable the local MangaBaka dump and ensure the configured storage path has about 1.5 GB available; the initial download is roughly 335 MB.",
+          "homepage_url": "https://github.com/Vondel-Media/vondel-plugin-manga-metadata",
+          "source_url": "https://github.com/Vondel-Media/vondel-plugin-manga-metadata",
+          "support_url": "https://github.com/Vondel-Media/vondel-plugin-manga-metadata/issues",
+          "changelog_url": "https://github.com/Vondel-Media/vondel-plugin-manga-metadata/releases",
+          "publisher_name": "Vondel",
+          "publisher_url": "https://github.com/Vondel-Media",
+          "license_spdx": "AGPL-3.0-only"
+        }
+      },
+      "repo_url": "https://github.com/Vondel-Media/vondel-plugin-manga-metadata",
+      "checksums_url": "https://github.com/Vondel-Media/vondel-plugin-manga-metadata/releases/download/v0.1.3/checksums.txt",
+      "binaries": {
+        "darwin/arm64": {
+          "url": "https://github.com/Vondel-Media/vondel-plugin-manga-metadata/releases/download/v0.1.3/plugin-darwin-arm64",
+          "checksum": "0cf1bdd48ea0e6aaf3a5bf13ab049dc6f12337f8c9b16c8dd51ce5343bcf5555"
+        },
+        "linux/amd64": {
+          "url": "https://github.com/Vondel-Media/vondel-plugin-manga-metadata/releases/download/v0.1.3/plugin-linux-amd64",
+          "checksum": "cbbae95b912c71877771a483cdf33a757be95c1445d206492a5dfa9f0f173819"
+        },
+        "linux/arm64": {
+          "url": "https://github.com/Vondel-Media/vondel-plugin-manga-metadata/releases/download/v0.1.3/plugin-linux-arm64",
+          "checksum": "e9e635b40019287a8f0c1855e3876006da656a0c00aee5ef53d063ebe13576ba"
+        }
+      }
+    },
+    {
+      "manifest": {
+        "plugin_id": "silo.tmdb",
+        "version": "1.2.23",
+        "silo_api_version": "v1",
+        "supported_platforms": [
+          {
+            "os": "darwin",
+            "arch": "arm64"
+          },
+          {
+            "os": "linux",
+            "arch": "amd64"
+          },
+          {
+            "os": "linux",
+            "arch": "arm64"
+          }
+        ],
+        "capabilities": [
+          {
+            "type": "metadata_provider.v1",
+            "id": "tmdb",
+            "display_name": "TMDB",
+            "description": "The Movie Database — metadata for movies and TV series.",
+            "metadata": {
+              "default_priority": {
+                "episode": 3,
+                "movie": 2,
+                "season": 3,
+                "series": 3
+              }
+            }
+          },
+          {
+            "type": "image_resolver.v1",
+            "id": "tmdb",
+            "display_name": "TMDB Images",
+            "description": "Resolves tmdb:// image paths to The Movie Database image URLs.",
+            "metadata": {
+              "priority": 100,
+              "schemes": [
+                "tmdb"
+              ]
+            }
+          }
+        ],
+        "global_config_schema": [
+          {
+            "key": "api_key",
+            "title": "TMDB API key",
+            "description": "A TMDB v3 API key supplied by the server operator. It is retained only in plugin memory.",
+            "json_schema": "{\"type\":\"object\",\"properties\":{\"value\":{\"type\":\"string\",\"minLength\":1}},\"required\":[\"value\"]}",
+            "required": true,
+            "admin_form": {
+              "fields": [
+                {
+                  "key": "value",
+                  "label": "API key",
+                  "control": 3,
+                  "required": true,
+                  "secret": true
+                }
+              ]
+            }
+          }
+        ],
+        "presentation": {
+          "display_name": "TMDB Metadata",
+          "summary": "Fetch movie and TV metadata and artwork from The Movie Database.",
+          "description_markdown": "Provides metadata for movies, series, seasons, and episodes, plus image resolution for TMDB artwork stored by Silo. It is a general-purpose first-party provider for movie and television libraries.",
+          "setup_markdown": "Enter a TMDB API key in the plugin's global settings, then add or enable **TMDB** in a library's metadata provider chain.",
+          "homepage_url": "https://github.com/Vondel-Media/vondel-plugin-tmdb",
+          "source_url": "https://github.com/Vondel-Media/vondel-plugin-tmdb",
+          "support_url": "https://github.com/Vondel-Media/vondel-plugin-tmdb/issues",
+          "changelog_url": "https://github.com/Vondel-Media/vondel-plugin-tmdb/releases",
+          "publisher_name": "Vondel",
+          "publisher_url": "https://github.com/Vondel-Media",
+          "license_spdx": "AGPL-3.0-or-later"
+        }
+      },
+      "repo_url": "https://github.com/Vondel-Media/vondel-plugin-tmdb",
+      "checksums_url": "https://github.com/Vondel-Media/vondel-plugin-tmdb/releases/download/v1.2.23/checksums.txt",
+      "binaries": {
+        "darwin/arm64": {
+          "url": "https://github.com/Vondel-Media/vondel-plugin-tmdb/releases/download/v1.2.23/plugin-darwin-arm64",
+          "checksum": "9edfb5c8577da59dae7e6cb653198a42463efe483d16d050579095f92ad83d67"
+        },
+        "linux/amd64": {
+          "url": "https://github.com/Vondel-Media/vondel-plugin-tmdb/releases/download/v1.2.23/plugin-linux-amd64",
+          "checksum": "52c61dd9dfc8e9f27daebd8d81c5ce1ae77541b43c3881572e59d7a00372f319"
+        },
+        "linux/arm64": {
+          "url": "https://github.com/Vondel-Media/vondel-plugin-tmdb/releases/download/v1.2.23/plugin-linux-arm64",
+          "checksum": "48065958ffe0fc6c0b674c6a24c8eeb790d0f8dab52ce2a6c7218e7d00603e01"
+        }
+      }
+    },
+    {
+      "manifest": {
+        "plugin_id": "silo.tvdb",
+        "version": "1.2.27",
+        "silo_api_version": "v1",
+        "supported_platforms": [
+          {
+            "os": "darwin",
+            "arch": "arm64"
+          },
+          {
+            "os": "linux",
+            "arch": "amd64"
+          },
+          {
+            "os": "linux",
+            "arch": "arm64"
+          }
+        ],
+        "capabilities": [
+          {
+            "type": "metadata_provider.v1",
+            "id": "tvdb",
+            "display_name": "TVDB",
+            "description": "TheTVDB — metadata for TV series.",
+            "metadata": {
+              "default_priority": {
+                "episode": 2,
+                "season": 2,
+                "series": 2
+              }
+            }
+          },
+          {
+            "type": "image_resolver.v1",
+            "id": "tvdb",
+            "display_name": "TVDB Images",
+            "description": "Resolves tvdb:// image paths to TheTVDB image URLs.",
+            "metadata": {
+              "priority": 100,
+              "schemes": [
+                "tvdb"
+              ]
+            }
+          }
+        ],
+        "global_config_schema": [
+          {
+            "key": "api_key",
+            "description": "TVDB v4 project API key used to obtain an in-memory bearer token.",
+            "json_schema": "{\"type\":\"object\",\"properties\":{\"value\":{\"type\":\"string\",\"minLength\":1}},\"required\":[\"value\"]}",
+            "required": true,
+            "admin_form": {
+              "fields": [
+                {
+                  "key": "value",
+                  "control": 3,
+                  "required": true,
+                  "secret": true
+                }
+              ]
+            }
+          }
+        ],
+        "presentation": {
+          "display_name": "TVDB Metadata",
+          "summary": "Fetch series, season, episode, and artwork metadata from TheTVDB.",
+          "description_markdown": "Provides television metadata for series, seasons, and episodes, plus image resolution for TVDB artwork stored by Silo. It complements other providers when a library relies on TVDB identities or ordering.",
+          "setup_markdown": "Create a TVDB v4 project API key and enter it in the required global **api_key** password field before enabling the provider.",
+          "homepage_url": "https://github.com/Vondel-Media/vondel-plugin-tvdb",
+          "source_url": "https://github.com/Vondel-Media/vondel-plugin-tvdb",
+          "support_url": "https://github.com/Vondel-Media/vondel-plugin-tvdb/issues",
+          "changelog_url": "https://github.com/Vondel-Media/vondel-plugin-tvdb/releases",
+          "publisher_name": "Vondel",
+          "publisher_url": "https://github.com/Vondel-Media",
+          "license_spdx": "AGPL-3.0-or-later"
+        }
+      },
+      "repo_url": "https://github.com/Vondel-Media/vondel-plugin-tvdb",
+      "checksums_url": "https://github.com/Vondel-Media/vondel-plugin-tvdb/releases/download/v1.2.27/checksums.txt",
+      "binaries": {
+        "darwin/arm64": {
+          "url": "https://github.com/Vondel-Media/vondel-plugin-tvdb/releases/download/v1.2.27/plugin-darwin-arm64",
+          "checksum": "6c558ea7b735063e51d500289b605337e011e7a84d88900941dfe5db41aa84e1"
+        },
+        "linux/amd64": {
+          "url": "https://github.com/Vondel-Media/vondel-plugin-tvdb/releases/download/v1.2.27/plugin-linux-amd64",
+          "checksum": "353f9df58ed42e39c524faa7deb7d51b4fe58c11819a945ad8fd44dc43a66d11"
+        },
+        "linux/arm64": {
+          "url": "https://github.com/Vondel-Media/vondel-plugin-tvdb/releases/download/v1.2.27/plugin-linux-arm64",
+          "checksum": "7cbd7ae07f8d6fc9089364732131dc0dc0de6bb88f6cdd5dc8f28672e73a361c"
+        }
+      }
+    }
+  ]
 }
