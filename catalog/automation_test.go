@@ -62,3 +62,23 @@ func TestWorkflowsKeepCredentialsScopedAndNonPersistent(t *testing.T) {
 		}
 	}
 }
+
+func TestPrivateStagingDocumentationForbidsCredentialBearingStaticConfiguration(t *testing.T) {
+	data, err := os.ReadFile("../docs/private-staging.md")
+	if err != nil {
+		t.Fatalf("ReadFile(private-staging.md) error = %v", err)
+	}
+	doc := string(data)
+	for _, required := range []string{
+		"GITHUB_TOKEN",
+		"go run ./cmd/materialize-private-catalog",
+		"python3 -m http.server",
+		"catalog.json",
+		"relative",
+		"must not contain credentials",
+	} {
+		if !strings.Contains(doc, required) {
+			t.Errorf("private staging documentation is missing %q", required)
+		}
+	}
+}
