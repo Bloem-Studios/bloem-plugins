@@ -87,14 +87,16 @@ func BuildPackageFromRelease(repo string, source *SourceManifest, release Releas
 		return CatalogPackage{}, fmt.Errorf("release tag_name is required")
 	}
 
+	checksumsFound := false
 	checksumsURL := ""
 	binaries := map[string]PlatformBinary{}
 	for _, asset := range release.Assets {
 		switch {
 		case asset.Name == "checksums.txt":
-			if checksumsURL != "" {
+			if checksumsFound {
 				return CatalogPackage{}, fmt.Errorf("release %q has duplicate checksums.txt assets", release.TagName)
 			}
+			checksumsFound = true
 			checksumsURL = asset.BrowserDownloadURL
 		case strings.HasPrefix(asset.Name, "plugin-"):
 			platform, ok := platformKeyFromAssetName(asset.Name)
@@ -111,11 +113,19 @@ func BuildPackageFromRelease(repo string, source *SourceManifest, release Releas
 		}
 	}
 
-	if checksumsURL == "" {
+	if !checksumsFound {
 		return CatalogPackage{}, fmt.Errorf("release %q is missing checksums.txt", release.TagName)
+	}
+	if strings.TrimSpace(checksumsURL) == "" {
+		return CatalogPackage{}, fmt.Errorf("release %q asset checksums.txt has an empty browser_download_url", release.TagName)
 	}
 	if len(binaries) == 0 {
 		return CatalogPackage{}, fmt.Errorf("release %q has no plugin binaries", release.TagName)
+	}
+	for platform, binary := range binaries {
+		if strings.TrimSpace(binary.URL) == "" {
+			return CatalogPackage{}, fmt.Errorf("release %q asset plugin-%s has an empty browser_download_url", release.TagName, strings.ReplaceAll(platform, "/", "-"))
+		}
 	}
 	for _, advertised := range source.GetSupportedPlatforms() {
 		platform := advertised.GetOs() + "/" + advertised.GetArch()

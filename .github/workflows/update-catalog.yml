@@ -16,7 +16,7 @@ on:
         type: string
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: plugin-catalog-update
@@ -28,46 +28,76 @@ jobs:
     steps:
       - uses: actions/checkout@v6
         with:
-          token: ${{ secrets.VONDEL_CATALOG_PUSH_TOKEN }}
+          persist-credentials: false
 
       - uses: actions/setup-go@v6
         with:
           go-version: "1.26"
+          cache: false
 
-      - name: Configure private module access
-        env:
-          GH_TOKEN: ${{ secrets.VONDEL_MODULES_TOKEN }}
-        run: gh auth setup-git
+      - name: Install temporary private module credentials
+        run: |
+          askpass="${RUNNER_TEMP}/vondel-module-askpass.sh"
+          printf '%s\n' '#!/bin/sh' \
+            'case "$1" in' \
+            '  *Username*) printf "%s\\n" "x-access-token" ;;' \
+            '  *Password*) printf "%s\\n" "$VONDEL_MODULES_TOKEN" ;;' \
+            'esac' > "${askpass}"
+          chmod 0700 "${askpass}"
+
+      - name: Clear module cache
+        run: go clean -modcache
 
       - name: Test before update
         env:
+          GIT_ASKPASS: ${{ runner.temp }}/vondel-module-askpass.sh
+          GIT_TERMINAL_PROMPT: "0"
           GOPRIVATE: github.com/Vondel-Media/*
           GONOSUMDB: github.com/Vondel-Media/*
+          VONDEL_MODULES_TOKEN: ${{ secrets.VONDEL_MODULES_TOKEN }}
         run: GOWORK=off go test ./...
 
       - name: Update catalog manifest
         env:
           GITHUB_TOKEN: ${{ secrets.VONDEL_CATALOG_SOURCE_TOKEN }}
+          GIT_ASKPASS: ${{ runner.temp }}/vondel-module-askpass.sh
+          GIT_TERMINAL_PROMPT: "0"
           GOPRIVATE: github.com/Vondel-Media/*
           GONOSUMDB: github.com/Vondel-Media/*
           PLUGIN_REPO: ${{ inputs.repo || github.event.client_payload.repo }}
           PLUGIN_TAG: ${{ inputs.tag || github.event.client_payload.tag }}
+          VONDEL_MODULES_TOKEN: ${{ secrets.VONDEL_MODULES_TOKEN }}
         run: |
           test -n "$PLUGIN_REPO"
           test -n "$PLUGIN_TAG"
           go run ./cmd/update-catalog -repo "$PLUGIN_REPO" -tag "$PLUGIN_TAG"
 
-      - name: Commit catalog changes
+      - name: Remove private module credentials
+        if: always()
+        run: rm -f "${RUNNER_TEMP}/vondel-module-askpass.sh"
+
+      - name: Commit and push catalog changes
         env:
           PLUGIN_REPO: ${{ inputs.repo || github.event.client_payload.repo }}
           PLUGIN_TAG: ${{ inputs.tag || github.event.client_payload.tag }}
+          VONDEL_CATALOG_PUSH_TOKEN: ${{ secrets.VONDEL_CATALOG_PUSH_TOKEN }}
         run: |
           if git diff --quiet -- manifest.json; then
             exit 0
           fi
+          push_askpass="${RUNNER_TEMP}/vondel-push-askpass.sh"
+          trap 'rm -f "${push_askpass}"' EXIT
+          printf '%s\n' '#!/bin/sh' \
+            'case "$1" in' \
+            '  *Username*) printf "%s\\n" "x-access-token" ;;' \
+            '  *Password*) printf "%s\\n" "$VONDEL_CATALOG_PUSH_TOKEN" ;;' \
+            'esac' > "${push_askpass}"
+          chmod 0700 "${push_askpass}"
+          export GIT_ASKPASS="${push_askpass}"
+          export GIT_TERMINAL_PROMPT=0
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add manifest.json
           git commit -m "chore: update catalog for ${PLUGIN_REPO}@${PLUGIN_TAG}"
-          git pull --rebase origin main
-          git push origin HEAD:main
+          git pull --rebase https://github.com/Vondel-Media/vondel-plugins.git main
+          git push https://github.com/Vondel-Media/vondel-plugins.git HEAD:main

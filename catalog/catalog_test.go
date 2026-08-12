@@ -312,6 +312,29 @@ func TestBuildPackageFromReleaseRejectsInvalidPlatformAssets(t *testing.T) {
 				asset("checksums.txt"), asset("checksums.txt"),
 			},
 		},
+		{
+			name:    "duplicate checksums with empty URLs",
+			wantErr: "duplicate checksums.txt",
+			assets: []Asset{
+				asset("plugin-linux-amd64"), asset("plugin-linux-arm64"),
+				{Name: "checksums.txt"}, {Name: "checksums.txt"},
+			},
+		},
+		{
+			name:    "empty checksums URL",
+			wantErr: "checksums.txt has an empty browser_download_url",
+			assets: []Asset{
+				asset("plugin-linux-amd64"), asset("plugin-linux-arm64"),
+				{Name: "checksums.txt"},
+			},
+		},
+		{
+			name:    "empty platform binary URL",
+			wantErr: "plugin-linux-amd64 has an empty browser_download_url",
+			assets: []Asset{
+				{Name: "plugin-linux-amd64"}, asset("plugin-linux-arm64"), asset("checksums.txt"),
+			},
+		},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
 			release := Release{

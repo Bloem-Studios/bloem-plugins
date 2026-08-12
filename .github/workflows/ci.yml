@@ -15,24 +15,48 @@ jobs:
     env:
       GOPRIVATE: github.com/Vondel-Media/*
       GONOSUMDB: github.com/Vondel-Media/*
-      GH_TOKEN: ${{ secrets.VONDEL_MODULES_TOKEN }}
     steps:
       - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
 
       - uses: actions/setup-go@v6
         with:
           go-version: "1.26"
+          cache: false
 
-      - name: Configure private module access
-        run: gh auth setup-git
+      - name: Install temporary private module credentials
+        run: |
+          askpass="${RUNNER_TEMP}/vondel-module-askpass.sh"
+          printf '%s\n' '#!/bin/sh' \
+            'case "$1" in' \
+            '  *Username*) printf "%s\\n" "x-access-token" ;;' \
+            '  *Password*) printf "%s\\n" "$VONDEL_MODULES_TOKEN" ;;' \
+            'esac' > "${askpass}"
+          chmod 0700 "${askpass}"
+
+      - name: Clear module cache
+        run: go clean -modcache
 
       - name: Test
+        env:
+          GIT_ASKPASS: ${{ runner.temp }}/vondel-module-askpass.sh
+          GIT_TERMINAL_PROMPT: "0"
+          VONDEL_MODULES_TOKEN: ${{ secrets.VONDEL_MODULES_TOKEN }}
         run: GOWORK=off go test ./...
 
       - name: Vet
+        env:
+          GIT_ASKPASS: ${{ runner.temp }}/vondel-module-askpass.sh
+          GIT_TERMINAL_PROMPT: "0"
+          VONDEL_MODULES_TOKEN: ${{ secrets.VONDEL_MODULES_TOKEN }}
         run: GOWORK=off go vet ./...
 
       - name: Build
+        env:
+          GIT_ASKPASS: ${{ runner.temp }}/vondel-module-askpass.sh
+          GIT_TERMINAL_PROMPT: "0"
+          VONDEL_MODULES_TOKEN: ${{ secrets.VONDEL_MODULES_TOKEN }}
         run: GOWORK=off go build ./...
 
       - name: Guard private-only source
@@ -50,3 +74,7 @@ jobs:
           if grep -R -nE "${visibility_action}|${publication_action}" --include='*.yml' --include='*.yaml' .github; then
             exit 1
           fi
+
+      - name: Remove private module credentials
+        if: always()
+        run: rm -f "${RUNNER_TEMP}/vondel-module-askpass.sh"
