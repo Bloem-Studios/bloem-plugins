@@ -14,8 +14,8 @@ import (
 	"strings"
 	"testing"
 
-	pluginv1 "github.com/Vondel-Media/vondel-plugin-sdk/pkg/pluginproto/silo/plugin/v1"
-	"github.com/Vondel-Media/vondel-plugins/catalog"
+	pluginv1 "github.com/Bloem-Studios/bloem-plugin-sdk/pkg/pluginproto/silo/plugin/v1"
+	"github.com/Bloem-Studios/bloem-plugins/catalog"
 )
 
 const testToken = "task6-token-canary-892734"
@@ -46,7 +46,7 @@ func TestMaterializeRejectsNonAllowlistedRepositoryAndTraversal(t *testing.T) {
 		mutate func(*catalog.RepositoryIndex)
 	}{
 		{"repository", func(index *catalog.RepositoryIndex) {
-			index.Plugins[0].RepoURL = "https://github.com/Vondel-Media/vondel-plugin-unrelated"
+			index.Plugins[0].RepoURL = "https://github.com/Bloem-Studios/bloem-plugin-unrelated"
 		}},
 		{"plugin traversal", func(index *catalog.RepositoryIndex) { index.Plugins[0].Manifest.PluginId = "../escape" }},
 		{"version traversal", func(index *catalog.RepositoryIndex) { index.Plugins[0].Manifest.Version = "../../escape" }},
@@ -174,8 +174,8 @@ func TestMaterializeProducesDeterministicTokenFreeAnonymousStaticTree(t *testing
 	if err := json.Unmarshal(catalogBody, &index); err != nil {
 		t.Fatal(err)
 	}
-	if len(index.Plugins) != 6 {
-		t.Fatalf("plugins = %d, want 6", len(index.Plugins))
+	if len(index.Plugins) != len(retainedPlugins) {
+		t.Fatalf("plugins = %d, want %d", len(index.Plugins), len(retainedPlugins))
 	}
 	for _, pkg := range index.Plugins {
 		if !isSafeRelativeURL(pkg.ChecksumsURL) {
@@ -219,12 +219,17 @@ func newReleaseFixture(t *testing.T) *releaseFixture {
 	t.Cleanup(f.blob.Close)
 
 	repos := []struct{ repo, id, version string }{
-		{"Vondel-Media/vondel-plugin-audiobook-metadata", "silo.audiobook-metadata", "0.1.6"},
-		{"Vondel-Media/vondel-plugin-autoscan-arr", "silo.autoscan.arr", "0.1.4"},
-		{"Vondel-Media/vondel-plugin-ebook-metadata", "silo.ebook-metadata", "0.1.3"},
-		{"Vondel-Media/vondel-plugin-manga-metadata", "silo.manga-metadata", "0.1.3"},
-		{"Vondel-Media/vondel-plugin-tmdb", "silo.tmdb", "1.2.23"},
-		{"Vondel-Media/vondel-plugin-tvdb", "silo.tvdb", "1.2.27"},
+		{"Bloem-Studios/bloem-plugin-tmdb", "silo.tmdb", "1.2.25"},
+		{"Bloem-Studios/bloem-plugin-tvdb", "silo.tvdb", "1.2.28"},
+		{"Bloem-Studios/bloem-plugin-ebook-metadata", "silo.ebook-metadata", "0.1.4"},
+		{"Bloem-Studios/bloem-plugin-audiobook-metadata", "silo.audiobook-metadata", "0.1.7"},
+		{"Bloem-Studios/bloem-plugin-manga-metadata", "silo.manga-metadata", "0.1.4"},
+		{"Bloem-Studios/bloem-plugin-autoscan-arr", "silo.autoscan.arr", "0.1.5"},
+		{"Bloem-Studios/bloem-plugin-theintrodb", "silo.theintrodb", "0.1.2"},
+		{"Bloem-Studios/bloem-plugin-sportarr-metadata", "silo.sportarr", "1.0.4"},
+		{"Bloem-Studios/bloem-plugin-watchprovider-floppy", "silo.watchprovider.floppy", "0.2.4"},
+		{"Bloem-Studios/bloem-plugin-requests-arr", "silo.requests.arr", "0.1.5"},
+		{"Bloem-Studios/bloem-plugin-requests-seerr", "silo.requests.seerr", "0.1.3"},
 	}
 	for _, item := range repos {
 		binaries := map[string]catalog.PlatformBinary{}

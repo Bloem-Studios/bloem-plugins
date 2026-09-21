@@ -5,8 +5,8 @@ import (
 	"sort"
 	"strings"
 
-	pluginv1 "github.com/Vondel-Media/vondel-plugin-sdk/pkg/pluginproto/silo/plugin/v1"
-	pluginmanifest "github.com/Vondel-Media/vondel-plugin-sdk/pkg/pluginsdk/manifest"
+	pluginv1 "github.com/Bloem-Studios/bloem-plugin-sdk/pkg/pluginproto/silo/plugin/v1"
+	pluginmanifest "github.com/Bloem-Studios/bloem-plugin-sdk/pkg/pluginsdk/manifest"
 	"google.golang.org/protobuf/encoding/protojson"
 	"google.golang.org/protobuf/proto"
 )

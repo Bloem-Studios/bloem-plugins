@@ -7,25 +7,25 @@ import (
 	"testing"
 )
 
-func TestModuleUsesVondelIdentityAndTaggedSDK(t *testing.T) {
+func TestModuleUsesBloemIdentityAndTaggedSDK(t *testing.T) {
 	data, err := os.ReadFile("../go.mod")
 	if err != nil {
 		t.Fatalf("ReadFile(go.mod) error = %v", err)
 	}
 
 	module := string(data)
-	if !strings.Contains(module, "module github.com/Vondel-Media/vondel-plugins\n") {
-		t.Fatal("go.mod does not declare the Vondel catalog module")
+	if !strings.Contains(module, "module github.com/Bloem-Studios/bloem-plugins\n") {
+		t.Fatal("go.mod does not declare the Bloem catalog module")
 	}
-	if !strings.Contains(module, "github.com/Vondel-Media/vondel-plugin-sdk v0.13.3") {
-		t.Fatal("go.mod does not pin the Vondel SDK at v0.13.3")
+	if !strings.Contains(module, "github.com/Bloem-Studios/bloem-plugin-sdk v0.16.1") {
+		t.Fatal("go.mod does not pin the Bloem SDK at v0.16.1")
 	}
 	if strings.Contains(module, "\nreplace ") || strings.Contains(module, "\nreplace (") {
 		t.Fatal("go.mod contains a replace directive")
 	}
 }
 
-func TestManifestReferencesOnlyAllowedVondelRepositories(t *testing.T) {
+func TestManifestReferencesOnlyAllowedBloemRepositories(t *testing.T) {
 	data, err := os.ReadFile("../manifest.json")
 	if err != nil {
 		t.Fatalf("ReadFile(manifest.json) error = %v", err)
@@ -36,20 +36,30 @@ func TestManifestReferencesOnlyAllowedVondelRepositories(t *testing.T) {
 	}
 
 	allowed := map[string]struct{}{
-		"https://github.com/Vondel-Media/vondel-plugin-tmdb":               {},
-		"https://github.com/Vondel-Media/vondel-plugin-tvdb":               {},
-		"https://github.com/Vondel-Media/vondel-plugin-ebook-metadata":     {},
-		"https://github.com/Vondel-Media/vondel-plugin-audiobook-metadata": {},
-		"https://github.com/Vondel-Media/vondel-plugin-manga-metadata":     {},
-		"https://github.com/Vondel-Media/vondel-plugin-autoscan-arr":       {},
+		"https://github.com/Bloem-Studios/bloem-plugin-tmdb":                 {},
+		"https://github.com/Bloem-Studios/bloem-plugin-tvdb":                 {},
+		"https://github.com/Bloem-Studios/bloem-plugin-ebook-metadata":       {},
+		"https://github.com/Bloem-Studios/bloem-plugin-audiobook-metadata":   {},
+		"https://github.com/Bloem-Studios/bloem-plugin-manga-metadata":       {},
+		"https://github.com/Bloem-Studios/bloem-plugin-autoscan-arr":         {},
+		"https://github.com/Bloem-Studios/bloem-plugin-theintrodb":           {},
+		"https://github.com/Bloem-Studios/bloem-plugin-sportarr-metadata":    {},
+		"https://github.com/Bloem-Studios/bloem-plugin-watchprovider-floppy": {},
+		"https://github.com/Bloem-Studios/bloem-plugin-requests-arr":         {},
+		"https://github.com/Bloem-Studios/bloem-plugin-requests-seerr":       {},
 	}
 	exactVersions := map[string]string{
-		"silo.tmdb":               "1.2.23",
-		"silo.tvdb":               "1.2.27",
-		"silo.ebook-metadata":     "0.1.3",
-		"silo.audiobook-metadata": "0.1.6",
-		"silo.manga-metadata":     "0.1.3",
-		"silo.autoscan.arr":       "0.1.4",
+		"silo.tmdb":                 "1.2.25",
+		"silo.tvdb":                 "1.2.28",
+		"silo.ebook-metadata":       "0.1.4",
+		"silo.audiobook-metadata":   "0.1.7",
+		"silo.manga-metadata":       "0.1.4",
+		"silo.autoscan.arr":         "0.1.5",
+		"silo.theintrodb":           "0.1.2",
+		"silo.sportarr":             "1.0.4",
+		"silo.watchprovider.floppy": "0.2.4",
+		"silo.requests.arr":         "0.1.5",
+		"silo.requests.seerr":       "0.1.3",
 	}
 	if len(index.Plugins) != len(allowed) {
 		t.Fatalf("manifest contains %d plugins, want exactly %d", len(index.Plugins), len(allowed))
@@ -73,24 +83,32 @@ func TestManifestReferencesOnlyAllowedVondelRepositories(t *testing.T) {
 			t.Errorf("%s uses API %q, want v1", plugin.Manifest.GetPluginId(), plugin.Manifest.GetSiloApiVersion())
 		}
 		presentation := plugin.Manifest.GetPresentation()
-		if presentation.GetSourceUrl() != plugin.RepoURL || presentation.GetHomepageUrl() != plugin.RepoURL || presentation.GetPublisherName() != "Vondel" || presentation.GetPublisherUrl() != "https://github.com/Vondel-Media" {
-			t.Errorf("%s does not use exact Vondel source/publisher presentation", plugin.Manifest.GetPluginId())
+		if presentation.GetSourceUrl() != plugin.RepoURL || presentation.GetHomepageUrl() != plugin.RepoURL || presentation.GetPublisherName() != "Bloem Studios" || presentation.GetPublisherUrl() != "https://github.com/Bloem-Studios" {
+			t.Errorf("%s does not use exact Bloem source/publisher presentation", plugin.Manifest.GetPluginId())
 		}
 		if len(plugin.Binaries) != 3 {
 			t.Errorf("%s has %d binaries, want exactly 3", plugin.Manifest.GetPluginId(), len(plugin.Binaries))
 		}
 		for _, platform := range []string{"darwin/arm64", "linux/amd64", "linux/arm64"} {
 			binary, ok := plugin.Binaries[platform]
-			if !ok || len(binary.Checksum) != 64 || !strings.HasPrefix(binary.URL, "https://github.com/Vondel-Media/") {
+			if !ok || len(binary.Checksum) != 64 || !strings.HasPrefix(binary.URL, "https://github.com/Bloem-Studios/") {
 				t.Errorf("%s has invalid %s binary metadata", plugin.Manifest.GetPluginId(), platform)
 			}
 		}
-		if !strings.HasPrefix(plugin.ChecksumsURL, "https://github.com/Vondel-Media/") {
+		if !strings.HasPrefix(plugin.ChecksumsURL, "https://github.com/Bloem-Studios/") {
 			t.Errorf("%s has invalid checksums URL", plugin.Manifest.GetPluginId())
 		}
+		// Everything the server fetches or links as the source must be Bloem's. Descriptions
+		// may link the upstream project to credit it.
+		for _, link := range []string{plugin.RepoURL, plugin.ChecksumsURL, presentation.GetSourceUrl(), presentation.GetHomepageUrl(),
+			presentation.GetSupportUrl(), presentation.GetChangelogUrl(), presentation.GetPublisherUrl()} {
+			if !strings.HasPrefix(link, "https://github.com/Bloem-Studios") {
+				t.Errorf("%s links outside Bloem-Studios: %q", plugin.Manifest.GetPluginId(), link)
+			}
+		}
 		serialized, _ := json.Marshal(plugin)
-		if strings.Contains(string(serialized), "Silo-Server/") || strings.Contains(string(serialized), "api.github.com") || strings.Contains(string(serialized), "Authorization: Bearer") {
-			t.Errorf("%s catalog package contains upstream/API/credential material", plugin.Manifest.GetPluginId())
+		if strings.Contains(string(serialized), "api.github.com") || strings.Contains(string(serialized), "Authorization: Bearer") {
+			t.Errorf("%s catalog package contains API or credential material", plugin.Manifest.GetPluginId())
 		}
 	}
 }

@@ -10,20 +10,25 @@ import (
 	"strings"
 	"testing"
 
-	pluginv1 "github.com/Vondel-Media/vondel-plugin-sdk/pkg/pluginproto/silo/plugin/v1"
-	"github.com/Vondel-Media/vondel-plugins/catalog"
+	pluginv1 "github.com/Bloem-Studios/bloem-plugin-sdk/pkg/pluginproto/silo/plugin/v1"
+	"github.com/Bloem-Studios/bloem-plugins/catalog"
 	"google.golang.org/protobuf/encoding/protojson"
 	"google.golang.org/protobuf/proto"
 )
 
-func TestValidateRepositoryUsesLiteralVondelAllowlist(t *testing.T) {
+func TestValidateRepositoryUsesLiteralBloemAllowlist(t *testing.T) {
 	want := map[string]struct{}{
-		"Vondel-Media/vondel-plugin-tmdb":               {},
-		"Vondel-Media/vondel-plugin-tvdb":               {},
-		"Vondel-Media/vondel-plugin-ebook-metadata":     {},
-		"Vondel-Media/vondel-plugin-audiobook-metadata": {},
-		"Vondel-Media/vondel-plugin-manga-metadata":     {},
-		"Vondel-Media/vondel-plugin-autoscan-arr":       {},
+		"Bloem-Studios/bloem-plugin-tmdb":                 {},
+		"Bloem-Studios/bloem-plugin-tvdb":                 {},
+		"Bloem-Studios/bloem-plugin-ebook-metadata":       {},
+		"Bloem-Studios/bloem-plugin-audiobook-metadata":   {},
+		"Bloem-Studios/bloem-plugin-manga-metadata":       {},
+		"Bloem-Studios/bloem-plugin-autoscan-arr":         {},
+		"Bloem-Studios/bloem-plugin-theintrodb":           {},
+		"Bloem-Studios/bloem-plugin-sportarr-metadata":    {},
+		"Bloem-Studios/bloem-plugin-watchprovider-floppy": {},
+		"Bloem-Studios/bloem-plugin-requests-arr":         {},
+		"Bloem-Studios/bloem-plugin-requests-seerr":       {},
 	}
 	if len(allowedRepositories) != len(want) {
 		t.Fatalf("allowedRepositories has %d entries, want exactly %d: %v", len(allowedRepositories), len(want), allowedRepositories)
@@ -44,9 +49,9 @@ func TestValidateRepositoryUsesLiteralVondelAllowlist(t *testing.T) {
 
 	for _, repo := range []string{
 		"Silo-Server/silo-plugin-metadata-tmdb",
-		"Vondel-Media/vondel-plugin-metadb",
-		"Vondel-Media/vondel-plugin-unrelated",
-		"Vondel-Media/vondel-plugin-tmdb/../../attacker",
+		"Bloem-Studios/bloem-plugin-metadb",
+		"Bloem-Studios/bloem-plugin-unrelated",
+		"Bloem-Studios/bloem-plugin-tmdb/../../attacker",
 		"",
 	} {
 		if err := validateRepository(repo); err == nil {
@@ -56,7 +61,7 @@ func TestValidateRepositoryUsesLiteralVondelAllowlist(t *testing.T) {
 }
 
 func TestValidateReleaseAssetsRequiresExactAuthenticatedAPIAssets(t *testing.T) {
-	repo := "Vondel-Media/vondel-plugin-tmdb"
+	repo := "Bloem-Studios/bloem-plugin-tmdb"
 	asset := func(id int64, name string) catalog.Asset {
 		return catalog.Asset{ID: id, Name: name, URL: fmt.Sprintf("https://api.github.com/repos/%s/releases/assets/%d", repo, id), BrowserDownloadURL: "https://github.com/" + repo + "/releases/download/v1.2.23/" + name}
 	}
@@ -111,7 +116,7 @@ func TestDownloadReleaseAssetsAuthenticatesAPIAndStripsTokenOnRedirect(t *testin
 	}))
 	defer api.Close()
 
-	repo := "Vondel-Media/vondel-plugin-tmdb"
+	repo := "Bloem-Studios/bloem-plugin-tmdb"
 	asset := catalog.Asset{ID: 7, Name: "plugin-linux-amd64", URL: api.URL + "/repos/" + repo + "/releases/assets/7"}
 	got, err := downloadAsset(context.Background(), api.Client(), token, api.URL, repo, asset)
 	if err != nil {
@@ -171,7 +176,7 @@ func TestValidateNativeManifestOutputRequiresExactSourceAndBinaryIdentity(t *tes
 	binary := []byte("native release binary")
 	source := &catalog.SourceManifest{
 		PluginId: "silo.tmdb", Version: "1.2.23", Checksum: "__CHECKSUM__", SiloApiVersion: "v1",
-		Presentation:       &pluginv1.PluginPresentation{SourceUrl: "https://github.com/Vondel-Media/vondel-plugin-tmdb", PublisherName: "Vondel", PublisherUrl: "https://github.com/Vondel-Media"},
+		Presentation:       &pluginv1.PluginPresentation{SourceUrl: "https://github.com/Bloem-Studios/bloem-plugin-tmdb", PublisherName: "Bloem Studios", PublisherUrl: "https://github.com/Bloem-Studios"},
 		SupportedPlatforms: []*pluginv1.SupportedPlatform{{Os: "darwin", Arch: "arm64"}},
 		Capabilities:       []*pluginv1.CapabilityDescriptor{{Type: "metadata_provider.v1", Id: "tmdb"}},
 	}

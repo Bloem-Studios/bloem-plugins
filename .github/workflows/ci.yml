@@ -13,8 +13,8 @@ jobs:
   verify:
     runs-on: ubuntu-latest
     env:
-      GOPRIVATE: github.com/Vondel-Media/*
-      GONOSUMDB: github.com/Vondel-Media/*
+      GOPRIVATE: github.com/Bloem-Studios/*
+      GONOSUMDB: github.com/Bloem-Studios/*
     steps:
       - uses: actions/checkout@v6
         with:
@@ -27,11 +27,11 @@ jobs:
 
       - name: Install temporary private module credentials
         run: |
-          askpass="${RUNNER_TEMP}/vondel-module-askpass.sh"
+          askpass="${RUNNER_TEMP}/bloem-module-askpass.sh"
           printf '%s\n' '#!/bin/sh' \
             'case "$1" in' \
             '  *Username*) printf "%s\\n" "x-access-token" ;;' \
-            '  *Password*) printf "%s\\n" "$VONDEL_MODULES_TOKEN" ;;' \
+            '  *Password*) printf "%s\\n" "$BLOEM_MODULES_TOKEN" ;;' \
             'esac' > "${askpass}"
           chmod 0700 "${askpass}"
 
@@ -40,23 +40,23 @@ jobs:
 
       - name: Test
         env:
-          GIT_ASKPASS: ${{ runner.temp }}/vondel-module-askpass.sh
+          GIT_ASKPASS: ${{ runner.temp }}/bloem-module-askpass.sh
           GIT_TERMINAL_PROMPT: "0"
-          VONDEL_MODULES_TOKEN: ${{ secrets.VONDEL_MODULES_TOKEN }}
+          BLOEM_MODULES_TOKEN: ${{ secrets.BLOEM_MODULES_TOKEN }}
         run: GOWORK=off go test ./...
 
       - name: Vet
         env:
-          GIT_ASKPASS: ${{ runner.temp }}/vondel-module-askpass.sh
+          GIT_ASKPASS: ${{ runner.temp }}/bloem-module-askpass.sh
           GIT_TERMINAL_PROMPT: "0"
-          VONDEL_MODULES_TOKEN: ${{ secrets.VONDEL_MODULES_TOKEN }}
+          BLOEM_MODULES_TOKEN: ${{ secrets.BLOEM_MODULES_TOKEN }}
         run: GOWORK=off go vet ./...
 
       - name: Build
         env:
-          GIT_ASKPASS: ${{ runner.temp }}/vondel-module-askpass.sh
+          GIT_ASKPASS: ${{ runner.temp }}/bloem-module-askpass.sh
           GIT_TERMINAL_PROMPT: "0"
-          VONDEL_MODULES_TOKEN: ${{ secrets.VONDEL_MODULES_TOKEN }}
+          BLOEM_MODULES_TOKEN: ${{ secrets.BLOEM_MODULES_TOKEN }}
         run: GOWORK=off go build ./...
 
       - name: Guard private-only source
@@ -77,4 +77,4 @@ jobs:
 
       - name: Remove private module credentials
         if: always()
-        run: rm -f "${RUNNER_TEMP}/vondel-module-askpass.sh"
+        run: rm -f "${RUNNER_TEMP}/bloem-module-askpass.sh"

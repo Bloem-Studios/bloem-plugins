@@ -30,29 +30,29 @@ func TestWorkflowsKeepCredentialsScopedAndNonPersistent(t *testing.T) {
 	}
 	workflow := string(data)
 	checkout := strings.Index(workflow, "actions/checkout@")
-	moduleToken := strings.Index(workflow, "secrets.VONDEL_MODULES_TOKEN")
+	moduleToken := strings.Index(workflow, "secrets.BLOEM_MODULES_TOKEN")
 	if moduleToken < 0 || checkout < 0 || moduleToken > checkout {
 		t.Fatal("private SDK token is not isolated in the checkout-free prefetch job")
 	}
-	if got := strings.Count(workflow, "secrets.VONDEL_MODULES_TOKEN"); got != 1 {
+	if got := strings.Count(workflow, "secrets.BLOEM_MODULES_TOKEN"); got != 1 {
 		t.Fatalf("private SDK token appears %d times, want exactly once", got)
 	}
 	if !strings.Contains(workflow, "actions/upload-artifact@") || !strings.Contains(workflow, "actions/download-artifact@") {
 		t.Fatal("sanitized private SDK cache does not cross the job boundary as an artifact")
 	}
-	if got := strings.Count(workflow, "secrets.VONDEL_CATALOG_SOURCE_TOKEN"); got != 1 {
+	if got := strings.Count(workflow, "secrets.BLOEM_CATALOG_SOURCE_TOKEN"); got != 1 {
 		t.Fatalf("source token appears %d times, want exactly once", got)
 	}
 	updateStep := strings.Index(workflow, "- name: Update catalog manifest")
-	sourceToken := strings.Index(workflow, "secrets.VONDEL_CATALOG_SOURCE_TOKEN")
+	sourceToken := strings.Index(workflow, "secrets.BLOEM_CATALOG_SOURCE_TOKEN")
 	if updateStep < 0 || sourceToken < updateStep {
 		t.Fatal("source token is exposed outside the catalog update step")
 	}
-	if got := strings.Count(workflow, "secrets.VONDEL_CATALOG_PUSH_TOKEN"); got != 1 {
+	if got := strings.Count(workflow, "secrets.BLOEM_CATALOG_PUSH_TOKEN"); got != 1 {
 		t.Fatalf("write token appears %d times, want exactly once", got)
 	}
 	pushStep := strings.Index(workflow, "- name: Commit and push catalog changes")
-	token := strings.Index(workflow, "secrets.VONDEL_CATALOG_PUSH_TOKEN")
+	token := strings.Index(workflow, "secrets.BLOEM_CATALOG_PUSH_TOKEN")
 	if pushStep < 0 || token < pushStep {
 		t.Fatal("write token is exposed before the final commit/push step")
 	}

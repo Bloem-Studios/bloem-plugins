@@ -18,7 +18,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/Vondel-Media/vondel-plugins/catalog"
+	"github.com/Bloem-Studios/bloem-plugins/catalog"
 )
 
 const githubAPIOrigin = "https://api.github.com"
@@ -28,12 +28,17 @@ var stableVersion = regexp.MustCompile(`^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1
 var sha256Digest = regexp.MustCompile(`^[0-9a-fA-F]{64}$`)
 
 var retainedPlugins = map[string]string{
-	"Vondel-Media/vondel-plugin-audiobook-metadata": "silo.audiobook-metadata",
-	"Vondel-Media/vondel-plugin-autoscan-arr":       "silo.autoscan.arr",
-	"Vondel-Media/vondel-plugin-ebook-metadata":     "silo.ebook-metadata",
-	"Vondel-Media/vondel-plugin-manga-metadata":     "silo.manga-metadata",
-	"Vondel-Media/vondel-plugin-tmdb":               "silo.tmdb",
-	"Vondel-Media/vondel-plugin-tvdb":               "silo.tvdb",
+	"Bloem-Studios/bloem-plugin-tmdb":                 "silo.tmdb",
+	"Bloem-Studios/bloem-plugin-tvdb":                 "silo.tvdb",
+	"Bloem-Studios/bloem-plugin-ebook-metadata":       "silo.ebook-metadata",
+	"Bloem-Studios/bloem-plugin-audiobook-metadata":   "silo.audiobook-metadata",
+	"Bloem-Studios/bloem-plugin-manga-metadata":       "silo.manga-metadata",
+	"Bloem-Studios/bloem-plugin-autoscan-arr":         "silo.autoscan.arr",
+	"Bloem-Studios/bloem-plugin-theintrodb":           "silo.theintrodb",
+	"Bloem-Studios/bloem-plugin-sportarr-metadata":    "silo.sportarr",
+	"Bloem-Studios/bloem-plugin-watchprovider-floppy": "silo.watchprovider.floppy",
+	"Bloem-Studios/bloem-plugin-requests-arr":         "silo.requests.arr",
+	"Bloem-Studios/bloem-plugin-requests-seerr":       "silo.requests.seerr",
 }
 
 func main() {
@@ -69,7 +74,7 @@ func materialize(ctx context.Context, client *http.Client, token, apiOrigin, cat
 		return fmt.Errorf("decode catalog: %w", err)
 	}
 	if len(index.Plugins) != len(retainedPlugins) {
-		return fmt.Errorf("catalog must contain exactly the six retained plugins")
+		return fmt.Errorf("catalog must contain exactly the retained plugins")
 	}
 
 	parent := filepath.Dir(outputPath)
@@ -332,7 +337,7 @@ func authenticatedRequest(ctx context.Context, requestURL, token, accept string)
 	}
 	req.Header.Set("Authorization", "Bearer "+token)
 	req.Header.Set("Accept", accept)
-	req.Header.Set("User-Agent", "vondel-private-staging-materializer")
+	req.Header.Set("User-Agent", "bloem-private-staging-materializer")
 	req.Header.Set("X-GitHub-Api-Version", "2022-11-28")
 	return req, nil
 }

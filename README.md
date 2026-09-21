@@ -15,8 +15,8 @@ catalog endpoint: Bloem Server public defaults must not point here while the rep
 release sources require authentication.
 
 > **Naming.** This repository predates the Bloem rename and still carries its earlier identity in
-> real identifiers: the Go module is `github.com/Vondel-Media/vondel-plugins`, the secrets are
-> `VONDEL_*`, the allowlisted plugin repositories live under the `Vondel-Media` GitHub
+> real identifiers: the Go module is `github.com/Bloem-Studios/bloem-plugins`, the secrets are
+> `BLOEM_*`, the allowlisted plugin repositories live under the `Bloem-Studios` GitHub
 > organisation, and plugin ids carry the `silo.` prefix from the SDK's manifest proto. Tests and
 > the updater's allowlist enforce those names, so they appear verbatim below. The product is Bloem.
 
@@ -25,14 +25,14 @@ release sources require authentication.
 **The catalog**
 
 - One reviewed, committed `manifest.json` in the `RepositoryIndex` shape a Bloem Server fetches: manifest, `repo_url`, `checksums_url` and three `binaries` entries per plugin.
-- Exactly six retained plugins, one version each: `silo.tmdb`, `silo.tvdb`, `silo.ebook-metadata`, `silo.audiobook-metadata`, `silo.manga-metadata`, `silo.autoscan.arr`; the list is literal in code and pinned by `catalog/identity_test.go`.
+- Exactly eleven retained plugins, one version each: `silo.audiobook-metadata`, `silo.autoscan.arr`, `silo.ebook-metadata`, `silo.manga-metadata`, `silo.requests.arr`, `silo.requests.seerr`, `silo.sportarr`, `silo.theintrodb`, `silo.tmdb`, `silo.tvdb`, `silo.watchprovider.floppy`; the list is literal in code and pinned by `catalog/identity_test.go`.
 - Every entry advertises `darwin/arm64`, `linux/amd64` and `linux/arm64` and plugin API `v1`; a server shows only entries matching its own platform and API version.
 - A complete presentation block per plugin (display name, summary, description, setup notes, links, publisher, licence) — what the server's Catalog tab renders.
 
 **The updater (`cmd/update-catalog`)**
 
 - Adds or replaces one plugin's entry from a GitHub release tag, reading the release and the source `manifest.json` at that tag through the GitHub API.
-- Accepts only the six allowlisted repositories and only non-draft, non-prerelease, published releases.
+- Accepts only the eleven allowlisted repositories and only non-draft, non-prerelease, published releases.
 - Requires exactly four assets (`checksums.txt` plus the three `plugin-<os>-<arch>` binaries) with GitHub's own download URLs, downloads all of them, and verifies every binary against `checksums.txt`.
 - Checks the source manifest: version equals the tag without `v`, API version `v1`, exactly three platforms, capabilities with type and id, and a presentation block that passes the SDK's `ValidateCatalogPresentation` against the repository URL.
 - On a matching platform runs the binary's `manifest` subcommand and compares plugin id, version, API version, checksum, source URL and publisher URL with the source manifest.
@@ -44,13 +44,13 @@ release sources require authentication.
 - Downloads every retained release again, re-verifies checksums against fresh `checksums.txt` content, and requires them to equal what the catalog recorded.
 - Writes a static tree — `catalog.json` plus `plugins/<id>/<version>/{checksums.txt,plugin-*}` — with URLs relative to the static root, which a Bloem Server resolves against the repository URL it was given.
 - Atomic publish: builds into a hidden sibling directory and renames into place only on complete success; a failed run leaves the previous tree untouched.
-- Refuses a symlink or non-directory output, a non-regular catalog file, a catalog of any size other than six, prerelease version suffixes, and mismatched repository or plugin ids.
+- Refuses a symlink or non-directory output, a non-regular catalog file, a catalog of any size other than eleven, prerelease version suffixes, and mismatched repository or plugin ids.
 - Scans its whole output for the token it was given and fails on a hit ("credential canary detected in staging output"); download caps of 512 MiB per binary and 1 MiB for `checksums.txt`.
 
 **Automation and trust**
 
 - `Update Catalog` workflow triggered by `repository_dispatch` (`plugin_release_published` with `{"repo", "tag"}`) from a plugin repository, or manually from the Actions tab; runs queue and never race.
-- Three repository secrets with one job each: `VONDEL_MODULES_TOKEN` (private SDK module), `VONDEL_CATALOG_SOURCE_TOKEN` (private releases and manifests), `VONDEL_CATALOG_PUSH_TOKEN` (push to `main`); a test asserts each appears exactly once, in the step that needs it and no earlier.
+- Three repository secrets with one job each: `BLOEM_MODULES_TOKEN` (private SDK module), `BLOEM_CATALOG_SOURCE_TOKEN` (private releases and manifests), `BLOEM_CATALOG_PUSH_TOKEN` (push to `main`); a test asserts each appears exactly once, in the step that needs it and no earlier.
 - The SDK module is prefetched into a sanitised cache in a job that never checks this repository out, so the module token never coexists with a checkout.
 - CI guards against `replace` directives, upstream dispatch endpoints, visibility changes, `npm publish`, `docker push` and Pages publishes.
 - No cryptographic signing: trust rests on GitHub authentication, the allowlists, and SHA-256 checksums verified three times (updater, materialiser, installing server). No token belongs in source, catalog data, release assets or server binaries.
@@ -79,15 +79,15 @@ either let the plugin repository's release workflow send a `repository_dispatch`
 `main` titled `chore: update catalog for <repo>@<tag>`. Afterwards bump the pinned version in
 `catalog/identity_test.go` and, where a static tree is served, re-materialise it:
 
-    GITHUB_TOKEN="$VONDEL_CATALOG_SOURCE_TOKEN" \
+    GITHUB_TOKEN="$BLOEM_CATALOG_SOURCE_TOKEN" \
       GOWORK=off go run ./cmd/materialize-private-catalog \
       -catalog manifest.json \
-      -output /srv/vondel-plugin-staging
+      -output /srv/bloem-plugin-staging
 
 Serve the output on the private network only, for example `python3 -m http.server 8080 --bind
 127.0.0.1` from inside the directory.
 
-**Local development.** Go 1.26, `GOPRIVATE=github.com/Vondel-Media/*` with Git credentials for that
+**Local development.** Go 1.26, `GOPRIVATE=github.com/Bloem-Studios/*` with Git credentials for that
 organisation, and `GOWORK=off go test ./...`; the tests run against fake HTTP servers and need no
 network.
 

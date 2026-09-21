@@ -23,14 +23,14 @@ This guide has two readers.
 
 - **Section 1–2: a Bloem Server administrator** who has been given a catalog URL and wants plugins
   from it to appear on the server's **Admin → Plugins** page.
-- **Section 3–5: a plugin author** who maintains one of the six retained plugin repositories and
+- **Section 3–5: a plugin author** who maintains one of the eleven retained plugin repositories and
   wants a new version to reach the catalog.
 
 Running the catalog itself — secrets, workflows, hosting the static tree — is the
 [Admin Guide](admin-guide.md).
 
 > **Identifiers.** The catalog repository, its Go module and its secrets keep the pre-rename
-> `Vondel` identity, and plugin ids in the manifest proto carry a `silo.` prefix. Where this guide
+> `Bloem` identity, and plugin ids in the manifest proto carry a `silo.` prefix. Where this guide
 > shows such a name, it is the literal value the tooling checks, not a typo. The product is Bloem.
 
 ---
@@ -46,7 +46,7 @@ URLs and SHA-256 checksums. Installing from a catalog means:
 - the download is verified against the catalog checksum before anything is installed;
 - the *Installed* tab can tell you when a newer version exists in the catalog.
 
-This private catalog lists six plugins: TMDB and TVDB metadata, ebook, audiobook and manga
+This private catalog lists eleven plugins: TMDB, TVDB, Sportarr, ebook, audiobook and manga
 metadata providers, and the `*arr` autoscan integration (the exact list and versions are in the
 Admin Guide, 1.2). Each carries a presentation block — display name, summary, description, setup
 notes, links, publisher, licence — which is what the Catalog tab renders.
@@ -117,7 +117,7 @@ from it but does not touch plugins already installed.
 | What you see | What to try |
 |---|---|
 | The repository row exists but the Catalog tab shows nothing from it | The URL is unreachable from the server, returns a non-200 status, or the JSON has no entry for your OS/arch. Fetch it with `curl` *from the server host* and check the log for `skipping broken plugin repository`. |
-| `plugin … does not support platform …` on install | The catalog has no binary for your platform. The six retained plugins all ship three platforms, so this usually means a stale or hand-edited tree. Ask the operator to re-materialise. |
+| `plugin … does not support platform …` on install | The catalog has no binary for your platform. The retained plugins all ship three platforms, so this usually means a stale or hand-edited tree. Ask the operator to re-materialise. |
 | `binary checksum mismatch` | The served binary does not match the catalog. Do not retry blindly; tell the catalog operator, who re-materialises from verified releases. |
 | `plugin silo_api_version "…" is not supported` | The entry targets a different plugin API than this server. This catalog only lists `v1`. |
 | An update never appears | The catalog still lists the version you have; check with the operator whether the release was published into it. |
@@ -126,7 +126,7 @@ from it but does not touch plugins already installed.
 
 ## 3. Publishing a plugin version (author side)
 
-The catalog accepts a release only from the six allowlisted repositories, and only if the release
+The catalog accepts a release only from the eleven allowlisted repositories, and only if the release
 passes every check in `cmd/update-catalog`. This section is the checklist that makes a release
 pass first time. Terms: your **source manifest** is the `manifest.json` at the root of your
 repository; the **tag** is the git tag of the release.
@@ -152,7 +152,7 @@ Commit `manifest.json` at the repository root so it exists at the tag. It is the
 | `silo_api_version` | Exactly `v1`. |
 | `supported_platforms` | Exactly three entries: `{os: darwin, arch: arm64}`, `{os: linux, arch: amd64}`, `{os: linux, arch: arm64}`, no duplicates. |
 | `capabilities` | At least one; each with non-empty `type` and `id`. |
-| `presentation` | Every field the SDK's `ValidateCatalogPresentation` requires, validated against your repository URL: `display_name`, `summary`, `description_markdown`, `setup_markdown`, `homepage_url`, `source_url`, `support_url`, `changelog_url`, `publisher_name`, `publisher_url`, `license_spdx`. The identity test additionally expects `source_url` and `homepage_url` to be the repository URL, `publisher_name` `Vondel` and `publisher_url` `https://github.com/Vondel-Media`. |
+| `presentation` | Every field the SDK's `ValidateCatalogPresentation` requires, validated against your repository URL: `display_name`, `summary`, `description_markdown`, `setup_markdown`, `homepage_url`, `source_url`, `support_url`, `changelog_url`, `publisher_name`, `publisher_url`, `license_spdx`. The identity test additionally expects `source_url` and `homepage_url` to be the repository URL, `publisher_name` `Bloem` and `publisher_url` `https://github.com/Bloem-Studios`. |
 | `checksum` | May be the placeholder `__CHECKSUM__` in source; the catalog blanks it and uses per-platform release checksums instead. |
 
 The binary itself must print a manifest whose `plugin_id`, `version`, `silo_api_version`,
@@ -244,11 +244,11 @@ servers reading the static tree still see the previous version.
 If you are writing tooling around the catalog, `catalog/catalog.go` is the public surface:
 
 ```go
-import "github.com/Vondel-Media/vondel-plugins/catalog"
+import "github.com/Bloem-Studios/bloem-plugins/catalog"
 
 index, _ := catalog.RepositoryIndex{}, error(nil)     // decode manifest.json into this
 source, err := catalog.DecodeSourceManifest(manifestJSON)   // protojson → *PluginManifest, unknown fields discarded
-pkg, err := catalog.BuildPackageFromRelease("Vondel-Media/vondel-plugin-tmdb", source, release)
+pkg, err := catalog.BuildPackageFromRelease("Bloem-Studios/bloem-plugin-tmdb", source, release)
 index = catalog.UpsertPackage(index, pkg)              // replace-by-plugin-id, sorted
 ```
 
@@ -257,8 +257,8 @@ release API; `Asset{ID, Name, URL, BrowserDownloadURL}`; `CatalogPackage{Manifes
 ChecksumsURL, Binaries map["os/arch"]PlatformBinary}`; `PlatformBinary{URL, Checksum}`.
 `BuildPackageFromRelease` does not download anything and does not fill checksums — that is the
 updater's job after it has verified `checksums.txt`. The module depends on
-`github.com/Vondel-Media/vondel-plugin-sdk v0.13.3` for the manifest proto and presentation
-validator; the SDK is private, so set `GOPRIVATE=github.com/Vondel-Media/*`.
+`github.com/Bloem-Studios/bloem-plugin-sdk v0.16.1` for the manifest proto and presentation
+validator; the SDK is private, so set `GOPRIVATE=github.com/Bloem-Studios/*`.
 
 Platform keys are derived from asset names by `platformKeyFromAssetName`: `plugin-linux-amd64` →
 `linux/amd64`; any other shape is rejected as an unsupported platform binary.
@@ -293,7 +293,7 @@ the binaries themselves; GitHub is only touched by the catalog tooling.
 - **Presentation** — the human-facing fields of a plugin manifest shown on the Catalog tab.
 - **Release** — a GitHub release: a tag plus attached assets.
 - **Repository (server side)** — a catalog URL a Bloem Server fetches.
-- **Retained plugin** — one of the six plugins this catalog is allowed to list.
+- **Retained plugin** — one of the eleven plugins this catalog is allowed to list.
 - **Static tree** — the served directory containing `catalog.json` and the binaries.
 - **Update policy** — the per-installation setting that governs whether catalog updates are applied automatically.
 

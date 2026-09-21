@@ -30,8 +30,8 @@ wants to *get a release into it*, read the [User Guide](user-guide.md) first; it
 consumer side and the release checklist.
 
 > **Naming note.** This repository predates the Bloem rename and still carries its earlier
-> identity in real identifiers: the Go module is `github.com/Vondel-Media/vondel-plugins`, the
-> secrets are `VONDEL_*`, and the allowlisted plugin repositories live under the `Vondel-Media`
+> identity in real identifiers: the Go module is `github.com/Bloem-Studios/bloem-plugins`, the
+> secrets are `BLOEM_*`, and the allowlisted plugin repositories live under the `Bloem-Studios`
 > GitHub organisation. Those names are enforced by tests (`catalog/identity_test.go`) and by the
 > updater's allowlist, so this guide uses them verbatim where they are identifiers. The product is
 > Bloem.
@@ -55,18 +55,23 @@ This repository produces exactly one such document, `manifest.json`, and nothing
 
 ### 1.2 What is in the catalog today
 
-The catalog holds **exactly six plugins, one version each**. The list is literal in code
+The catalog holds **exactly eleven plugins, one version each**. The list is literal in code
 (`retainedPlugins` in `cmd/materialize-private-catalog/main.go`, `allowedRepositories` in
 `cmd/update-catalog/main.go`, and the exact versions in `catalog/identity_test.go`):
 
-| Plugin id | Source repository | Version pinned by tests |
-|---|---|---|
-| `silo.tmdb` | `Vondel-Media/vondel-plugin-tmdb` | 1.2.23 |
-| `silo.tvdb` | `Vondel-Media/vondel-plugin-tvdb` | 1.2.27 |
-| `silo.ebook-metadata` | `Vondel-Media/vondel-plugin-ebook-metadata` | 0.1.3 |
-| `silo.audiobook-metadata` | `Vondel-Media/vondel-plugin-audiobook-metadata` | 0.1.6 |
-| `silo.manga-metadata` | `Vondel-Media/vondel-plugin-manga-metadata` | 0.1.3 |
-| `silo.autoscan.arr` | `Vondel-Media/vondel-plugin-autoscan-arr` | 0.1.4 |
+| Plugin id | Source repository | Version pinned by tests | Based on |
+|---|---|---|---|
+| `silo.audiobook-metadata` | `Bloem-Studios/bloem-plugin-audiobook-metadata` | 0.1.7 | [Silo-Server/silo-plugin-metadata-audiobook](https://github.com/Silo-Server/silo-plugin-metadata-audiobook) |
+| `silo.autoscan.arr` | `Bloem-Studios/bloem-plugin-autoscan-arr` | 0.1.5 | [Silo-Server/silo-plugin-autoscan-arr](https://github.com/Silo-Server/silo-plugin-autoscan-arr) |
+| `silo.ebook-metadata` | `Bloem-Studios/bloem-plugin-ebook-metadata` | 0.1.4 | [Silo-Server/silo-plugin-metadata-ebook](https://github.com/Silo-Server/silo-plugin-metadata-ebook) |
+| `silo.manga-metadata` | `Bloem-Studios/bloem-plugin-manga-metadata` | 0.1.4 | [Silo-Server/silo-plugin-metadata-manga](https://github.com/Silo-Server/silo-plugin-metadata-manga) |
+| `silo.requests.arr` | `Bloem-Studios/bloem-plugin-requests-arr` | 0.1.5 | [Silo-Community/silo-plugins-requests-arr](https://github.com/Silo-Community/silo-plugins-requests-arr) |
+| `silo.requests.seerr` | `Bloem-Studios/bloem-plugin-requests-seerr` | 0.1.3 | [Silo-Community/silo-plugins-requests-seerr](https://github.com/Silo-Community/silo-plugins-requests-seerr) |
+| `silo.sportarr` | `Bloem-Studios/bloem-plugin-sportarr-metadata` | 1.0.4 | [Silo-Server/silo-plugin-metadata-sportarr](https://github.com/Silo-Server/silo-plugin-metadata-sportarr) |
+| `silo.theintrodb` | `Bloem-Studios/bloem-plugin-theintrodb` | 0.1.2 | [Silo-Server/silo-plugin-markers-theintrodb](https://github.com/Silo-Server/silo-plugin-markers-theintrodb) |
+| `silo.tmdb` | `Bloem-Studios/bloem-plugin-tmdb` | 1.2.25 | [Silo-Server/silo-plugin-metadata-tmdb](https://github.com/Silo-Server/silo-plugin-metadata-tmdb) |
+| `silo.tvdb` | `Bloem-Studios/bloem-plugin-tvdb` | 1.2.28 | [Silo-Server/silo-plugin-metadata-tvdb](https://github.com/Silo-Server/silo-plugin-metadata-tvdb) |
+| `silo.watchprovider.floppy` | `Bloem-Studios/bloem-plugin-watchprovider-floppy` | 0.2.4 | [Silo-Server/silo-plugin-watchprovider-floppy](https://github.com/Silo-Server/silo-plugin-watchprovider-floppy) |
 
 Every entry advertises three platforms — `darwin/arm64`, `linux/amd64`, `linux/arm64` — and
 `silo_api_version: v1`. (The `silo.` prefix and the `silo_api_version` field are wire-level names
@@ -90,8 +95,8 @@ There is **no cryptographic signing** in this pipeline. Trust rests on three thi
 1. **GitHub authentication.** The updater and materialiser read releases through the GitHub API
    with a token that can see the private plugin repositories. Nothing unauthenticated can be
    published from.
-2. **Allowlists.** The updater accepts only the six repositories above; the materialiser accepts
-   only those six *and* checks each package's plugin id matches its repository.
+2. **Allowlists.** The updater accepts only the eleven repositories above; the materialiser accepts
+   only those eleven *and* checks each package's plugin id matches its repository.
 3. **SHA-256 checksums, verified three times.** The updater downloads every release asset,
    checks each binary against `checksums.txt`, and records the checksums in the catalog. The
    materialiser downloads again and checks the catalog's checksums against fresh `checksums.txt`
@@ -117,9 +122,9 @@ The workflows use three GitHub Actions secrets on this private repository:
 
 | Secret | Used by | Purpose |
 |---|---|---|
-| `VONDEL_MODULES_TOKEN` | `ci.yml`; `update-catalog.yml` (prefetch job only) | Read access to the private plugin SDK module `github.com/Vondel-Media/vondel-plugin-sdk` so `go build`/`go test` can resolve it. |
-| `VONDEL_CATALOG_SOURCE_TOKEN` | `update-catalog.yml` (update step only, as `GITHUB_TOKEN`) | Read access to the private plugin repositories: release metadata, release assets, and `manifest.json` at the tag. |
-| `VONDEL_CATALOG_PUSH_TOKEN` | `update-catalog.yml` (final commit step only) | Push access to this repository's `main`. |
+| `BLOEM_MODULES_TOKEN` | `ci.yml`; `update-catalog.yml` (prefetch job only) | Read access to the private plugin SDK module `github.com/Bloem-Studios/bloem-plugin-sdk` so `go build`/`go test` can resolve it. |
+| `BLOEM_CATALOG_SOURCE_TOKEN` | `update-catalog.yml` (update step only, as `GITHUB_TOKEN`) | Read access to the private plugin repositories: release metadata, release assets, and `manifest.json` at the tag. |
+| `BLOEM_CATALOG_PUSH_TOKEN` | `update-catalog.yml` (final commit step only) | Push access to this repository's `main`. |
 
 A test (`catalog/automation_test.go`) asserts that each secret appears exactly once in the update
 workflow, in the step that needs it and no earlier, that checkouts use `persist-credentials: false`,
@@ -129,9 +134,9 @@ that `setup-go` uses `cache: false`, and that the workflow never runs `gh auth s
 ### 2.2 CI (`.github/workflows/ci.yml`)
 
 Runs on every pull request and on pushes to `main`. Steps: check out; set up Go 1.26; write a
-temporary `GIT_ASKPASS` script that answers with `x-access-token` / `$VONDEL_MODULES_TOKEN`;
+temporary `GIT_ASKPASS` script that answers with `x-access-token` / `$BLOEM_MODULES_TOKEN`;
 `go clean -modcache`; then `GOWORK=off go test ./...`, `go vet ./...`, `go build ./...` with
-`GOPRIVATE`/`GONOSUMDB` set to `github.com/Vondel-Media/*`; finally a **Guard private-only source**
+`GOPRIVATE`/`GONOSUMDB` set to `github.com/Bloem-Studios/*`; finally a **Guard private-only source**
 step that fails the build if:
 
 - any `go.mod` contains a `replace` directive;
@@ -154,16 +159,16 @@ Concurrency group `plugin-catalog-update` with `cancel-in-progress: false`: upda
 never race.
 
 **Job 1 — `prefetch-private-sdk`.** Runs *without* checking out this repository. With
-`VONDEL_MODULES_TOKEN` it downloads exactly `vondel-plugin-sdk@v0.13.3` into a private module
+`BLOEM_MODULES_TOKEN` it downloads exactly `bloem-plugin-sdk@v0.16.1` into a private module
 cache, greps that cache for the token (fails with `sanitized SDK cache contains credential
-material` if found), tars it, and uploads it as the artifact `sanitized-vondel-plugin-sdk-v0.13.3`
+material` if found), tars it, and uploads it as the artifact `sanitized-bloem-plugin-sdk-v0.16.1`
 with one-day retention. This is how the module token never coexists with a checkout.
 
 **Job 2 — `update`.** Checks out, installs the sanitised SDK cache into `GOMODCACHE`, runs
 `go test ./...`, then runs the updater **twice** and requires the two results to be byte-identical
 (`cmp`), and requires `jq -e . manifest.json` to parse. If `manifest.json` changed, it commits as
 `github-actions[bot]` with the message `chore: update catalog for <repo>@<tag>`, does
-`git pull --rebase` and pushes `HEAD:main` using `VONDEL_CATALOG_PUSH_TOKEN` through a second
+`git pull --rebase` and pushes `HEAD:main` using `BLOEM_CATALOG_PUSH_TOKEN` through a second
 temporary askpass script. If nothing changed, it exits cleanly.
 
 > **The identity test pins exact versions.** `catalog/identity_test.go` asserts each plugin's
@@ -176,7 +181,7 @@ temporary askpass script. If nothing changed, it exits cleanly.
 
 1. Confirm the plugin repository and tag meet the release contract (User Guide, section 3).
 2. Either let the plugin repository's own automation send `plugin_release_published`, or open
-   **Actions → Update Catalog → Run workflow** and enter `repo` (`Vondel-Media/vondel-plugin-tmdb`)
+   **Actions → Update Catalog → Run workflow** and enter `repo` (`Bloem-Studios/bloem-plugin-tmdb`)
    and `tag` (`v1.2.24`).
 3. Watch the run. Any failure in "Update catalog manifest" is the updater refusing the release;
    the message names the check (Part 3.1 lists them all).
@@ -197,16 +202,16 @@ The supported way to serve it is the **static staging tree** produced by the mat
 (`docs/private-staging.md`):
 
 ```sh
-GITHUB_TOKEN="$VONDEL_CATALOG_SOURCE_TOKEN" \
+GITHUB_TOKEN="$BLOEM_CATALOG_SOURCE_TOKEN" \
   GOWORK=off go run ./cmd/materialize-private-catalog \
   -catalog manifest.json \
-  -output /srv/vondel-plugin-staging
+  -output /srv/bloem-plugin-staging
 ```
 
 This produces:
 
 ```
-/srv/vondel-plugin-staging/
+/srv/bloem-plugin-staging/
   catalog.json
   plugins/<plugin id>/<version>/checksums.txt
   plugins/<plugin id>/<version>/plugin-darwin-arm64
@@ -220,7 +225,7 @@ repository URL it was given. Serve the directory with any static file server on 
 your servers can reach; the documented example is:
 
 ```sh
-cd /srv/vondel-plugin-staging
+cd /srv/bloem-plugin-staging
 python3 -m http.server 8080 --bind 127.0.0.1
 ```
 
@@ -246,7 +251,7 @@ GOWORK=off go run ./cmd/update-catalog -repo <owner/name> -tag <vX.Y.Z> [-manife
 
 | Flag | Default | Meaning |
 |---|---|---|
-| `-repo` | (required) | GitHub repository in `owner/name` form. Must be in the literal allowlist of six. |
+| `-repo` | (required) | GitHub repository in `owner/name` form. Must be in the literal allowlist of eleven. |
 | `-tag` | (required) | Release tag. Must be exactly `v` + the manifest's `version`. |
 | `-manifest` | `manifest.json` | Path of the catalog file to read and rewrite. An empty file is treated as an empty catalog. |
 
@@ -298,7 +303,7 @@ GITHUB_TOKEN=… GOWORK=off go run ./cmd/materialize-private-catalog [-catalog m
 |---|---|
 | `GITHUB_TOKEN` | **Required** (`GITHUB_TOKEN is required`). Used for every API read; stripped on redirects; scanned for in the output. |
 
-**What it verifies.** `catalog must contain exactly the six retained plugins`; per package:
+**What it verifies.** `catalog must contain exactly the eleven retained plugins`; per package:
 repository URL must be `https://github.com/<owner>/<name>` with no query, fragment or user info;
 repository must be retained and its plugin id must match; no duplicate repositories; version must
 match `^\d+\.\d+\.\d+$` (no prerelease suffixes); API version `v1`; at least one capability;
@@ -326,11 +331,11 @@ The HTTP client timeout is two minutes per request.
         "presentation": {
           "display_name": "…", "summary": "…", "description_markdown": "…", "setup_markdown": "…",
           "homepage_url": "…", "source_url": "…", "support_url": "…", "changelog_url": "…",
-          "publisher_name": "Vondel", "publisher_url": "https://github.com/Vondel-Media",
+          "publisher_name": "Bloem Studios", "publisher_url": "https://github.com/Bloem-Studios",
           "license_spdx": "AGPL-3.0-only"
         }
       },
-      "repo_url": "https://github.com/Vondel-Media/vondel-plugin-tmdb",
+      "repo_url": "https://github.com/Bloem-Studios/bloem-plugin-tmdb",
       "checksums_url": "https://github.com/…/releases/download/v1.2.23/checksums.txt",
       "binaries": {
         "darwin/arm64": {"url": "…/plugin-darwin-arm64", "checksum": "<sha256>"},
@@ -353,7 +358,7 @@ catalog tests also assert that no package serialises with `Silo-Server/`, `api.g
 - **One version per plugin.** `UpsertPackage` replaces; the catalog never lists two versions of the
   same plugin id. Older versions live on only as GitHub releases in the plugin repository and in
   git history here.
-- **Exactly six plugins.** Adding a seventh requires code changes in three places (both allowlists
+- **Exactly eleven plugins.** Adding a twelfth requires code changes in three places (both allowlists
   and the identity test); the materialiser refuses a catalog of any other size.
 - **Static trees keep only what the catalog says.** Re-running the materialiser replaces the whole
   output directory; a previous version's binaries are deleted with it. Keep your own archive if you
@@ -366,7 +371,7 @@ catalog tests also assert that no package serialises with `Silo-Server/`, `api.g
 
 ### 4.1 Local development
 
-Go 1.26. Because the SDK is private, set `GOPRIVATE=github.com/Vondel-Media/*` and have git
+Go 1.26. Because the SDK is private, set `GOPRIVATE=github.com/Bloem-Studios/*` and have git
 credentials for that organisation; run everything with `GOWORK=off` so a parent workspace cannot
 pull in a `replace` (CI forbids `replace` directives in this repository, and the identity test
 checks `go.mod` for them). `go test ./...` runs the catalog unit tests, the workflow/documentation
@@ -377,8 +382,8 @@ needed.
 
 1. Updater run succeeded and the `manifest.json` diff is what you expect.
 2. `catalog/identity_test.go` `exactVersions` updated; CI green.
-3. If the SDK version changes: update `go.mod`, the identity test's `v0.13.3` assertion, and the
-   three literal `v0.13.3` occurrences in `update-catalog.yml` (module download, artifact name,
+3. If the SDK version changes: update `go.mod`, the identity test's `v0.16.1` assertion, and the
+   three literal `v0.16.1` occurrences in `update-catalog.yml` (module download, artifact name,
    tar name).
 4. Static tree re-materialised where one is served.
 
@@ -392,8 +397,8 @@ re-materialise.
 
 | Symptom | Cause | Fix |
 |---|---|---|
-| `repository "…" is not allowed` | Repo not in the six-entry allowlist. | Only retained repositories can publish; adding one is a code change (3.4). |
-| `GitHub API request returned status 404` on fetch release | Tag does not exist, is a draft, or the token cannot see the repository. | Check the tag and that `VONDEL_CATALOG_SOURCE_TOKEN` has read access. |
+| `repository "…" is not allowed` | Repo not in the eleven-entry allowlist. | Only retained repositories can publish; adding one is a code change (3.4). |
+| `GitHub API request returned status 404` on fetch release | Tag does not exist, is a draft, or the token cannot see the repository. | Check the tag and that `BLOEM_CATALOG_SOURCE_TOKEN` has read access. |
 | `source manifest request returned status 404` | No `manifest.json` at the repository root at that tag. | The plugin must commit its manifest at the tag. |
 | `release must contain exactly four assets` | Extra, missing or differently named assets. | Publish exactly `checksums.txt` + the three `plugin-*` binaries. |
 | `checksums.txt must contain exactly three lines` / `binary checksum mismatch` | Checksums file malformed or stale. | Regenerate it from the final binaries with `sha256sum plugin-*`. |
@@ -402,10 +407,10 @@ re-materialise.
 | `native manifest identity or checksum does not match` | The binary's self-reported manifest differs from the committed one, or the binary was rebuilt after `checksums.txt`. | Rebuild, regenerate checksums, re-upload, retag if needed. |
 | `source manifest presentation: …` | A presentation field failed the SDK's `ValidateCatalogPresentation` (typically a URL not under the repository, or a missing field). | Fill every presentation field; source/homepage should be the repository URL. |
 | Update workflow: second run differs (`cmp` fails) | Non-deterministic output — should never happen; indicates a tooling bug. | Investigate before merging anything. |
-| Update workflow: push rejected | `VONDEL_CATALOG_PUSH_TOKEN` expired or lacks push. | Rotate the secret. |
+| Update workflow: push rejected | `BLOEM_CATALOG_PUSH_TOKEN` expired or lacks push. | Rotate the secret. |
 | CI: `sanitized SDK cache contains credential material` | The module token leaked into the downloaded cache. | Do not proceed; inspect the SDK module for embedded URLs. |
 | CI: identity test fails on version | A catalog update landed without bumping `exactVersions`. | Update the test (4.2). |
-| Materialiser: `catalog must contain exactly the six retained plugins` | Catalog edited by hand or a plugin removed. | Restore the six entries. |
+| Materialiser: `catalog must contain exactly the eleven retained plugins` | Catalog edited by hand or a plugin removed. | Restore the retained entries. |
 | Materialiser: `credential canary detected in staging output` | The token string appeared in a downloaded file. | Stop; rotate the token; examine the offending release. |
 | Materialiser: `output must be a real directory path` | `-output` is a symlink or a file. | Point at a real directory (existing or not). |
 | Bloem Server shows nothing from the repository | The repository URL is unreachable from the server, returns non-200, or the JSON has no entry for the server's OS/arch and API `v1`. | Check the server's log line `skipping broken plugin repository`; verify the URL serves `catalog.json`. |
@@ -415,21 +420,21 @@ re-materialise.
 
 ## Glossary
 
-- **Allowlist** — the literal list of six source repositories the tooling accepts.
+- **Allowlist** — the literal list of eleven source repositories the tooling accepts.
 - **Asset** — a file attached to a GitHub release.
 - **Catalog / repository index** — the JSON document a Bloem Server fetches to list installable plugins.
 - **Materialise** — download and verify every retained release into a static, servable directory.
 - **Package** — one catalog entry: manifest plus URLs and checksums.
 - **Presentation** — the human-facing block of a plugin manifest (names, summaries, links, licence).
 - **Repository dispatch** — a GitHub event another repository sends to trigger the update workflow.
-- **Retained plugin** — one of the six the catalog is allowed to contain.
+- **Retained plugin** — one of the eleven the catalog is allowed to contain.
 - **Source manifest** — the plugin's own `manifest.json` at the release tag.
 - **Static staging tree** — the materialiser's output directory.
 
 ## Source References
 
 - `README.md`, `docs/private-staging.md` — purpose, secrets, static hosting recipe
-- `manifest.json` — the catalog and its six entries
+- `manifest.json` — the catalog and its eleven entries
 - `catalog/catalog.go` — types, `BuildPackageFromRelease`, `UpsertPackage`
 - `catalog/identity_test.go`, `catalog/automation_test.go`, `catalog/catalog_test.go` — pinned versions, allowlisted repositories, workflow and documentation invariants
 - `cmd/update-catalog/main.go` — flags, `GITHUB_TOKEN`, every verification step and message

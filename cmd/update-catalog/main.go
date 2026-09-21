@@ -19,7 +19,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/Vondel-Media/vondel-plugins/catalog"
+	"github.com/Bloem-Studios/bloem-plugins/catalog"
 )
 
 const githubAPIVersion = "2022-11-28"
@@ -29,12 +29,17 @@ var releaseBinaryNames = []string{"plugin-darwin-arm64", "plugin-linux-amd64", "
 var sha256Pattern = regexp.MustCompile(`^[0-9a-fA-F]{64}$`)
 
 var allowedRepositories = map[string]struct{}{
-	"Vondel-Media/vondel-plugin-tmdb":               {},
-	"Vondel-Media/vondel-plugin-tvdb":               {},
-	"Vondel-Media/vondel-plugin-ebook-metadata":     {},
-	"Vondel-Media/vondel-plugin-audiobook-metadata": {},
-	"Vondel-Media/vondel-plugin-manga-metadata":     {},
-	"Vondel-Media/vondel-plugin-autoscan-arr":       {},
+	"Bloem-Studios/bloem-plugin-tmdb":                 {},
+	"Bloem-Studios/bloem-plugin-tvdb":                 {},
+	"Bloem-Studios/bloem-plugin-ebook-metadata":       {},
+	"Bloem-Studios/bloem-plugin-audiobook-metadata":   {},
+	"Bloem-Studios/bloem-plugin-manga-metadata":       {},
+	"Bloem-Studios/bloem-plugin-autoscan-arr":         {},
+	"Bloem-Studios/bloem-plugin-theintrodb":           {},
+	"Bloem-Studios/bloem-plugin-sportarr-metadata":    {},
+	"Bloem-Studios/bloem-plugin-watchprovider-floppy": {},
+	"Bloem-Studios/bloem-plugin-requests-arr":         {},
+	"Bloem-Studios/bloem-plugin-requests-seerr":       {},
 }
 
 func main() {
@@ -162,7 +167,7 @@ func downloadAsset(ctx context.Context, client *http.Client, token, apiOrigin, r
 		return nil, fmt.Errorf("build asset request")
 	}
 	req.Header.Set("Accept", "application/octet-stream")
-	req.Header.Set("User-Agent", "vondel-plugins-catalog-updater")
+	req.Header.Set("User-Agent", "bloem-plugins-catalog-updater")
 	req.Header.Set("X-GitHub-Api-Version", githubAPIVersion)
 	if token != "" {
 		req.Header.Set("Authorization", "Bearer "+token)
@@ -284,7 +289,7 @@ func validateSourceReleaseIdentity(source *catalog.SourceManifest, tag string) e
 }
 
 func validateNativeBinary(source *catalog.SourceManifest, binary []byte) error {
-	dir, err := os.MkdirTemp("", "vondel-native-manifest-")
+	dir, err := os.MkdirTemp("", "bloem-native-manifest-")
 	if err != nil {
 		return fmt.Errorf("create native validation directory")
 	}
@@ -332,7 +337,7 @@ func fetchSourceManifest(ctx context.Context, client *http.Client, token, repo, 
 		return nil, fmt.Errorf("build source manifest request")
 	}
 	req.Header.Set("Accept", "application/vnd.github.raw+json")
-	req.Header.Set("User-Agent", "vondel-plugins-catalog-updater")
+	req.Header.Set("User-Agent", "bloem-plugins-catalog-updater")
 	req.Header.Set("X-GitHub-Api-Version", githubAPIVersion)
 	if token != "" {
 		req.Header.Set("Authorization", "Bearer "+token)
@@ -364,7 +369,7 @@ func githubJSON(ctx context.Context, client *http.Client, token, url string, des
 		return fmt.Errorf("build request: %w", err)
 	}
 	req.Header.Set("Accept", "application/vnd.github+json")
-	req.Header.Set("User-Agent", "vondel-plugins-catalog-updater")
+	req.Header.Set("User-Agent", "bloem-plugins-catalog-updater")
 	req.Header.Set("X-GitHub-Api-Version", githubAPIVersion)
 	if token != "" {
 		req.Header.Set("Authorization", "Bearer "+token)

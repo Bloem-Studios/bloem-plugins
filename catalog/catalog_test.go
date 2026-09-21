@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	pluginv1 "github.com/Vondel-Media/vondel-plugin-sdk/pkg/pluginproto/silo/plugin/v1"
+	pluginv1 "github.com/Bloem-Studios/bloem-plugin-sdk/pkg/pluginproto/silo/plugin/v1"
 )
 
 func TestBuildPackageFromRelease_MinimalManifestAndAssets(t *testing.T) {
@@ -224,7 +224,7 @@ func TestBuildPackageFromReleaseRejectsUnpublishedReleaseStates(t *testing.T) {
 		PluginId:       "silo.tmdb",
 		Version:        "1.0.0",
 		SiloApiVersion: "v1",
-		Presentation:   catalogTestPresentation("https://github.com/Vondel-Media/vondel-plugin-tmdb"),
+		Presentation:   catalogTestPresentation("https://github.com/Bloem-Studios/bloem-plugin-tmdb"),
 		SupportedPlatforms: []*pluginv1.SupportedPlatform{
 			{Os: "linux", Arch: "amd64"},
 		},
@@ -247,7 +247,7 @@ func TestBuildPackageFromReleaseRejectsUnpublishedReleaseStates(t *testing.T) {
 		{name: "prerelease", release: Release{TagName: "v1.0.0", PublishedAt: "2026-08-12T10:00:00Z", Prerelease: true, Assets: assets}, wantErr: "prerelease"},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
-			_, err := BuildPackageFromRelease("Vondel-Media/vondel-plugin-tmdb", source, tc.release)
+			_, err := BuildPackageFromRelease("Bloem-Studios/bloem-plugin-tmdb", source, tc.release)
 			if err == nil {
 				t.Fatalf("BuildPackageFromRelease() accepted %s release", tc.name)
 			}
@@ -263,7 +263,7 @@ func TestBuildPackageFromReleaseRejectsInvalidPlatformAssets(t *testing.T) {
 		PluginId:       "silo.tmdb",
 		Version:        "1.0.0",
 		SiloApiVersion: "v1",
-		Presentation:   catalogTestPresentation("https://github.com/Vondel-Media/vondel-plugin-tmdb"),
+		Presentation:   catalogTestPresentation("https://github.com/Bloem-Studios/bloem-plugin-tmdb"),
 		SupportedPlatforms: []*pluginv1.SupportedPlatform{
 			{Os: "linux", Arch: "amd64"},
 			{Os: "linux", Arch: "arm64"},
@@ -342,7 +342,7 @@ func TestBuildPackageFromReleaseRejectsInvalidPlatformAssets(t *testing.T) {
 				PublishedAt: "2026-08-12T10:00:00Z",
 				Assets:      tc.assets,
 			}
-			_, err := BuildPackageFromRelease("Vondel-Media/vondel-plugin-tmdb", source, release)
+			_, err := BuildPackageFromRelease("Bloem-Studios/bloem-plugin-tmdb", source, release)
 			if err == nil {
 				t.Fatalf("BuildPackageFromRelease() accepted %s", tc.name)
 			}
