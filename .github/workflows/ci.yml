@@ -1,80 +1,24 @@
 name: CI
-
 on:
   pull_request:
   push:
-    branches:
-      - main
-
+    branches: [main]
 permissions:
   contents: read
-
 jobs:
   verify:
     runs-on: ubuntu-latest
-    env:
-      GOPRIVATE: github.com/Bloem-Studios/*
-      GONOSUMDB: github.com/Bloem-Studios/*
     steps:
       - uses: actions/checkout@v6
         with:
           persist-credentials: false
-
       - uses: actions/setup-go@v6
         with:
-          go-version: "1.26"
+          go-version-file: go.mod
           cache: false
-
-      - name: Install temporary private module credentials
-        run: |
-          askpass="${RUNNER_TEMP}/bloem-module-askpass.sh"
-          printf '%s\n' '#!/bin/sh' \
-            'case "$1" in' \
-            '  *Username*) printf "%s\\n" "x-access-token" ;;' \
-            '  *Password*) printf "%s\\n" "$BLOEM_MODULES_TOKEN" ;;' \
-            'esac' > "${askpass}"
-          chmod 0700 "${askpass}"
-
-      - name: Clear module cache
-        run: go clean -modcache
-
       - name: Test
-        env:
-          GIT_ASKPASS: ${{ runner.temp }}/bloem-module-askpass.sh
-          GIT_TERMINAL_PROMPT: "0"
-          BLOEM_MODULES_TOKEN: ${{ secrets.BLOEM_MODULES_TOKEN }}
-        run: GOWORK=off go test ./...
-
+        run: GOWORK=off go test -race ./...
       - name: Vet
-        env:
-          GIT_ASKPASS: ${{ runner.temp }}/bloem-module-askpass.sh
-          GIT_TERMINAL_PROMPT: "0"
-          BLOEM_MODULES_TOKEN: ${{ secrets.BLOEM_MODULES_TOKEN }}
         run: GOWORK=off go vet ./...
-
       - name: Build
-        env:
-          GIT_ASKPASS: ${{ runner.temp }}/bloem-module-askpass.sh
-          GIT_TERMINAL_PROMPT: "0"
-          BLOEM_MODULES_TOKEN: ${{ secrets.BLOEM_MODULES_TOKEN }}
         run: GOWORK=off go build ./...
-
-      - name: Guard private-only source
-        run: |
-          if grep -R -nE '(^|[[:space:]])replace([[:space:]]|$)' --include='go.mod' .; then
-            exit 1
-          fi
-          dispatch_token='SILO''_.*DISPATCH'
-          silo_owner='Silo''-Server'
-          if grep -R -nE "${dispatch_token}|${silo_owner}/silo-plugins/(dispatches|actions)" --include='*.yml' --include='*.yaml' .github; then
-            exit 1
-          fi
-          visibility_action='gh repo edit .*--visi''bility'
-          publication_action='npm publi''sh|docker pu''sh|publish-gh-pa''ges'
-          if grep -R -nE "${visibility_action}|${publication_action}" --include='*.yml' --include='*.yaml' .github; then
-            exit 1
-          fi
-
-      - name: Remove private module credentials
-        if: always()
-        run: rm -f "${RUNNER_TEMP}/bloem-module-askpass.sh"

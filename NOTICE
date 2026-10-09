@@ -14,3 +14,9 @@ private-only continuous integration and update automation.
 
 Bloem Media is independent from Silo. This fork is not affiliated with,
 endorsed by, or sponsored by the Silo project or its contributors.
+
+2026-10-09 catalog scope changed to public custom-plugin metadata. Shared Silo
+plugins are consumed from Silo's own catalog. The historical private staging
+materializer and duplicate release entries have been removed. Catalog tooling
+uses the public Bloem SDK v0.26.0. The imported revision above remains provenance,
+not a claim about current catalog contents.

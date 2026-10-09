@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "plugins": [
+    {
+      "plugin_id": "bloem.pastime",
+      "display_name": "Pastime",
+      "repository_url": "https://github.com/Bloem-Studios/bloem-plugin-pastime",
+      "source_version": "0.1.0",
+      "sdk_version": "0.26.0",
+      "installation_mode": "native",
+      "status": "integration_pending",
+      "summary": "Server-managed playback tracking for independent household profiles.",
+      "requirements": [
+        "Bloem managed-tracking host extension and explicit enrollment grants.",
+        "Transactional account/profile lifecycle outbox and encrypted connection enrollment.",
+        "Complete Pastime native ingestion, snapshot and archival endpoints.",
+        "End-to-end acceptance before production activation."
+      ]
+    },
+    {
+      "plugin_id": "bloem.storage.bookwarehouse",
+      "display_name": "Bookwarehouse",
+      "repository_url": "https://github.com/Bloem-Studios/bloem-plugin-bookwarehouse",
+      "source_version": "0.2.2",
+      "sdk_version": "0.26.0",
+      "installation_mode": "native",
+      "status": "requires_native_approval",
+      "summary": "Native EPUB/PDF storage with a bounded, verified download cache.",
+      "requirements": [
+        "Bloem native StorageProvider host support.",
+        "Operator approval of the exact packaged plugin version and binary SHA-256.",
+        "Backend Bookwarehouse connection configuration and acceptance checks."
+      ]
+    }
+  ]
+}

@@ -3,7 +3,7 @@ module github.com/Bloem-Studios/bloem-plugins
 go 1.26.0
 
 require (
-	github.com/Bloem-Studios/bloem-plugin-sdk v0.16.1
+	github.com/Bloem-Studios/bloem-plugin-sdk v0.26.0
 	google.golang.org/protobuf v1.36.11
 )
 

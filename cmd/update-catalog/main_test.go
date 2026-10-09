@@ -16,46 +16,18 @@ import (
 	"google.golang.org/protobuf/proto"
 )
 
-func TestValidateRepositoryUsesLiteralBloemAllowlist(t *testing.T) {
-	want := map[string]struct{}{
-		"Bloem-Studios/bloem-plugin-tmdb":                 {},
-		"Bloem-Studios/bloem-plugin-tvdb":                 {},
-		"Bloem-Studios/bloem-plugin-ebook-metadata":       {},
-		"Bloem-Studios/bloem-plugin-audiobook-metadata":   {},
-		"Bloem-Studios/bloem-plugin-manga-metadata":       {},
-		"Bloem-Studios/bloem-plugin-autoscan-arr":         {},
-		"Bloem-Studios/bloem-plugin-theintrodb":           {},
-		"Bloem-Studios/bloem-plugin-sportarr-metadata":    {},
-		"Bloem-Studios/bloem-plugin-watchprovider-floppy": {},
-		"Bloem-Studios/bloem-plugin-requests-arr":         {},
-		"Bloem-Studios/bloem-plugin-requests-seerr":       {},
-	}
-	if len(allowedRepositories) != len(want) {
-		t.Fatalf("allowedRepositories has %d entries, want exactly %d: %v", len(allowedRepositories), len(want), allowedRepositories)
-	}
-	for repo := range want {
-		if _, ok := allowedRepositories[repo]; !ok {
-			t.Errorf("allowedRepositories is missing %q", repo)
-		}
-		if err := validateRepository(repo); err != nil {
-			t.Errorf("validateRepository(%q) error = %v", repo, err)
-		}
-	}
-	for repo := range allowedRepositories {
-		if _, ok := want[repo]; !ok {
-			t.Errorf("allowedRepositories has unexpected entry %q", repo)
-		}
-	}
-
+func TestDuplicateAndUnreadyRepositoriesCannotReenterCatalog(t *testing.T) {
 	for _, repo := range []string{
-		"Silo-Server/silo-plugin-metadata-tmdb",
-		"Bloem-Studios/bloem-plugin-metadb",
-		"Bloem-Studios/bloem-plugin-unrelated",
-		"Bloem-Studios/bloem-plugin-tmdb/../../attacker",
-		"",
+		"Bloem-Studios/bloem-plugin-tmdb", "Bloem-Studios/bloem-plugin-tvdb",
+		"Bloem-Studios/bloem-plugin-ebook-metadata", "Bloem-Studios/bloem-plugin-audiobook-metadata",
+		"Bloem-Studios/bloem-plugin-manga-metadata", "Bloem-Studios/bloem-plugin-autoscan-arr",
+		"Bloem-Studios/bloem-plugin-theintrodb", "Bloem-Studios/bloem-plugin-sportarr-metadata",
+		"Bloem-Studios/bloem-plugin-watchprovider-floppy", "Bloem-Studios/bloem-plugin-requests-arr",
+		"Bloem-Studios/bloem-plugin-requests-seerr", "Bloem-Studios/bloem-plugin-bookwarehouse",
+		"Bloem-Studios/bloem-plugin-pastime", "attacker/repo", "",
 	} {
 		if err := validateRepository(repo); err == nil {
-			t.Errorf("validateRepository(%q) accepted a repository outside the allowlist", repo)
+			t.Errorf("repository %q must not enter the generic installer feed", repo)
 		}
 	}
 }
