@@ -3,15 +3,14 @@
 Keep this catalog limited to custom Bloem plugins. Shared Silo releases belong
 in Silo's existing catalog and should be consumed directly.
 
-Maintain `plugins.json` as the custom source inventory: stable plugin ID, public
-repository, source version, SDK version, installation mode, status and prerequisites.
-Keep it separate from the installable `manifest.json` feed. Neither Bookwarehouse
-nor Pastime currently has an approved generic-installer release.
+Maintain `plugins.json` as the custom source inventory: stable plugin ID, private source
+repository, public binary release, source version, SDK version, installation mode, status and prerequisites.
+Keep it separate from the installable `manifest.json` feed. Pastime 0.1.2 is listed in the ordinary feed. Bookwarehouse 0.2.2 uses the separate native storage admission path.
 
 Bookwarehouse uses native StorageProvider admission with an approval that pins
 the exact artifact version and SHA-256. Pastime requires the matching managed-tracking
 host extension, enrollment grants and completed native tracker endpoints. Publishing
-source is not production activation.
+binaries is not production activation.
 
 For a future generic plugin, review its host compatibility, presentation,
 platforms and artifact packaging first. Update the updater's repository allowlist
@@ -32,3 +31,8 @@ still be based on older upstream code; compare source and behavior when deciding
 whether to adopt a release. Removing a fork does not migrate an existing installed
 plugin, its configuration, its database repository association or its binary.
 Verify those separately during an actual server rollout.
+
+Official custom binary releases are hosted in this public catalog repository.
+Plugin source repositories remain private. Releases contain proprietary terms,
+third-party notices, platform executables and verified SHA-256 checksums.
+The ordinary updater remains disabled for private source repositories.

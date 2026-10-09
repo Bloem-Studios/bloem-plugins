@@ -31,7 +31,7 @@ func TestInventoryContainsOnlyCustomNativePluginsWithExplicitPrerequisites(t *te
 	}
 	expected := map[string]struct{ repo, version, status string }{
 		"bloem.storage.bookwarehouse": {"bloem-plugin-bookwarehouse", "0.2.2", "requires_native_approval"},
-		"bloem.pastime":               {"bloem-plugin-pastime", "0.1.0", "integration_pending"},
+		"bloem.pastime":               {"bloem-plugin-pastime", "0.1.2", "integration_pending"},
 	}
 	for _, p := range inventory.Plugins {
 		want, ok := expected[p.ID]

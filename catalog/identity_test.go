@@ -34,7 +34,7 @@ func TestCustomCatalogDoesNotDuplicateSiloOrAdvertiseUnreadyNativePlugins(t *tes
 	if err := json.Unmarshal(data, &index); err != nil {
 		t.Fatal(err)
 	}
-	if index.Plugins == nil || len(index.Plugins) != 0 {
-		t.Fatalf("generic catalog must contain a non-null empty plugins list until a reviewed custom release exists")
+	if len(index.Plugins) != 1 || index.Plugins[0].Manifest.GetPluginId() != "bloem.pastime" {
+		t.Fatalf("generic catalog must advertise only the supported Pastime plugin; native storage remains outside the ordinary installer")
 	}
 }

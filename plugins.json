@@ -5,7 +5,7 @@
       "plugin_id": "bloem.pastime",
       "display_name": "Pastime",
       "repository_url": "https://github.com/Bloem-Studios/bloem-plugin-pastime",
-      "source_version": "0.1.0",
+      "source_version": "0.1.2",
       "sdk_version": "0.26.0",
       "installation_mode": "native",
       "status": "integration_pending",
@@ -16,7 +16,24 @@
         "Complete Pastime native ingestion, snapshot and archival endpoints.",
         "End-to-end acceptance before production activation."
       ],
-      "license_spdx": "AGPL-3.0-only"
+      "license_spdx": "LicenseRef-Bloem-Proprietary",
+      "source_visibility": "private",
+      "release_url": "https://github.com/Bloem-Studios/bloem-plugins/releases/tag/pastime-v0.1.2",
+      "checksums_url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/pastime-v0.1.2/checksums.txt",
+      "binaries": {
+        "linux/amd64": {
+          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/pastime-v0.1.2/plugin-linux-amd64",
+          "checksum": "cb6658ff79c57db25ffc6d8c838a6c029afcdbfec72d315181727f504bcb3633"
+        },
+        "linux/arm64": {
+          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/pastime-v0.1.2/plugin-linux-arm64",
+          "checksum": "04a144a7979a8a19b4da02e062884f73d42f514d25f378772fecdd0f0be1a496"
+        },
+        "darwin/arm64": {
+          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/pastime-v0.1.2/plugin-darwin-arm64",
+          "checksum": "d019d293772eb3a3c35b63fc7ff13b1092cb2e143ce88ffcfb3dff7cab578451"
+        }
+      }
     },
     {
       "plugin_id": "bloem.storage.bookwarehouse",
@@ -32,7 +49,24 @@
         "Operator approval of the exact packaged plugin version and binary SHA-256.",
         "Backend Bookwarehouse connection configuration and acceptance checks."
       ],
-      "license_spdx": "AGPL-3.0-only"
+      "license_spdx": "LicenseRef-Bloem-Proprietary",
+      "source_visibility": "private",
+      "release_url": "https://github.com/Bloem-Studios/bloem-plugins/releases/tag/bookwarehouse-v0.2.2",
+      "checksums_url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/bookwarehouse-v0.2.2/checksums.txt",
+      "binaries": {
+        "linux/amd64": {
+          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/bookwarehouse-v0.2.2/plugin-linux-amd64",
+          "checksum": "5273b88674214896f711fa60df25f48ab65d12a11ea38ca7f74af13eea72be46"
+        },
+        "linux/arm64": {
+          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/bookwarehouse-v0.2.2/plugin-linux-arm64",
+          "checksum": "0a72a0c22a74182913e3f8d3ee38961132ffdbbf7f5ba4155e24bf39cc767e71"
+        },
+        "darwin/arm64": {
+          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/bookwarehouse-v0.2.2/plugin-darwin-arm64",
+          "checksum": "b00b55fb3fe3bd8d804e9a23a02f9e738c161b742b280785b65fca2d91cbf47d"
+        }
+      }
     }
   ]
 }
