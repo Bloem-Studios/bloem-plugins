@@ -71,5 +71,5 @@ See [the operator guide](docs/admin-guide.md) and
 ## License and provenance
 
 The catalog retains its Apache-2.0 license. See [LICENSE](LICENSE) and
-[NOTICE](NOTICE). Each plugin's own license applies to its source. Bloem is
+[NOTICE](NOTICE). Bookwarehouse and Pastime source use AGPL-3.0-only. The public SDK retains Apache-2.0. Bloem is
 independent of Silo; retaining Silo protocol identifiers preserves compatibility.
