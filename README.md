@@ -21,6 +21,8 @@ https://raw.githubusercontent.com/Bloem-Studios/bloem-plugins/main/manifest.json
 
 Pastime installation alone does not enroll users. The matching host extension, backend-only provisioning configuration and explicit account/profile grants are required. Bookwarehouse requires native host approval matching the downloaded executable’s complete SHA-256 and manifest. The approval file in its release is an example, not an active grant.
 
+See [Bookwarehouse installation](docs/bookwarehouse-installation.md) for native approval and cover cache setup.
+
 ## Development
 
 The catalog code remains Apache-2.0. The proprietary license applies to separately packaged custom plugin binaries; third-party components retain their own licenses. Previously published open-source versions retain their licenses.
