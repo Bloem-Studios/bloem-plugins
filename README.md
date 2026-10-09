@@ -1,6 +1,6 @@
 # Bloem Plugin Catalog
 
-Public metadata and future binary releases for plugins maintained by [Bloem Studios](https://github.com/Bloem-Studios).
+Public metadata for plugins maintained by [Bloem Studios](https://github.com/Bloem-Studios).
 Use [Silo's maintained catalog](https://github.com/Silo-Server/silo-plugins) for
 shared metadata, autoscan, markers, request routing and Floppy plugins. Bloem
 already uses that catalog by default; this repository does not duplicate its
@@ -42,7 +42,7 @@ currently empty: neither custom plugin is approved for that path. A reviewed
 change must add a supported repository before release automation can accept it.
 Old duplicate Silo repositories cannot re-enter this catalog through a dispatch.
 
-Implementation repositories are private. Official binary releases and metadata are published from this public catalog repository; source repository URLs in the inventory require authorized access. No custom binary release has been published here yet. A published,
+Source repositories own their implementations and release artifacts. A published,
 non-draft, non-prerelease ordinary plugin release must contain `checksums.txt`
 and exactly three binaries: `plugin-darwin-arm64`, `plugin-linux-amd64`, and
 `plugin-linux-arm64`. The updater runs the matching-platform binary's `manifest`
@@ -71,5 +71,5 @@ See [the operator guide](docs/admin-guide.md) and
 ## License and provenance
 
 The catalog retains its Apache-2.0 license. See [LICENSE](LICENSE) and
-[NOTICE](NOTICE). Bookwarehouse and Pastime source repositories are private. Future official binaries use proprietary distribution terms (`LicenseRef-Bloem-Proprietary`); accompanying notices preserve dependency licenses. Earlier publicly licensed revisions retain their licenses. The public SDK retains Apache-2.0. Bloem is
+[NOTICE](NOTICE). Bookwarehouse and Pastime source use AGPL-3.0-only. The public SDK retains Apache-2.0. Bloem is
 independent of Silo; retaining Silo protocol identifiers preserves compatibility.

@@ -16,8 +16,7 @@
         "Complete Pastime native ingestion, snapshot and archival endpoints.",
         "End-to-end acceptance before production activation."
       ],
-      "license_spdx": "LicenseRef-Bloem-Proprietary",
-      "source_visibility": "private"
+      "license_spdx": "AGPL-3.0-only"
     },
     {
       "plugin_id": "bloem.storage.bookwarehouse",
@@ -33,8 +32,7 @@
         "Operator approval of the exact packaged plugin version and binary SHA-256.",
         "Backend Bookwarehouse connection configuration and acceptance checks."
       ],
-      "license_spdx": "LicenseRef-Bloem-Proprietary",
-      "source_visibility": "private"
+      "license_spdx": "AGPL-3.0-only"
     }
   ]
 }

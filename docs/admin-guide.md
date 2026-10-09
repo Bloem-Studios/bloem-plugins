@@ -32,14 +32,3 @@ still be based on older upstream code; compare source and behavior when deciding
 whether to adopt a release. Removing a fork does not migrate an existing installed
 plugin, its configuration, its database repository association or its binary.
 Verify those separately during an actual server rollout.
-
-## Binary distribution
-
-Bookwarehouse and Pastime implementation repositories are private. Publish future
-reviewed binaries from this public catalog repository, with exact checksums,
-manifest/version identity, proprietary binary terms and all required dependency
-license/source notices. The inventory uses `LicenseRef-Bloem-Proprietary`; it does
-not promise available release assets. Earlier Apache/AGPL source revisions retain
-their published terms. Bookwarehouse native approval and Pastime integration
-acceptance remain separate release gates. Do not publish private source, credentials
-or unfinished native integrations as install-ready releases.
