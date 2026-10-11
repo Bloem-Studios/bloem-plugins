@@ -34,7 +34,7 @@ func TestCustomCatalogDoesNotDuplicateSiloOrAdvertiseUnreadyNativePlugins(t *tes
 	if err := json.Unmarshal(data, &index); err != nil {
 		t.Fatal(err)
 	}
-	if len(index.Plugins) != 1 || index.Plugins[0].Manifest.GetPluginId() != "bloem.pastime" {
-		t.Fatalf("generic catalog must advertise only the supported Pastime plugin; native storage remains outside the ordinary installer")
+	if len(index.Plugins) != 2 || index.Plugins[0].Manifest.GetPluginId() != "bloem.pastime" || index.Plugins[1].Manifest.GetPluginId() != "bloem.requests.bookwarehouse" {
+		t.Fatalf("generic catalog must advertise only the supported Pastime and Bookwarehouse request plugins; native storage remains outside the ordinary installer")
 	}
 }

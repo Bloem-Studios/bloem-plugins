@@ -6,12 +6,16 @@ Public metadata and official proprietary binary releases from Bloem Studios. Cus
 
 | Plugin | Version | Install path |
 | --- | --- | --- |
-| [Pastime](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/pastime-v0.1.2) | 0.1.2 | Plugin catalog; explicit managed-tracking grant and backend setup required |
-| [Bookwarehouse](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/bookwarehouse-v0.2.2) | 0.2.2 | Native storage installer; exact-artifact approval required |
+| [Pastime](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/pastime-v0.1.3) | 0.1.3 | Plugin catalog; explicit managed-tracking grant and backend setup required |
+| [Bookwarehouse](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/bookwarehouse-v0.2.3) | 0.2.3 | Native storage installer; exact-artifact approval required |
+| [S3 storage](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/s3-v0.2.1) | 0.2.1 | Native storage installer; exact-artifact approval and source configuration required |
+| [Bookwarehouse ebook requests](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/requests-bookwarehouse-v0.1.1) | 0.1.1 | Plugin catalog; connection, organization policy and native ebook library binding required |
 
-Each release includes Linux amd64, Linux arm64 and macOS arm64 executables, SHA-256 checksums, proprietary distribution terms and third-party notices. No proprietary plugin source is published here. GitHub’s generated source archives contain only this metadata repository.
+S3 supports Linux amd64 and arm64. The other releases also include macOS arm64. Releases contain SHA-256 checksums, proprietary distribution terms and third-party notices. No proprietary plugin source is published here. GitHub’s generated source archives contain only this metadata repository.
 
-[plugins.json](plugins.json) includes both releases, verified download checksums and installation requirements. [manifest.json](manifest.json) advertises Pastime to the ordinary plugin catalog. Bookwarehouse has no ordinary plugin capabilities and must use the native StorageProvider installation path; it is not inserted into the ordinary manifest with fabricated capabilities.
+[plugins.json](plugins.json) includes all four releases, verified download checksums and installation requirements. [manifest.json](manifest.json) advertises Pastime and Bookwarehouse ebook requests to the ordinary plugin catalog. Native Bookwarehouse storage and S3 have no ordinary plugin capabilities and must use the native StorageProvider installation path; neither is inserted into the ordinary manifest with fabricated capabilities.
+
+Ebook requests are disabled by default. Audiobook requests have no automatic acquisition backend. S3 requires immutable object versions by default; checked ETag reads require explicit opt-in and cannot prove unchanged bytes.
 
 Feed URL:
 
