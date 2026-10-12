@@ -2,61 +2,11 @@
   "plugins": [
     {
       "manifest": {
-        "plugin_id": "bloem.pastime",
-        "version": "0.1.11",
-        "silo_api_version": "v1",
-        "capabilities": [
-          {
-            "type": "watch_sync_provider.v1",
-            "id": "pastime",
-            "display_name": "Pastime",
-            "description": "Server-managed independent household playback tracking.",
-            "metadata": {
-              "managed_only": true,
-              "required_host_capability": "bloem.managed_tracking.v1",
-              "managed_personal_state": true
-            },
-            "watch_sync_provider": {
-              "auth_methods": [
-                2
-              ],
-              "supported_media_types": [
-                1,
-                3,
-                2
-              ],
-              "external_id_namespaces": [
-                "tmdb",
-                "imdb",
-                "tvdb"
-              ],
-              "max_batch_size": 100,
-              "scrobble_playback": true,
-              "export_watched": true,
-              "import_favorites": true,
-              "export_favorites": true,
-              "remove_favorites": true,
-              "import_watchlist": true,
-              "export_watchlist": true,
-              "remove_watchlist": true,
-              "import_ratings": true,
-              "export_ratings": true
-            }
-          },
-          {
-            "type": "scheduled_task.v1",
-            "id": "pastime.reconcile",
-            "display_name": "Reconcile Pastime profiles",
-            "description": "Repair the explicitly enrolled account and profile scope."
-          },
-          {
-            "type": "event_consumer.v1",
-            "id": "pastime.lifecycle",
-            "display_name": "Pastime lifecycle reconciliation",
-            "description": "Reconcile after host-authorized account or profile changes."
-          }
-        ],
-        "supported_platforms": [
+        "pluginId": "bloem.pastime",
+        "version": "0.1.12",
+        "checksum": "caf440f973317f935cd785cd119ae1361755a825672aa1c1505031f1d935f1b1",
+        "siloApiVersion": "v1",
+        "supportedPlatforms": [
           {
             "os": "linux",
             "arch": "amd64"
@@ -70,22 +20,73 @@
             "arch": "arm64"
           }
         ],
+        "capabilities": [
+          {
+            "type": "watch_sync_provider.v1",
+            "id": "pastime",
+            "displayName": "Pastime",
+            "description": "Server-managed independent household playback tracking.",
+            "metadata": {
+              "managed_only": true,
+              "managed_personal_state": true,
+              "required_host_capability": "bloem.managed_tracking.v1"
+            },
+            "watchSyncProvider": {
+              "authMethods": [
+                "WATCH_SYNC_AUTH_METHOD_API_KEY"
+              ],
+              "exportWatched": true,
+              "supportedMediaTypes": [
+                "WATCH_SYNC_MEDIA_TYPE_MOVIE",
+                "WATCH_SYNC_MEDIA_TYPE_SERIES",
+                "WATCH_SYNC_MEDIA_TYPE_EPISODE"
+              ],
+              "externalIdNamespaces": [
+                "tmdb",
+                "imdb",
+                "tvdb"
+              ],
+              "maxBatchSize": 100,
+              "importFavorites": true,
+              "exportFavorites": true,
+              "removeFavorites": true,
+              "importWatchlist": true,
+              "exportWatchlist": true,
+              "removeWatchlist": true,
+              "scrobblePlayback": true,
+              "importRatings": true,
+              "exportRatings": true
+            }
+          },
+          {
+            "type": "scheduled_task.v1",
+            "id": "pastime.reconcile",
+            "displayName": "Reconcile Pastime profiles",
+            "description": "Repair the explicitly enrolled account and profile scope."
+          },
+          {
+            "type": "event_consumer.v1",
+            "id": "pastime.lifecycle",
+            "displayName": "Pastime lifecycle reconciliation",
+            "description": "Reconcile after host-authorized account or profile changes."
+          }
+        ],
         "presentation": {
-          "display_name": "Pastime",
+          "displayName": "Pastime",
           "summary": "Automatic playback tracking for independent household profiles.",
-          "description_markdown": "Tracks accounts and child profiles independently in Pastime. Backend enrollment and credentials are managed by Bloem.",
-          "setup_markdown": "Requires the Bloem managed-tracking host extension, backend-only Pastime provisioning configuration, and an explicit account/profile grant. Installing the binary alone does not activate enrollment.",
-          "homepage_url": "https://github.com/Bloem-Studios/bloem-plugins",
-          "source_url": "https://github.com/Bloem-Studios/bloem-plugin-pastime",
-          "support_url": "https://github.com/Bloem-Studios/bloem-plugins/issues",
-          "changelog_url": "https://github.com/Bloem-Studios/bloem-plugins/releases",
-          "publisher_name": "Bloem Studios",
-          "publisher_url": "https://github.com/Bloem-Studios",
-          "license_spdx": "LicenseRef-Bloem-Proprietary"
+          "descriptionMarkdown": "Tracks accounts and child profiles independently in Pastime. Backend enrollment and credentials are managed by Bloem.",
+          "setupMarkdown": "Requires the Bloem managed-tracking host extension, backend-only Pastime provisioning configuration, and an explicit account/profile grant. Installing the binary alone does not activate enrollment.",
+          "homepageUrl": "https://github.com/Bloem-Studios/bloem-plugins",
+          "sourceUrl": "https://github.com/Bloem-Studios/bloem-plugin-pastime",
+          "supportUrl": "https://github.com/Bloem-Studios/bloem-plugins/issues",
+          "changelogUrl": "https://github.com/Bloem-Studios/bloem-plugins/releases",
+          "publisherName": "Bloem Studios",
+          "publisherUrl": "https://github.com/Bloem-Studios",
+          "licenseSpdx": "LicenseRef-Bloem-Proprietary"
         }
       },
       "repo_url": "https://github.com/Bloem-Studios/bloem-plugins",
-      "checksums_url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/pastime-v0.1.11/checksums.txt",
+      "checksums_url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/pastime-v0.1.12/checksums.txt",
       "binaries": {
         "darwin/arm64": {
           "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/pastime-v0.1.11/plugin-darwin-arm64",

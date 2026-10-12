@@ -5,7 +5,7 @@
       "plugin_id": "bloem.pastime",
       "display_name": "Pastime",
       "repository_url": "https://github.com/Bloem-Studios/bloem-plugin-pastime",
-      "source_version": "0.1.11",
+      "source_version": "0.1.12",
       "sdk_version": "0.26.0",
       "installation_mode": "native",
       "status": "requires_explicit_enrollment",
@@ -16,20 +16,20 @@
       ],
       "license_spdx": "LicenseRef-Bloem-Proprietary",
       "source_visibility": "private",
-      "release_url": "https://github.com/Bloem-Studios/bloem-plugins/releases/tag/pastime-v0.1.11",
-      "checksums_url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/pastime-v0.1.11/checksums.txt",
+      "release_url": "https://github.com/Bloem-Studios/bloem-plugins/releases/tag/pastime-v0.1.12",
+      "checksums_url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/pastime-v0.1.12/checksums.txt",
       "binaries": {
         "linux/amd64": {
-          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/pastime-v0.1.11/plugin-linux-amd64",
-          "checksum": "a28437df06bfb08cd5f4d2a51a8ae2d1e0da70ee5a1fdab0fd6c6a9efd78226e"
+          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/pastime-v0.1.12/plugin-linux-amd64",
+          "checksum": "caf440f973317f935cd785cd119ae1361755a825672aa1c1505031f1d935f1b1"
         },
         "linux/arm64": {
-          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/pastime-v0.1.11/plugin-linux-arm64",
-          "checksum": "188acde8fe7676f4326bde7e200878b7277bede2dad70ae4fe3add4863893778"
+          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/pastime-v0.1.12/plugin-linux-arm64",
+          "checksum": "ac3ff994ea3c77b3ba833ee769103309ce2091c3aea59024f63567599fda2f8b"
         },
         "darwin/arm64": {
-          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/pastime-v0.1.11/plugin-darwin-arm64",
-          "checksum": "5694cd8d7463190c6dabc9c1417db05a197add05b8417a01998399ba066938d4"
+          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/pastime-v0.1.12/plugin-darwin-arm64",
+          "checksum": "d7d8c5d42ee289d416a0bf925c01183e498edfeb26ef1ed9f737e2cf1e5f4753"
         }
       }
     },
