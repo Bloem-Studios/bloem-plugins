@@ -33,7 +33,7 @@ func TestInventoryContainsOnlyCustomPluginsWithExplicitPrerequisites(t *testing.
 		"bloem.storage.bookwarehouse":  {"bloem-plugin-bookwarehouse", "0.2.3", "native", "requires_native_approval"},
 		"bloem.storage.s3":             {"bloem-storage-s3", "0.2.1", "native", "requires_native_approval"},
 		"bloem.requests.bookwarehouse": {"bloem-plugin-requests-bookwarehouse", "0.1.1", "ordinary", "requires_connection_and_policy"},
-		"bloem.pastime":                {"bloem-plugin-pastime", "0.1.10", "native", "requires_explicit_enrollment"},
+		"bloem.pastime":                {"bloem-plugin-pastime", "0.1.11", "native", "requires_explicit_enrollment"},
 	}
 	for _, p := range inventory.Plugins {
 		want, ok := expected[p.ID]
