@@ -29,11 +29,11 @@ func TestInventoryContainsOnlyCustomPluginsWithExplicitPrerequisites(t *testing.
 	if inventory.SchemaVersion != 1 || len(inventory.Plugins) != 4 {
 		t.Fatal("expected four custom inventory entries with schema version 1")
 	}
-	expected := map[string]struct{ repo, version, mode, status string }{
-		"bloem.storage.bookwarehouse":  {"bloem-plugin-bookwarehouse", "0.2.3", "native", "requires_native_approval"},
-		"bloem.storage.s3":             {"bloem-storage-s3", "0.2.1", "native", "requires_native_approval"},
-		"bloem.requests.bookwarehouse": {"bloem-plugin-requests-bookwarehouse", "0.1.1", "ordinary", "requires_connection_and_policy"},
-		"bloem.pastime":                {"bloem-plugin-pastime", "0.1.14", "native", "requires_explicit_enrollment"},
+	expected := map[string]struct{ repo, version, sdk, mode, status string }{
+		"bloem.storage.bookwarehouse":  {"bloem-plugin-bookwarehouse", "0.2.3", "0.26.0", "native", "requires_native_approval"},
+		"bloem.storage.s3":             {"bloem-storage-s3", "0.3.2", "0.27.0", "native", "requires_native_approval"},
+		"bloem.requests.bookwarehouse": {"bloem-plugin-requests-bookwarehouse", "0.1.2", "0.26.0", "ordinary", "requires_connection_and_policy"},
+		"bloem.pastime":                {"bloem-plugin-pastime", "0.1.14", "0.26.0", "native", "requires_explicit_enrollment"},
 	}
 	for _, p := range inventory.Plugins {
 		want, ok := expected[p.ID]
@@ -41,7 +41,7 @@ func TestInventoryContainsOnlyCustomPluginsWithExplicitPrerequisites(t *testing.
 			t.Fatalf("unexpected or duplicate plugin %q", p.ID)
 		}
 		delete(expected, p.ID)
-		if p.Repository != "https://github.com/Bloem-Studios/"+want.repo || p.Version != want.version || p.SDK != "0.26.0" || p.InstallMode != want.mode || p.Status != want.status || len(p.Requirements) == 0 {
+		if p.Repository != "https://github.com/Bloem-Studios/"+want.repo || p.Version != want.version || p.SDK != want.sdk || p.InstallMode != want.mode || p.Status != want.status || len(p.Requirements) == 0 {
 			t.Errorf("invalid identity/version/install prerequisites for %s", p.ID)
 		}
 	}
