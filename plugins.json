@@ -5,31 +5,32 @@
       "plugin_id": "bloem.pastime",
       "display_name": "Pastime",
       "repository_url": "https://github.com/Bloem-Studios/bloem-plugin-pastime",
-      "source_version": "0.1.14",
+      "source_version": "0.2.0",
       "sdk_version": "0.26.0",
-      "installation_mode": "native",
-      "status": "requires_explicit_enrollment",
-      "summary": "Household playback tracking, personal calendars, AI recommendations and source-controlled lists with native requests.",
+      "installation_mode": "ordinary",
+      "status": "requires_connection_and_policy",
+      "summary": "Syncs playback, history, favourites, watchlist and ratings with Pastime.",
       "requirements": [
-        "Bloem managed-tracking host extension and explicit enrollment grants.",
-        "Backend-only provisioning configuration and Pastime native ingestion endpoints."
+        "Pastime release A (database schema 57) must be deployed before plugin 0.2.0.",
+        "Set the plugin’s Pastime address to the HTTPS origin people use to open Pastime.",
+        "Each profile creates a key on Pastime’s Connect Silo page and pastes it under Silo’s Settings → Watch Providers → Pastime."
       ],
       "license_spdx": "LicenseRef-Bloem-Proprietary",
       "source_visibility": "private",
-      "release_url": "https://github.com/Bloem-Studios/bloem-plugins/releases/tag/pastime-v0.1.14",
-      "checksums_url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/pastime-v0.1.14/checksums.txt",
+      "release_url": "https://github.com/Bloem-Studios/bloem-plugins/releases/tag/pastime-v0.2.0",
+      "checksums_url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/pastime-v0.2.0/checksums.txt",
       "binaries": {
         "darwin/arm64": {
-          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/pastime-v0.1.14/plugin-darwin-arm64",
-          "checksum": "437fe94042a5821f3eace220e9107fcc21f6e65115f764e2d86f8e9745e28b01"
+          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/pastime-v0.2.0/plugin-darwin-arm64",
+          "checksum": "f07e7818b8849d0d428e8b692cf02b869122762752dace7c05c37064cbc64374"
         },
         "linux/amd64": {
-          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/pastime-v0.1.14/plugin-linux-amd64",
-          "checksum": "92989d1a27aa11061f382dbb20d6fc2a442dd6ea13b348505c96267fbffc8535"
+          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/pastime-v0.2.0/plugin-linux-amd64",
+          "checksum": "025acf00d4a934d1d51126e8bd3c9a9fe09f0c1664451b903fa7af4ef6234fee"
         },
         "linux/arm64": {
-          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/pastime-v0.1.14/plugin-linux-arm64",
-          "checksum": "9af53b846cde982c41e11e7eaeee46eafe4bdce0a0352d5e7eb42b8e93e19d3e"
+          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/pastime-v0.2.0/plugin-linux-arm64",
+          "checksum": "53d1fe1d0a123f8f03ac7c57d1bbeebbc19166c0ff7293c11dea3b083ae602e3"
         }
       }
     },

@@ -3,8 +3,8 @@
     {
       "manifest": {
         "plugin_id": "bloem.pastime",
-        "version": "0.1.14",
-        "checksum": "92989d1a27aa11061f382dbb20d6fc2a442dd6ea13b348505c96267fbffc8535",
+        "version": "0.2.0",
+        "checksum": "025acf00d4a934d1d51126e8bd3c9a9fe09f0c1664451b903fa7af4ef6234fee",
         "silo_api_version": "v1",
         "supported_platforms": [
           {
@@ -25,13 +25,7 @@
             "type": "watch_sync_provider.v1",
             "id": "pastime",
             "display_name": "Pastime",
-            "description": "Server-managed independent household playback tracking.",
-            "metadata": {
-              "managed_list_collections": true,
-              "managed_only": true,
-              "managed_personal_state": true,
-              "required_host_capability": "bloem.managed_tracking.v1"
-            },
+            "description": "Sends what you watch to Pastime.",
             "watch_sync_provider": {
               "auth_methods": [
                 2
@@ -58,25 +52,38 @@
               "import_ratings": true,
               "export_ratings": true
             }
-          },
+          }
+        ],
+        "global_config_schema": [
           {
-            "type": "scheduled_task.v1",
-            "id": "pastime.reconcile",
-            "display_name": "Reconcile Pastime profiles",
-            "description": "Repair the explicitly enrolled account and profile scope."
-          },
-          {
-            "type": "event_consumer.v1",
-            "id": "pastime.lifecycle",
-            "display_name": "Pastime lifecycle reconciliation",
-            "description": "Reconcile after host-authorized account or profile changes."
+            "key": "pastime",
+            "title": "Pastime server",
+            "description": "Where Silo sends what connected profiles watch.",
+            "json_schema": "{\"type\":\"object\",\"properties\":{\"pastime_url\":{\"type\":\"string\",\"maxLength\":255}},\"required\":[\"pastime_url\"],\"additionalProperties\":false}",
+            "required": true,
+            "admin_form": {
+              "fields": [
+                {
+                  "key": "pastime_url",
+                  "label": "Pastime address",
+                  "description": "The address people open Pastime at, for example https://pastime.example.com.",
+                  "control": 1,
+                  "placeholder": "https://pastime.example.com",
+                  "required": true,
+                  "validation": {
+                    "pattern": "^https://[^/?#@\\s]+/?$",
+                    "max_length": 255
+                  }
+                }
+              ]
+            }
           }
         ],
         "presentation": {
           "display_name": "Pastime",
-          "summary": "Automatic playback tracking for independent household profiles.",
-          "description_markdown": "Tracks accounts and child profiles independently in Pastime. Backend enrollment and credentials are managed by Bloem.",
-          "setup_markdown": "Requires the Bloem managed-tracking host extension, backend-only Pastime provisioning configuration, and an explicit account/profile grant. Installing the binary alone does not activate enrollment.",
+          "summary": "Sends playback, history, favourites, watchlist and ratings to Pastime.",
+          "description_markdown": "Sends what each connected profile watches to Pastime: live playback, finished plays, favourites, watchlist and ratings. Pastime favourites, watchlist and ratings are added to Silo; a Pastime read never removes anything from Silo.",
+          "setup_markdown": "1. Install the plugin and set **Pastime address** to the address people open Pastime at.\n2. Each person opens Pastime's **Connect Silo** page, creates a key for their Pastime profile, then in Silo switches to that profile, opens **Settings → Watch Providers**, chooses **Pastime** and pastes the key.\n\nA new key replaces the profile's previous one. Disconnecting in Silo stops sending; revoking the key in Pastime does too.",
           "homepage_url": "https://github.com/Bloem-Studios/bloem-plugins",
           "source_url": "https://github.com/Bloem-Studios/bloem-plugin-pastime",
           "support_url": "https://github.com/Bloem-Studios/bloem-plugins/issues",
@@ -87,19 +94,19 @@
         }
       },
       "repo_url": "https://github.com/Bloem-Studios/bloem-plugins",
-      "checksums_url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/pastime-v0.1.14/checksums.txt",
+      "checksums_url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/pastime-v0.2.0/checksums.txt",
       "binaries": {
         "darwin/arm64": {
-          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/pastime-v0.1.14/plugin-darwin-arm64",
-          "checksum": "437fe94042a5821f3eace220e9107fcc21f6e65115f764e2d86f8e9745e28b01"
+          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/pastime-v0.2.0/plugin-darwin-arm64",
+          "checksum": "f07e7818b8849d0d428e8b692cf02b869122762752dace7c05c37064cbc64374"
         },
         "linux/amd64": {
-          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/pastime-v0.1.14/plugin-linux-amd64",
-          "checksum": "92989d1a27aa11061f382dbb20d6fc2a442dd6ea13b348505c96267fbffc8535"
+          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/pastime-v0.2.0/plugin-linux-amd64",
+          "checksum": "025acf00d4a934d1d51126e8bd3c9a9fe09f0c1664451b903fa7af4ef6234fee"
         },
         "linux/arm64": {
-          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/pastime-v0.1.14/plugin-linux-arm64",
-          "checksum": "9af53b846cde982c41e11e7eaeee46eafe4bdce0a0352d5e7eb42b8e93e19d3e"
+          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/pastime-v0.2.0/plugin-linux-arm64",
+          "checksum": "53d1fe1d0a123f8f03ac7c57d1bbeebbc19166c0ff7293c11dea3b083ae602e3"
         }
       }
     },
