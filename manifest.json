@@ -105,6 +105,574 @@
     },
     {
       "manifest": {
+        "plugin_id": "bloem.requests.audiobooks",
+        "version": "0.1.0",
+        "silo_api_version": "v1",
+        "supported_platforms": [
+          {
+            "os": "linux",
+            "arch": "amd64"
+          },
+          {
+            "os": "linux",
+            "arch": "arm64"
+          }
+        ],
+        "capabilities": [
+          {
+            "type": "request_router.v1",
+            "id": "audiobooks",
+            "display_name": "Audiobook requests",
+            "description": "Find approved audiobook requests on AudiobookBay, abook.link and NZBKing and hand them to qBittorrent or NZBGet.",
+            "config_schema": [
+              {
+                "key": "connection",
+                "title": "Audiobook acquisition",
+                "json_schema": "{\"additionalProperties\":false,\"properties\":{\"abook_auto_thank\":{\"default\":true,\"type\":\"boolean\"},\"abook_base_url\":{\"default\":\"https://abook.link/book\",\"maxLength\":4096,\"type\":\"string\"},\"abook_enabled\":{\"default\":false,\"type\":\"boolean\"},\"ai_allow_http\":{\"default\":false,\"type\":\"boolean\"},\"ai_base_url\":{\"default\":\"\",\"maxLength\":4096,\"type\":\"string\"},\"ai_chat_model\":{\"default\":\"\",\"maxLength\":128,\"type\":\"string\"},\"ai_enabled\":{\"default\":false,\"type\":\"boolean\"},\"ai_max_calls_per_request\":{\"default\":6,\"maximum\":20,\"minimum\":1,\"type\":\"integer\"},\"ai_max_queries\":{\"default\":3,\"maximum\":5,\"minimum\":1,\"type\":\"integer\"},\"ai_max_tokens\":{\"default\":1024,\"maximum\":4096,\"minimum\":256,\"type\":\"integer\"},\"ai_min_confidence\":{\"default\":0.75,\"maximum\":0.99,\"minimum\":0.5,\"type\":\"number\"},\"ai_parameter_profile\":{\"default\":\"standard\",\"enum\":[\"standard\",\"reasoning\"],\"maxLength\":32,\"type\":\"string\"},\"ai_query_expansion\":{\"default\":true,\"type\":\"boolean\"},\"ai_reasoning_effort\":{\"default\":\"\",\"enum\":[\"\",\"none\",\"low\",\"medium\"],\"maxLength\":32,\"type\":\"string\"},\"ai_response_format\":{\"default\":\"json_object\",\"enum\":[\"json_object\",\"json_schema\"],\"maxLength\":32,\"type\":\"string\"},\"ai_timeout_seconds\":{\"default\":20,\"maximum\":60,\"minimum\":5,\"type\":\"integer\"},\"ai_verify_downloads\":{\"default\":true,\"type\":\"boolean\"},\"allow_http_download_clients\":{\"default\":false,\"type\":\"boolean\"},\"allow_loopback_targets\":{\"default\":false,\"type\":\"boolean\"},\"allow_private_source_hosts\":{\"default\":false,\"type\":\"boolean\"},\"audiobookbay_base_url\":{\"default\":\"https://audiobookbay.lu\",\"maxLength\":4096,\"type\":\"string\"},\"audiobookbay_enabled\":{\"default\":true,\"type\":\"boolean\"},\"audiobookbay_resolve_limit\":{\"default\":5,\"maximum\":8,\"minimum\":1,\"type\":\"integer\"},\"audiobookbay_search_pages\":{\"default\":2,\"maximum\":5,\"minimum\":1,\"type\":\"integer\"},\"audiobookbay_trackers\":{\"default\":[\"udp://tracker.openbittorrent.com:80\",\"udp://opentor.org:2710\",\"udp://tracker.ccc.de:80\",\"udp://tracker.blackunicorn.xyz:6969\"],\"items\":{\"maxLength\":300,\"type\":\"string\"},\"maxItems\":20,\"type\":\"array\"},\"max_candidates\":{\"default\":10,\"maximum\":10,\"minimum\":3,\"type\":\"integer\"},\"min_author_coverage\":{\"default\":0.5,\"maximum\":1,\"minimum\":0,\"type\":\"number\"},\"min_title_coverage\":{\"default\":0.6,\"maximum\":1,\"minimum\":0.3,\"type\":\"number\"},\"nzbget_category\":{\"default\":\"bloem-audiobooks\",\"maxLength\":64,\"type\":\"string\"},\"nzbget_url\":{\"default\":\"\",\"maxLength\":4096,\"type\":\"string\"},\"nzbget_username\":{\"default\":\"\",\"maxLength\":256,\"type\":\"string\"},\"nzbking_base_url\":{\"default\":\"https://nzbking.com\",\"maxLength\":4096,\"type\":\"string\"},\"nzbking_enabled\":{\"default\":true,\"type\":\"boolean\"},\"nzbking_standalone\":{\"default\":true,\"type\":\"boolean\"},\"qbittorrent_category\":{\"default\":\"bloem-audiobooks\",\"maxLength\":64,\"type\":\"string\"},\"qbittorrent_save_root\":{\"default\":\"\",\"maxLength\":1024,\"type\":\"string\"},\"qbittorrent_stall_hours\":{\"default\":24,\"maximum\":720,\"minimum\":1,\"type\":\"integer\"},\"qbittorrent_url\":{\"default\":\"\",\"maxLength\":4096,\"type\":\"string\"},\"qbittorrent_username\":{\"default\":\"\",\"maxLength\":256,\"type\":\"string\"},\"verify_local_client_prefix\":{\"default\":\"\",\"maxLength\":1024,\"type\":\"string\"},\"verify_local_prefix\":{\"default\":\"\",\"maxLength\":1024,\"type\":\"string\"},\"verify_min_duration_minutes\":{\"default\":30,\"maximum\":6000,\"minimum\":0,\"type\":\"integer\"},\"verify_min_total_mb\":{\"default\":20,\"maximum\":10000,\"minimum\":0,\"type\":\"integer\"}},\"type\":\"object\"}",
+                "admin_form": {
+                  "fields": [
+                    {
+                      "key": "audiobookbay_enabled",
+                      "label": "Search AudiobookBay",
+                      "description": "Torrent releases; needs qBittorrent.",
+                      "control": 5,
+                      "default_value": true
+                    },
+                    {
+                      "key": "audiobookbay_base_url",
+                      "label": "AudiobookBay URL",
+                      "description": "HTTPS origin of the AudiobookBay mirror.",
+                      "control": 1,
+                      "default_value": "https://audiobookbay.lu"
+                    },
+                    {
+                      "key": "audiobookbay_search_pages",
+                      "label": "AudiobookBay result pages",
+                      "description": "Result pages read per search (1-5).",
+                      "control": 4,
+                      "default_value": 2,
+                      "validation": {
+                        "has_min": true,
+                        "min": 1,
+                        "has_max": true,
+                        "max": 5
+                      }
+                    },
+                    {
+                      "key": "audiobookbay_resolve_limit",
+                      "label": "AudiobookBay detail pages",
+                      "description": "Best hits opened per search to find the magnet (1-8).",
+                      "control": 4,
+                      "default_value": 5,
+                      "validation": {
+                        "has_min": true,
+                        "min": 1,
+                        "has_max": true,
+                        "max": 8
+                      }
+                    },
+                    {
+                      "key": "audiobookbay_trackers",
+                      "label": "Fallback trackers",
+                      "description": "Announce URLs added when a release lists none (udp, http or https).",
+                      "control": 7,
+                      "default_value": [
+                        "udp://tracker.openbittorrent.com:80",
+                        "udp://opentor.org:2710",
+                        "udp://tracker.ccc.de:80",
+                        "udp://tracker.blackunicorn.xyz:6969"
+                      ],
+                      "dynamic_options": true
+                    },
+                    {
+                      "key": "abook_enabled",
+                      "label": "Search abook.link",
+                      "description": "Usenet releases; needs NZBGet and abook.link credentials.",
+                      "control": 5,
+                      "default_value": false
+                    },
+                    {
+                      "key": "abook_base_url",
+                      "label": "abook.link URL",
+                      "description": "HTTPS forum URL including its path prefix.",
+                      "control": 1,
+                      "default_value": "https://abook.link/book"
+                    },
+                    {
+                      "key": "abook_auto_thank",
+                      "label": "Thank posts to reveal content",
+                      "description": "Posts one forum thank on the chosen topic when its content is hidden. This acts on the abook.link account.",
+                      "control": 5,
+                      "default_value": true
+                    },
+                    {
+                      "key": "nzbking_enabled",
+                      "label": "Search NZBKing",
+                      "description": "Usenet index; needs NZBGet.",
+                      "control": 5,
+                      "default_value": true
+                    },
+                    {
+                      "key": "nzbking_base_url",
+                      "label": "NZBKing URL",
+                      "description": "HTTPS origin of NZBKing.",
+                      "control": 1,
+                      "default_value": "https://nzbking.com"
+                    },
+                    {
+                      "key": "nzbking_standalone",
+                      "label": "Search NZBKing by title",
+                      "description": "Also search NZBKing directly, not only with abook.link search strings.",
+                      "control": 5,
+                      "default_value": true
+                    },
+                    {
+                      "key": "qbittorrent_url",
+                      "label": "qBittorrent URL",
+                      "description": "Web UI origin and optional path prefix. Empty disables qBittorrent.",
+                      "control": 1,
+                      "default_value": ""
+                    },
+                    {
+                      "key": "qbittorrent_username",
+                      "label": "qBittorrent username",
+                      "control": 1,
+                      "default_value": ""
+                    },
+                    {
+                      "key": "qbittorrent_category",
+                      "label": "qBittorrent category",
+                      "control": 1,
+                      "default_value": "bloem-audiobooks"
+                    },
+                    {
+                      "key": "qbittorrent_save_root",
+                      "label": "qBittorrent save root",
+                      "description": "Absolute folder on the qBittorrent host; one folder per request is created below it.",
+                      "control": 1,
+                      "default_value": ""
+                    },
+                    {
+                      "key": "qbittorrent_stall_hours",
+                      "label": "Stall after hours",
+                      "description": "Hours without activity before a torrent is reported as stalled.",
+                      "control": 4,
+                      "default_value": 24,
+                      "validation": {
+                        "has_min": true,
+                        "min": 1,
+                        "has_max": true,
+                        "max": 720
+                      }
+                    },
+                    {
+                      "key": "nzbget_url",
+                      "label": "NZBGet URL",
+                      "description": "Origin and optional path prefix. Empty disables NZBGet.",
+                      "control": 1,
+                      "default_value": ""
+                    },
+                    {
+                      "key": "nzbget_username",
+                      "label": "NZBGet username",
+                      "control": 1,
+                      "default_value": ""
+                    },
+                    {
+                      "key": "nzbget_category",
+                      "label": "NZBGet category",
+                      "description": "Its DestDir is the NZBGet download root.",
+                      "control": 1,
+                      "default_value": "bloem-audiobooks"
+                    },
+                    {
+                      "key": "allow_http_download_clients",
+                      "label": "Allow HTTP download clients",
+                      "description": "Permit plain HTTP to qBittorrent and NZBGet on a trusted network.",
+                      "control": 5,
+                      "default_value": false
+                    },
+                    {
+                      "key": "allow_private_source_hosts",
+                      "label": "Allow private source hosts",
+                      "description": "Let source URLs resolve to private addresses (self-hosted mirrors, tests).",
+                      "control": 5,
+                      "default_value": false
+                    },
+                    {
+                      "key": "allow_loopback_targets",
+                      "label": "Allow loopback services",
+                      "description": "Let download clients and the AI endpoint resolve to loopback.",
+                      "control": 5,
+                      "default_value": false
+                    },
+                    {
+                      "key": "min_title_coverage",
+                      "label": "Minimum title match",
+                      "description": "Share of title words a release must contain (0.3-1).",
+                      "control": 4,
+                      "default_value": 0.6,
+                      "validation": {
+                        "has_min": true,
+                        "min": 0.3,
+                        "has_max": true,
+                        "max": 1
+                      }
+                    },
+                    {
+                      "key": "min_author_coverage",
+                      "label": "Minimum author match",
+                      "description": "Share of author words a release must contain (0-1).",
+                      "control": 4,
+                      "default_value": 0.5,
+                      "validation": {
+                        "has_min": true,
+                        "has_max": true,
+                        "max": 1
+                      }
+                    },
+                    {
+                      "key": "max_candidates",
+                      "label": "Candidates considered",
+                      "description": "Best releases that enter selection (3-10).",
+                      "control": 4,
+                      "default_value": 10,
+                      "validation": {
+                        "has_min": true,
+                        "min": 3,
+                        "has_max": true,
+                        "max": 10
+                      }
+                    },
+                    {
+                      "key": "verify_min_total_mb",
+                      "label": "Minimum audio size (MB)",
+                      "control": 4,
+                      "default_value": 20,
+                      "validation": {
+                        "has_min": true,
+                        "has_max": true,
+                        "max": 10000
+                      }
+                    },
+                    {
+                      "key": "verify_min_duration_minutes",
+                      "label": "Minimum duration (minutes)",
+                      "description": "Applies when durations are known.",
+                      "control": 4,
+                      "default_value": 30,
+                      "validation": {
+                        "has_min": true,
+                        "has_max": true,
+                        "max": 6000
+                      }
+                    },
+                    {
+                      "key": "verify_local_client_prefix",
+                      "label": "Client download path prefix",
+                      "description": "Download client path that maps to the local prefix below. Set both or neither.",
+                      "control": 1,
+                      "default_value": ""
+                    },
+                    {
+                      "key": "verify_local_prefix",
+                      "label": "Local download path prefix",
+                      "description": "Where this server reads completed downloads. Usenet downloads need this mapping to complete without an admin.",
+                      "control": 1,
+                      "default_value": ""
+                    },
+                    {
+                      "key": "ai_enabled",
+                      "label": "Use AI",
+                      "description": "Kill switch. When off, no AI request is made.",
+                      "control": 5,
+                      "default_value": false
+                    },
+                    {
+                      "key": "ai_base_url",
+                      "label": "AI endpoint",
+                      "description": "OpenAI-compatible base URL, for example https://generativelanguage.googleapis.com/v1beta/openai.",
+                      "control": 1,
+                      "default_value": ""
+                    },
+                    {
+                      "key": "ai_chat_model",
+                      "label": "AI model",
+                      "description": "For example gemini-flash-latest.",
+                      "control": 1,
+                      "default_value": ""
+                    },
+                    {
+                      "key": "ai_allow_http",
+                      "label": "Allow HTTP AI endpoint",
+                      "description": "For a local Ollama.",
+                      "control": 5,
+                      "default_value": false
+                    },
+                    {
+                      "key": "ai_response_format",
+                      "label": "AI output mode",
+                      "control": 6,
+                      "default_value": "json_object",
+                      "options": [
+                        {
+                          "value": "json_object",
+                          "label": "json_object"
+                        },
+                        {
+                          "value": "json_schema",
+                          "label": "json_schema"
+                        }
+                      ]
+                    },
+                    {
+                      "key": "ai_reasoning_effort",
+                      "label": "AI reasoning effort",
+                      "description": "Sent only when set; low or none suits Gemini 2.5-class models.",
+                      "control": 6,
+                      "default_value": "",
+                      "options": [
+                        {
+                          "label": "Provider default"
+                        },
+                        {
+                          "value": "none",
+                          "label": "none"
+                        },
+                        {
+                          "value": "low",
+                          "label": "low"
+                        },
+                        {
+                          "value": "medium",
+                          "label": "medium"
+                        }
+                      ]
+                    },
+                    {
+                      "key": "ai_parameter_profile",
+                      "label": "AI parameter profile",
+                      "description": "Use reasoning for OpenAI reasoning models.",
+                      "control": 6,
+                      "default_value": "standard",
+                      "options": [
+                        {
+                          "value": "standard",
+                          "label": "standard"
+                        },
+                        {
+                          "value": "reasoning",
+                          "label": "reasoning"
+                        }
+                      ]
+                    },
+                    {
+                      "key": "ai_min_confidence",
+                      "label": "AI confidence threshold",
+                      "description": "Below it, a release is held for admin review.",
+                      "control": 4,
+                      "default_value": 0.75,
+                      "validation": {
+                        "has_min": true,
+                        "min": 0.5,
+                        "has_max": true,
+                        "max": 0.99
+                      }
+                    },
+                    {
+                      "key": "ai_max_calls_per_request",
+                      "label": "AI calls per request",
+                      "control": 4,
+                      "default_value": 6,
+                      "validation": {
+                        "has_min": true,
+                        "min": 1,
+                        "has_max": true,
+                        "max": 20
+                      }
+                    },
+                    {
+                      "key": "ai_timeout_seconds",
+                      "label": "AI timeout (seconds)",
+                      "control": 4,
+                      "default_value": 20,
+                      "validation": {
+                        "has_min": true,
+                        "min": 5,
+                        "has_max": true,
+                        "max": 60
+                      }
+                    },
+                    {
+                      "key": "ai_max_tokens",
+                      "label": "AI max tokens",
+                      "control": 4,
+                      "default_value": 1024,
+                      "validation": {
+                        "has_min": true,
+                        "min": 256,
+                        "has_max": true,
+                        "max": 4096
+                      }
+                    },
+                    {
+                      "key": "ai_query_expansion",
+                      "label": "AI alternative searches",
+                      "description": "Ask for other search terms when nothing usable is found.",
+                      "control": 5,
+                      "default_value": true
+                    },
+                    {
+                      "key": "ai_max_queries",
+                      "label": "AI alternative searches limit",
+                      "control": 4,
+                      "default_value": 3,
+                      "validation": {
+                        "has_min": true,
+                        "min": 1,
+                        "has_max": true,
+                        "max": 5
+                      }
+                    },
+                    {
+                      "key": "ai_verify_downloads",
+                      "label": "AI download check",
+                      "description": "Compare the downloaded files with the request before reporting success.",
+                      "control": 5,
+                      "default_value": true
+                    }
+                  ],
+                  "sections": [
+                    {
+                      "key": "sources",
+                      "title": "Search sources",
+                      "field_keys": [
+                        "audiobookbay_enabled",
+                        "audiobookbay_base_url",
+                        "audiobookbay_search_pages",
+                        "audiobookbay_resolve_limit",
+                        "audiobookbay_trackers",
+                        "abook_enabled",
+                        "abook_base_url",
+                        "abook_auto_thank",
+                        "nzbking_enabled",
+                        "nzbking_base_url",
+                        "nzbking_standalone"
+                      ]
+                    },
+                    {
+                      "key": "clients",
+                      "title": "Download clients",
+                      "field_keys": [
+                        "qbittorrent_url",
+                        "qbittorrent_username",
+                        "qbittorrent_category",
+                        "qbittorrent_save_root",
+                        "qbittorrent_stall_hours",
+                        "nzbget_url",
+                        "nzbget_username",
+                        "nzbget_category"
+                      ]
+                    },
+                    {
+                      "key": "matching",
+                      "title": "Matching and verification",
+                      "field_keys": [
+                        "min_title_coverage",
+                        "min_author_coverage",
+                        "max_candidates",
+                        "verify_min_total_mb",
+                        "verify_min_duration_minutes",
+                        "verify_local_client_prefix",
+                        "verify_local_prefix"
+                      ]
+                    },
+                    {
+                      "key": "ai",
+                      "title": "AI assistance",
+                      "field_keys": [
+                        "ai_enabled",
+                        "ai_base_url",
+                        "ai_chat_model",
+                        "ai_allow_http",
+                        "ai_response_format",
+                        "ai_reasoning_effort",
+                        "ai_parameter_profile",
+                        "ai_min_confidence",
+                        "ai_max_calls_per_request",
+                        "ai_timeout_seconds",
+                        "ai_max_tokens",
+                        "ai_query_expansion",
+                        "ai_max_queries",
+                        "ai_verify_downloads"
+                      ]
+                    },
+                    {
+                      "key": "network",
+                      "title": "Network",
+                      "field_keys": [
+                        "allow_http_download_clients",
+                        "allow_private_source_hosts",
+                        "allow_loopback_targets"
+                      ]
+                    }
+                  ]
+                }
+              }
+            ],
+            "metadata": {
+              "supported_media_types": [
+                "audiobook"
+              ]
+            },
+            "request_router": {
+              "wording": {
+                "step": "Acquiring",
+                "queued": {
+                  "label": "Searching",
+                  "detail": "Looking for a matching audiobook release."
+                },
+                "downloading": {
+                  "label": "Downloading",
+                  "detail": "The audiobook is downloading."
+                }
+              }
+            }
+          }
+        ],
+        "metadata": {
+          "source_revision": "b617a30425a3ddc83de9f9707fffc9c2a6c370e4"
+        },
+        "category": "Books/Audiobooks",
+        "presentation": {
+          "display_name": "Audiobook requests",
+          "summary": "Finds approved audiobook requests and hands them to qBittorrent or NZBGet.",
+          "description_markdown": "Searches AudiobookBay, abook.link and NZBKing for approved audiobook requests, picks a release by heuristic score (optionally checked by an OpenAI-compatible model), hands it to the operator's qBittorrent or NZBGet, and verifies the downloaded files before reporting success.",
+          "setup_markdown": "Create the audiobook request integration from Bloem's audiobook request setup, which stores the download client, abook.link and AI credentials encrypted. Bind an audiobook library and a dedicated download folder inside it that holds fewer than 10,000 files; the download client must be able to write there. Downloads can appear in that library before verification finishes. Usenet downloads need the local path mapping to complete without an admin. AI and abook.link are off by default. With abook.link enabled, the plugin may post one forum thank per request to reveal hidden content.",
+          "homepage_url": "https://github.com/Bloem-Studios/bloem-plugins",
+          "source_url": "https://github.com/Bloem-Studios/bloem-plugin-requests-audiobooks",
+          "support_url": "https://github.com/Bloem-Studios/bloem-plugins/issues",
+          "changelog_url": "https://github.com/Bloem-Studios/bloem-plugins/releases",
+          "publisher_name": "Bloem Studios",
+          "publisher_url": "https://github.com/Bloem-Studios",
+          "license_spdx": "LicenseRef-Bloem-Proprietary"
+        }
+      },
+      "repo_url": "https://github.com/Bloem-Studios/bloem-plugins",
+      "checksums_url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/requests-audiobooks-v0.1.0/checksums.txt",
+      "binaries": {
+        "linux/amd64": {
+          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/requests-audiobooks-v0.1.0/plugin-linux-amd64",
+          "checksum": "a7d1076aa40d21d82f7eeeb4c8b8fac5be6aa82bfd2c4948ef6811c9d0dfd431"
+        },
+        "linux/arm64": {
+          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/requests-audiobooks-v0.1.0/plugin-linux-arm64",
+          "checksum": "da80d32d72f2d5a8f73f0091a4b23762dcfb6bd5570609106ab4ae9736f3113f"
+        }
+      }
+    },
+    {
+      "manifest": {
         "plugin_id": "bloem.requests.bookwarehouse",
         "version": "0.1.2",
         "silo_api_version": "v1",

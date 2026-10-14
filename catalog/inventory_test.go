@@ -26,13 +26,14 @@ func TestInventoryContainsOnlyCustomPluginsWithExplicitPrerequisites(t *testing.
 	if err := json.Unmarshal(data, &inventory); err != nil {
 		t.Fatal(err)
 	}
-	if inventory.SchemaVersion != 1 || len(inventory.Plugins) != 4 {
-		t.Fatal("expected four custom inventory entries with schema version 1")
+	if inventory.SchemaVersion != 1 || len(inventory.Plugins) != 5 {
+		t.Fatal("expected five custom inventory entries with schema version 1")
 	}
 	expected := map[string]struct{ repo, version, sdk, mode, status string }{
 		"bloem.storage.bookwarehouse":  {"bloem-plugin-bookwarehouse", "0.2.3", "0.26.0", "native", "requires_native_approval"},
 		"bloem.storage.s3":             {"bloem-storage-s3", "0.3.2", "0.27.0", "native", "requires_native_approval"},
 		"bloem.requests.bookwarehouse": {"bloem-plugin-requests-bookwarehouse", "0.1.2", "0.26.0", "ordinary", "requires_connection_and_policy"},
+		"bloem.requests.audiobooks":    {"bloem-plugin-requests-audiobooks", "0.1.0", "0.26.0", "ordinary", "requires_connection_and_download_client"},
 		"bloem.pastime":                {"bloem-plugin-pastime", "0.1.14", "0.26.0", "native", "requires_explicit_enrollment"},
 	}
 	for _, p := range inventory.Plugins {

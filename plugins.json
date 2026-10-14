@@ -108,7 +108,7 @@
       "requirements": [
         "A Bookwarehouse request connection.",
         "Explicit organization opt-in for ebook requests and a bound native ebook library.",
-        "Audiobook requests have no automatic acquisition backend."
+        "Audiobook requests use the separate Audiobook requests plugin (bloem.requests.audiobooks)."
       ],
       "license_spdx": "LicenseRef-Bloem-Proprietary",
       "source_visibility": "private",
@@ -126,6 +126,36 @@
         "darwin/arm64": {
           "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/requests-bookwarehouse-v0.1.2/plugin-darwin-arm64",
           "checksum": "fcec852446c320973dcec7c76819568578356030067094288a75fdca22f6d997"
+        }
+      }
+    },
+    {
+      "plugin_id": "bloem.requests.audiobooks",
+      "display_name": "Audiobook requests",
+      "repository_url": "https://github.com/Bloem-Studios/bloem-plugin-requests-audiobooks",
+      "source_version": "0.1.0",
+      "sdk_version": "0.26.0",
+      "installation_mode": "ordinary",
+      "status": "requires_connection_and_download_client",
+      "summary": "Finds approved audiobook requests and hands them to qBittorrent or NZBGet.",
+      "requirements": [
+        "An audiobook acquisition connection created from Bloem's audiobook request setup, with a qBittorrent and/or NZBGet download client.",
+        "An audiobook library bound to the connection, with a dedicated download folder inside it that the download client can write and that holds fewer than 10,000 files.",
+        "Acquisition runs only for the default organization; other organizations' audiobook requests stay manual.",
+        "AI selection and verification are off by default and need their own OpenAI-compatible endpoint and key."
+      ],
+      "license_spdx": "LicenseRef-Bloem-Proprietary",
+      "source_visibility": "private",
+      "release_url": "https://github.com/Bloem-Studios/bloem-plugins/releases/tag/requests-audiobooks-v0.1.0",
+      "checksums_url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/requests-audiobooks-v0.1.0/checksums.txt",
+      "binaries": {
+        "linux/amd64": {
+          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/requests-audiobooks-v0.1.0/plugin-linux-amd64",
+          "checksum": "a7d1076aa40d21d82f7eeeb4c8b8fac5be6aa82bfd2c4948ef6811c9d0dfd431"
+        },
+        "linux/arm64": {
+          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/requests-audiobooks-v0.1.0/plugin-linux-arm64",
+          "checksum": "da80d32d72f2d5a8f73f0091a4b23762dcfb6bd5570609106ab4ae9736f3113f"
         }
       }
     }
