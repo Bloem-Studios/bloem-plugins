@@ -1,6 +1,6 @@
-# Install Bookwarehouse 0.2.3
+# Install Bookwarehouse 0.3.2
 
-Download the executable for your server from the [official binary release](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/bookwarehouse-v0.2.3), plus `checksums.txt`, the license and third-party notices. Verify the SHA-256 before making the executable runnable. Linux amd64 additionally includes its extracted manifest and an example approval map.
+Download the executable for your server from the [official binary release](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/bookwarehouse-v0.3.2), plus `checksums.txt`, the license and third-party notices. Verify the SHA-256 before making the executable runnable. Linux amd64 additionally includes its extracted manifest and an example approval map.
 
 Bookwarehouse is a native StorageProvider, not an ordinary metadata plugin. Do not install it through the ordinary plugin catalog or invent public capabilities for it.
 
@@ -14,9 +14,9 @@ For Linux arm64 or macOS arm64, extract the manifest by running the downloaded e
 
 Obtain a current signed administrative context from `POST /api/bloem/v1/admin/session`. Use `/api/bloem/v1/admin/organization/native-storage` or the corresponding platform scope. `GET /artifacts` lists approvals available to that server process.
 
-Send `POST /installations` with exactly two multipart parts: `binary` containing the raw executable and `request` containing JSON with `artifact_key`, `provider_source_id`, `root_entry_id`, `enabled`, and `config`. The protected connection object belongs under `config.connection`; it contains the Bookwarehouse `base_url`, `api_key`, `source_id` and `source_name`. Keep credentials in backend configuration; never place them in catalog metadata or release files. `provider_source_id` must match the configured source ID.
+Send `POST /installations` with exactly two multipart parts: `binary` containing the raw executable and `request` containing JSON with `artifact_key`, `provider_source_id`, `root_entry_id`, `enabled`, and `config`. The protected connection object belongs under `config.connection`; it contains the Bookwarehouse `base_url`, `api_key`, `source_id` and `source_name`, and `content`: `ebooks` (the default) or `audiobooks`. Use a separate installation for each; do not change `content` on a populated source. Keep credentials in backend configuration; never place them in catalog metadata or release files. `provider_source_id` must match the configured source ID.
 
-After installation, create a library referring to the returned native `source_key`, rather than filesystem paths. Installation alone neither creates a library nor scans it. Backend acceptance must verify real listing, metadata, cover and download behavior.
+After installation, create a library referring to the returned native `source_key`, rather than filesystem paths. Installation alone neither creates a library nor scans it. Backend acceptance must verify real listing, metadata, cover and download behavior. Browsing below the ebook format folders also requires the Bookwarehouse `GET /api/v1/books/folders` operation; a root listing alone does not exercise it.
 
 ## Ebook cover cache
 

@@ -7,7 +7,7 @@ Public metadata and official proprietary binary releases from Bloem Studios. Cus
 | Plugin | Version | Install path |
 | --- | --- | --- |
 | [Pastime](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/pastime-v0.2.0) | 0.2.0 | Plugin catalog; Pastime release A, Pastime address and one Connect Silo key per profile required |
-| [Bookwarehouse](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/bookwarehouse-v0.2.3) | 0.2.3 | Native storage installer; exact-artifact approval required |
+| [Bookwarehouse](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/bookwarehouse-v0.3.2) | 0.3.2 | Native storage installer; exact-artifact approval required |
 | [S3 storage](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/s3-v0.3.2) | 0.3.2 | Native storage installer; exact-artifact approval and source configuration required |
 | [Bookwarehouse ebook requests](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/requests-bookwarehouse-v0.1.2) | 0.1.2 | Plugin catalog; connection, organization policy and native ebook library binding required |
 | [Audiobook requests](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/requests-audiobooks-v0.1.0) | 0.1.0 | Plugin catalog; audiobook acquisition connection, download client and audiobook library binding required |
