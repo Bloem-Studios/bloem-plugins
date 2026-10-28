@@ -1,6 +1,6 @@
-# Install Bookwarehouse 0.3.3
+# Install Bookwarehouse 0.3.4
 
-Download the executable for your server from the [official binary release](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/bookwarehouse-v0.3.3), plus `checksums.txt`, the license and third-party notices. Verify the SHA-256 before making the executable runnable. Linux amd64 additionally includes its extracted manifest and an example approval map.
+Download the executable for your server from the [official binary release](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/bookwarehouse-v0.3.4), plus `checksums.txt`, the license and third-party notices. Verify the SHA-256 before making the executable runnable. Linux amd64 additionally includes its extracted manifest and an example approval map.
 
 Bookwarehouse is a native StorageProvider, not an ordinary metadata plugin. Do not install it through the ordinary plugin catalog or invent public capabilities for it.
 
