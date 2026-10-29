@@ -5,7 +5,7 @@ in Silo's existing catalog and should be consumed directly.
 
 Maintain `plugins.json` as the custom source inventory: stable plugin ID, private source
 repository, public binary release, source version, SDK version, installation mode, status and prerequisites.
-Keep it separate from the installable `manifest.json` feed. Pastime 0.1.2 is listed in the ordinary feed. Bookwarehouse 0.3.8 uses the separate native storage admission path.
+Keep it separate from the installable `manifest.json` feed. Pastime 0.1.2 is listed in the ordinary feed. Bookwarehouse 0.3.9 uses the separate native storage admission path.
 
 Bookwarehouse uses native StorageProvider admission with an approval that pins
 the exact artifact version and SHA-256. Pastime requires the matching managed-tracking
