@@ -31,7 +31,7 @@ func TestInventoryContainsOnlyCustomPluginsWithExplicitPrerequisites(t *testing.
 	}
 	expected := map[string]struct{ repo, version, sdk, mode, status string }{
 		"bloem.storage.bookwarehouse":  {"bloem-plugin-bookwarehouse", "0.3.9", "0.27.0", "native", "requires_native_approval"},
-		"bloem.storage.s3":             {"bloem-storage-s3", "0.3.2", "0.27.0", "native", "requires_native_approval"},
+		"bloem.storage.s3":             {"bloem-storage-s3", "0.4.0", "0.27.0", "native", "requires_native_approval"},
 		"bloem.requests.bookwarehouse": {"bloem-plugin-requests-bookwarehouse", "0.1.2", "0.26.0", "ordinary", "requires_connection_and_policy"},
 		"bloem.requests.audiobooks":    {"bloem-plugin-requests-audiobooks", "0.1.0", "0.26.0", "ordinary", "requires_connection_and_download_client"},
 		"bloem.pastime":                {"bloem-plugin-pastime", "0.2.0", "0.26.0", "ordinary", "requires_connection_and_policy"},

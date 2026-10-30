@@ -72,11 +72,11 @@
       "plugin_id": "bloem.storage.s3",
       "display_name": "S3 storage",
       "repository_url": "https://github.com/Bloem-Studios/bloem-storage-s3",
-      "source_version": "0.3.2",
+      "source_version": "0.4.0",
       "sdk_version": "0.27.0",
       "installation_mode": "native",
       "status": "requires_native_approval",
-      "summary": "Authenticated S3 objects with immutable versions or explicitly enabled checked ETag reads.",
+      "summary": "Authenticated S3 objects from one bucket or every bucket the keys can list, with immutable versions or explicitly enabled checked ETag reads.",
       "requirements": [
         "Bloem native StorageProvider host support.",
         "Operator approval of the exact packaged plugin version and binary SHA-256.",
@@ -85,16 +85,16 @@
       ],
       "license_spdx": "LicenseRef-Bloem-Proprietary",
       "source_visibility": "private",
-      "release_url": "https://github.com/Bloem-Studios/bloem-plugins/releases/tag/s3-v0.3.2",
-      "checksums_url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/s3-v0.3.2/checksums.txt",
+      "release_url": "https://github.com/Bloem-Studios/bloem-plugins/releases/tag/s3-v0.4.0",
+      "checksums_url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/s3-v0.4.0/checksums.txt",
       "binaries": {
         "linux/amd64": {
-          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/s3-v0.3.2/plugin-linux-amd64",
-          "checksum": "5af4d564c74df1500ede6f0de2ef319657bc55c903fd80f85a5ec1002ca7148d"
+          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/s3-v0.4.0/plugin-linux-amd64",
+          "checksum": "e289d6a3a19039f21f978de075f41fe856ef49a10c95c1c55455a8efa1122ff4"
         },
         "linux/arm64": {
-          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/s3-v0.3.2/plugin-linux-arm64",
-          "checksum": "d9ffe7b60d898f547a55d54df6cedcc2bd388f2ca8e854fbc0ba45dd83aba998"
+          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/s3-v0.4.0/plugin-linux-arm64",
+          "checksum": "96d9a29e554bb1020985b6b9986f2011f27e0400fa21879ed68fcee19d66e9e6"
         }
       }
     },
