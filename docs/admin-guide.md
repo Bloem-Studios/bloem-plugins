@@ -24,8 +24,8 @@ offers to a server is on [how the Bloem plugin catalog works](../README.md).
   version, installation mode, status and prerequisites. `manifest.json` is the
   **feed** for ordinary plugins. Keep them separate.
 
-Pastime 0.2.0, Bookwarehouse ebook requests 0.1.2 and Audiobook requests 0.1.0 are
-in the feed. Bookwarehouse 0.3.9 and S3 storage 0.4.0 are only in the inventory:
+Pastime 0.2.0, Bookwarehouse ebook requests 0.1.3 and Audiobook requests 0.1.0 are
+in the feed. Bookwarehouse 0.3.10 and S3 storage 0.4.0 are only in the inventory:
 they use Bloem Server's separate native storage path.
 
 ## Listing a new release
@@ -47,7 +47,7 @@ flowchart LR
    `checksums.txt`, the licence terms, the third-party notices, the build record and
    the program's own manifest.
 2. Publish a GitHub release in this repository, tagged with the plugin's name and
-   version, such as `bookwarehouse-v0.3.9`.
+   version, such as `bookwarehouse-v0.3.10`.
 3. Point the plugin's `plugins.json` entry at the new release: version, release
    links and checksums. Check every checksum against the published files.
 4. For an ordinary plugin, update its `manifest.json` entry the same way.
@@ -91,12 +91,12 @@ tests, and commits only `manifest.json`.
 
 This example is made up.
 
-A maintainer builds Bookwarehouse 0.3.10. She publishes a release tagged
-`bookwarehouse-v0.3.10` with the three programs and the release files, points the
+A maintainer builds Bookwarehouse 0.3.11. She publishes a release tagged
+`bookwarehouse-v0.3.11` with the three programs and the release files, points the
 `bloem.storage.bookwarehouse` entry in `plugins.json` at it with the new
 checksums, changes the expected version in the inventory test, and runs the tests.
-The next time a server refreshes its storage catalog, **Add source** offers 0.3.10;
-existing Bookwarehouse sources stay on 0.3.9 until an administrator upgrades them.
+The next time a server refreshes its storage catalog, **Add source** offers 0.3.11;
+existing Bookwarehouse sources stay on 0.3.10 until an administrator upgrades them.
 
 ## Who can change what
 

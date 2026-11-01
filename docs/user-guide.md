@@ -131,12 +131,12 @@ and key in its settings, sends a test request, and only then removes the old cop
   plugin, its configuration, its database repository association or its binary.
   Verify those separately during an actual server rollout.
 - The feed `manifest.json` lists Pastime 0.2.0, Audiobook requests 0.1.0 and
-  Bookwarehouse ebook requests 0.1.2. The inventory `plugins.json` includes all five
+  Bookwarehouse ebook requests 0.1.3. The inventory `plugins.json` includes all five
   custom plugins, their public binary download URLs, checksums and prerequisites.
   It is not an ordinary installer feed, but Bloem Server reads it directly for the
   two native storage providers (`internal/plugins/bloem_storage_catalog.go`).
 - **Bookwarehouse:** native EPUB/PDF and audiobook StorageProvider. Bloem Server
-  admits the listed [0.3.9 release](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/bookwarehouse-v0.3.9)
+  admits the listed [0.3.10 release](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/bookwarehouse-v0.3.10)
   after verifying it; a manually supplied executable needs an exact-artifact approval
   ([how to install Bookwarehouse](bookwarehouse-installation.md)).
 - **Pastime:** watch sync through Silo's `watch_sync_provider.v1`. Pastime release A

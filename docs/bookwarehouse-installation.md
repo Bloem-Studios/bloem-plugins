@@ -1,7 +1,7 @@
-# How to install Bookwarehouse 0.3.9
+# How to install Bookwarehouse 0.3.10
 
 > **Provenance and status.** Bloem plugin page, rewritten on 2026-11-01 and checked
-> against `main` at `acdd30d`. It covers installing the Bookwarehouse 0.3.9 native
+> against `main` at `acdd30d`. It covers installing the Bookwarehouse 0.3.10 native
 > storage provider on Bloem Server `main` at `e0320078f`, from the catalog or by hand,
 > and its cover cache; the technical rules are in the
 > [For developers](#for-developers) section.
@@ -56,7 +56,7 @@ Use this when the server should run a Bookwarehouse program that an operator
 downloaded and reviewed, instead of the one the catalog offers.
 
 1. Download the program for your server from the
-   [0.3.9 release](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/bookwarehouse-v0.3.9),
+   [0.3.10 release](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/bookwarehouse-v0.3.10),
    with `checksums.txt`, the licence and the third-party notices.
 2. Check its SHA-256 fingerprint against `checksums.txt` before you make it
    runnable.

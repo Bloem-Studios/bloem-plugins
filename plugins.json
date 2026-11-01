@@ -38,7 +38,7 @@
       "plugin_id": "bloem.storage.bookwarehouse",
       "display_name": "Bookwarehouse",
       "repository_url": "https://github.com/Bloem-Studios/bloem-plugin-bookwarehouse",
-      "source_version": "0.3.9",
+      "source_version": "0.3.10",
       "sdk_version": "0.27.0",
       "installation_mode": "native",
       "status": "requires_native_approval",
@@ -51,20 +51,20 @@
       ],
       "license_spdx": "LicenseRef-Bloem-Proprietary",
       "source_visibility": "private",
-      "release_url": "https://github.com/Bloem-Studios/bloem-plugins/releases/tag/bookwarehouse-v0.3.9",
-      "checksums_url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/bookwarehouse-v0.3.9/checksums.txt",
+      "release_url": "https://github.com/Bloem-Studios/bloem-plugins/releases/tag/bookwarehouse-v0.3.10",
+      "checksums_url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/bookwarehouse-v0.3.10/checksums.txt",
       "binaries": {
         "linux/amd64": {
-          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/bookwarehouse-v0.3.9/plugin-linux-amd64",
-          "checksum": "70151d837ac5d7d058eb6eec382041bcb061171318e5a0898e47320cdfd3d6b7"
+          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/bookwarehouse-v0.3.10/plugin-linux-amd64",
+          "checksum": "c1fc169af3f705974b32e645f6005e2b513010a79bdc3e1a90aa39c87d354df7"
         },
         "linux/arm64": {
-          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/bookwarehouse-v0.3.9/plugin-linux-arm64",
-          "checksum": "0398004e7fa0a96d3b1bf936ae37292cfac81b0b921d7f8c623f0e64b533c74d"
+          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/bookwarehouse-v0.3.10/plugin-linux-arm64",
+          "checksum": "dbec502bab13e5c0ce4a73964376f007408da331cb14eb0e24eff635135a4c5a"
         },
         "darwin/arm64": {
-          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/bookwarehouse-v0.3.9/plugin-darwin-arm64",
-          "checksum": "af127d370f0e69f6b41d7fa44b7a3b5565998fb10064cd280707b5c0164c29fc"
+          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/bookwarehouse-v0.3.10/plugin-darwin-arm64",
+          "checksum": "a32c7c5b9df5cb64a28f9092e78c4f9a9c6e745fd6454ecf3ebe892ce7dc1d39"
         }
       }
     },
@@ -102,7 +102,7 @@
       "plugin_id": "bloem.requests.bookwarehouse",
       "display_name": "Bookwarehouse ebook requests",
       "repository_url": "https://github.com/Bloem-Studios/bloem-plugin-requests-bookwarehouse",
-      "source_version": "0.1.2",
+      "source_version": "0.1.3",
       "sdk_version": "0.26.0",
       "installation_mode": "ordinary",
       "status": "requires_connection_and_policy",
@@ -114,20 +114,20 @@
       ],
       "license_spdx": "LicenseRef-Bloem-Proprietary",
       "source_visibility": "private",
-      "release_url": "https://github.com/Bloem-Studios/bloem-plugins/releases/tag/requests-bookwarehouse-v0.1.2",
-      "checksums_url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/requests-bookwarehouse-v0.1.2/checksums.txt",
+      "release_url": "https://github.com/Bloem-Studios/bloem-plugins/releases/tag/requests-bookwarehouse-v0.1.3",
+      "checksums_url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/requests-bookwarehouse-v0.1.3/checksums.txt",
       "binaries": {
         "linux/amd64": {
-          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/requests-bookwarehouse-v0.1.2/plugin-linux-amd64",
-          "checksum": "55b630bce8a3aa167b0542b29db92242365a01f2e652ebbc8a88f28084453a75"
+          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/requests-bookwarehouse-v0.1.3/plugin-linux-amd64",
+          "checksum": "f5b3e5083f54bbd3d54fe129d100b23452b461e63392d54d98df5778bf45df24"
         },
         "linux/arm64": {
-          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/requests-bookwarehouse-v0.1.2/plugin-linux-arm64",
-          "checksum": "491117a61ede3e728a3f5cd20a2ab674d6f3ae4cf486aeb5ac5b32b7e5601eae"
+          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/requests-bookwarehouse-v0.1.3/plugin-linux-arm64",
+          "checksum": "e2e0c348c2ae216d5386f329f2d3db8320dc80e3784a8eb72eabda4fdd278a0c"
         },
         "darwin/arm64": {
-          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/requests-bookwarehouse-v0.1.2/plugin-darwin-arm64",
-          "checksum": "fcec852446c320973dcec7c76819568578356030067094288a75fdca22f6d997"
+          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/requests-bookwarehouse-v0.1.3/plugin-darwin-arm64",
+          "checksum": "1f1e7bdffa24b9deabe091f9ea660c62e5d1ea9d852a1eccf7eac17713a6511a"
         }
       }
     },
