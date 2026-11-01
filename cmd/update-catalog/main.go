@@ -28,10 +28,11 @@ const githubAPIOrigin = "https://api.github.com"
 var releaseBinaryNames = []string{"plugin-darwin-arm64", "plugin-linux-amd64", "plugin-linux-arm64"}
 var sha256Pattern = regexp.MustCompile(`^[0-9a-fA-F]{64}$`)
 
-// Shared plugins are distributed by Silo's catalog. No custom plugin currently
-// has a reviewed generic-installer release: Bookwarehouse requires native host
-// approval, and Pastime requires the managed-tracking integration. Add a repo
-// here only after its release/install path is explicitly reviewed.
+// Shared plugins are distributed by Silo's catalog. No custom plugin goes
+// through this generic updater: Bookwarehouse and S3 install through Bloem
+// Server's native storage path, and Pastime and the two request plugins are
+// reviewed releases entered in manifest.json and plugins.json by hand. Add a
+// repo here only after its release/install path is explicitly reviewed.
 var allowedRepositories = map[string]struct{}{}
 
 func main() {

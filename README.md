@@ -333,14 +333,13 @@ repository), `source_version`, `sdk_version`, `installation_mode`, `status`,
 | `bloem.requests.bookwarehouse` | 0.1.2 | 0.26.0 | `ordinary` | `requires_connection_and_policy` |
 | `bloem.requests.audiobooks` | 0.1.0 | 0.26.0 | `ordinary` | `requires_connection_and_download_client` |
 
-Its `requirements` strings are the published prerequisites. Some published text
-predates or differs from current Bloem Server behaviour: Bookwarehouse's "Operator
-approval of the exact packaged plugin version and binary SHA-256" (Bloem Server now
-admits a listed Bookwarehouse release automatically; S3 still needs the pin);
-Audiobook requests' download folder that "holds fewer than 10,000 files" (the server
-accepts a root with at most 10,000 catalogued, non-missing files); and the
-Bookwarehouse ebook requests manifest's setup text, which says audiobook requests
-"have no automatic acquisition backend" (Audiobook requests 0.1.0 is that backend).
+Its `requirements` strings are the published prerequisites, and they match current
+Bloem Server behaviour: a listed Bookwarehouse release is admitted automatically while
+S3 needs its digest pinned, and an audiobook download folder may hold at most 10,000
+catalogued, non-missing files. One older text remains inside a released binary: the
+Bookwarehouse ebook requests 0.1.2 manifest's setup text says audiobook requests
+"have no automatic acquisition backend" (Audiobook requests 0.1.0 is that backend). Its
+source carries the corrected text for the next release.
 
 ### How Bloem Server reads the inventory
 
@@ -363,8 +362,10 @@ its checksum and version match an artifact pinned in the host's static approvals
 (`BLOEM_NATIVE_STORAGE_APPROVALS`); its served manifest must also carry that
 checksum, and the pinned manifest is used, never the served one. A Bookwarehouse
 row's manifest takes the row's checksum. Because a release's `manifest.json` carries
-the linux/amd64 digest, the S3 0.4.0 catalog row passes that check only on a
-linux/amd64 server; on linux/arm64, install S3 as a manually approved artifact. The
+the linux/amd64 digest, a Bloem Server older than `99a4a1133` (2026-11-01) offers the
+S3 0.4.0 catalog row only on linux/amd64; there, on linux/arm64, install S3 as a
+manually approved artifact. From `99a4a1133` on, a served manifest naming any binary
+of the same release passes, so the arm64 row is offered too. The
 artifact key is
 `<prefix>-<version>-<os>-<arch>-<sha256>`. Verified rows are cached in
 `native-catalog.json` under the native installation root. Installing downloads the

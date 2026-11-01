@@ -45,7 +45,7 @@
       "summary": "Native EPUB/PDF and audiobook storage with a bounded, verified download cache.",
       "requirements": [
         "Bloem native StorageProvider host support.",
-        "Operator approval of the exact packaged plugin version and binary SHA-256.",
+        "Catalog releases are admitted automatically; a build uploaded by hand needs operator approval of its exact version and binary SHA-256.",
         "Backend Bookwarehouse connection configuration and acceptance checks.",
         "Browsing below the ebook format folders requires the Bookwarehouse GET /api/v1/books/folders operation."
       ],
@@ -109,7 +109,7 @@
       "summary": "Routes approved ebook requests to Bookwarehouse.",
       "requirements": [
         "A Bookwarehouse request connection.",
-        "Explicit organization opt-in for ebook requests and a bound native ebook library.",
+        "Ebook requests turned on for the default organization (the only one they serve) and a bound native ebook library.",
         "Audiobook requests use the separate Audiobook requests plugin (bloem.requests.audiobooks)."
       ],
       "license_spdx": "LicenseRef-Bloem-Proprietary",
@@ -142,7 +142,7 @@
       "summary": "Finds approved audiobook requests and hands them to qBittorrent or NZBGet.",
       "requirements": [
         "An audiobook acquisition connection created from Bloem's audiobook request setup, with a qBittorrent and/or NZBGet download client.",
-        "An audiobook library bound to the connection, with a dedicated download folder inside it that the download client can write and that holds fewer than 10,000 files.",
+        "An audiobook library bound to the connection, with a dedicated download folder inside it that the download client can write and that holds at most 10,000 files.",
         "Acquisition runs only for the default organization; other organizations' audiobook requests stay manual.",
         "AI selection and verification are off by default and need their own OpenAI-compatible endpoint and key."
       ],
