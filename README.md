@@ -2,8 +2,8 @@
 
 > **Provenance and status.** Bloem plugin page, rewritten on 2026-11-01 and checked
 > against `main` at `acdd30d`. It covers this public catalog of Bloem Studios' five
-> proprietary plugins (Pastime 0.2.0, Bookwarehouse 0.3.10, S3 storage 0.4.0,
-> Bookwarehouse ebook requests 0.1.3 and Audiobook requests 0.1.0) and how Bloem
+> proprietary plugins (Pastime 0.2.0, Bookwarehouse 0.3.10, S3 storage 0.4.1,
+> Bookwarehouse ebook requests 0.1.3 and Audiobook requests 0.1.1) and how Bloem
 > Server `main` at `e0320078f` installs them; the technical rules are in the
 > [For developers](#for-developers) section.
 
@@ -76,9 +76,9 @@ flowchart LR
 | --- | --- | --- | --- |
 | [Pastime 0.2.0](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/pastime-v0.2.0) | Sends what each connected profile watches to Pastime, a separate watch-tracking service, and brings Pastime favourites, watchlist and ratings back. | Ordinary plugin, from the feed | Linux (amd64, arm64), macOS (arm64) |
 | [Bookwarehouse 0.3.10](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/bookwarehouse-v0.3.10) | Lets a library read EPUB and PDF ebooks, and audiobooks, from a Bookwarehouse book service. | Native storage provider, from the inventory | Linux (amd64, arm64), macOS (arm64) |
-| [S3 storage 0.4.0](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/s3-v0.4.0) | Lets a library read files from one S3 bucket, or from every bucket its keys can list. | Native storage provider, from the inventory, once the operator pins it | Linux (amd64, arm64) |
+| [S3 storage 0.4.1](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/s3-v0.4.1) | Lets a library read files from one S3 bucket, or from every bucket its keys can list. | Native storage provider, from the inventory, once the operator pins it | Linux (amd64, arm64) |
 | [Bookwarehouse ebook requests 0.1.3](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/requests-bookwarehouse-v0.1.3) | Sends approved ebook requests to Bookwarehouse. | Ordinary plugin, from the feed | Linux (amd64, arm64), macOS (arm64) |
-| [Audiobook requests 0.1.0](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/requests-audiobooks-v0.1.0) | Searches AudiobookBay, abook.link and NZBKing for approved audiobook requests and hands one release to qBittorrent or NZBGet. | Ordinary plugin, from the feed | Linux (amd64, arm64) |
+| [Audiobook requests 0.1.1](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/requests-audiobooks-v0.1.1) | Searches AudiobookBay, abook.link and NZBKing for approved audiobook requests and hands one release to qBittorrent or NZBGet. | Ordinary plugin, from the feed | Linux (amd64, arm64) |
 
 ## Installing the plugins
 
@@ -213,8 +213,9 @@ flowchart TD
   server program, pins its checksum in the server's approvals file. See Bloem
   Server's
   [storage sources](https://github.com/Bloem-Studios/bloem-server/blob/main/docs/architecture/bloem-storage-sources.md)
-  page. The 0.4.0 catalog release is offered only on a Linux amd64 server; on Linux
-  arm64 the operator installs it by hand as an approved upload. S3 reads
+  page. A Bloem Server older than `99a4a1133` offers the catalog release only on
+  Linux amd64; on Linux arm64 the operator then installs it by hand as an approved
+  upload. S3 reads
   **immutable object versions** by default, so a file can't change under a reader. **Checked ETag** reads, for buckets without versions, need an
   explicit opt-in and cannot prove the bytes are unchanged.
 
@@ -224,9 +225,9 @@ flowchart TD
 | --- | --- | --- | --- | --- |
 | Pastime 0.2.0 | 3 | yes | no | no |
 | Bookwarehouse 0.3.10 | 3 | yes | yes | yes, plus the linux/amd64 manifest and an example approvals file |
-| S3 storage 0.4.0 | 2 | yes | yes | yes, plus the linux/amd64 manifest |
+| S3 storage 0.4.1 | 2 | yes | yes | yes, plus the linux/amd64 manifest |
 | Bookwarehouse ebook requests 0.1.3 | 3 | yes | yes | yes, plus the linux/amd64 manifest |
-| Audiobook requests 0.1.0 | 2 | yes | yes | yes, plus the linux/amd64 manifest |
+| Audiobook requests 0.1.1 | 2 | yes | yes | yes, plus the linux/amd64 manifest |
 
 The **build record** names the source revision a release was built from. No
 plugin source is published here.
@@ -285,9 +286,9 @@ the club's ebooks on Bookwarehouse in Bloem, and members to ask for new ones.
 | --- | --- | --- |
 | [Pastime](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/pastime-v0.2.0) | 0.2.0 | Plugin catalog; Pastime release A, Pastime address and one Connect Silo key per profile required |
 | [Bookwarehouse](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/bookwarehouse-v0.3.10) | 0.3.10 | Native storage installer; Bloem Server admits the listed release after verifying its URL, checksum and release manifest |
-| [S3 storage](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/s3-v0.4.0) | 0.4.0 | Native storage installer; exact-artifact approval (a pin in the host's static approvals) and source configuration required |
+| [S3 storage](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/s3-v0.4.1) | 0.4.1 | Native storage installer; exact-artifact approval (a pin in the host's static approvals) and source configuration required |
 | [Bookwarehouse ebook requests](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/requests-bookwarehouse-v0.1.3) | 0.1.3 | Plugin catalog; connection, organization policy and native ebook library binding required |
-| [Audiobook requests](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/requests-audiobooks-v0.1.0) | 0.1.0 | Plugin catalog; audiobook acquisition connection, download client and audiobook library binding required |
+| [Audiobook requests](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/requests-audiobooks-v0.1.1) | 0.1.1 | Plugin catalog; audiobook acquisition connection, download client and audiobook library binding required |
 
 S3 and Audiobook requests support Linux amd64 and arm64; the other releases also
 include macOS arm64. Each release has `plugin-<os>-<arch>` executables and
@@ -301,9 +302,9 @@ linux/amd64 digest). Bookwarehouse 0.3.10 also carries
 `checksums.txt` and its three executables.
 
 Every executable prints its manifest with `plugin-<os>-<arch> manifest`. Audiobook
-requests 0.1.0 also reports its source commit with `plugin-<os>-<arch> version`
+requests 0.1.1 also reports its source commit with `plugin-<os>-<arch> version`
 and in its manifest's `metadata.source_revision`
-(`b617a30425a3ddc83de9f9707fffc9c2a6c370e4`); the other releases record theirs only
+(`1156109364b9ecd9bac19b764b8058bd15fbc403`); the other releases record theirs only
 in `build.json`.
 
 ### The two files
@@ -329,9 +330,9 @@ repository), `source_version`, `sdk_version`, `installation_mode`, `status`,
 | --- | --- | --- | --- | --- |
 | `bloem.pastime` | 0.2.0 | 0.26.0 | `ordinary` | `requires_connection_and_policy` |
 | `bloem.storage.bookwarehouse` | 0.3.10 | 0.27.0 | `native` | `requires_native_approval` |
-| `bloem.storage.s3` | 0.4.0 | 0.27.0 | `native` | `requires_native_approval` |
+| `bloem.storage.s3` | 0.4.1 | 0.27.0 | `native` | `requires_native_approval` |
 | `bloem.requests.bookwarehouse` | 0.1.3 | 0.26.0 | `ordinary` | `requires_connection_and_policy` |
-| `bloem.requests.audiobooks` | 0.1.0 | 0.26.0 | `ordinary` | `requires_connection_and_download_client` |
+| `bloem.requests.audiobooks` | 0.1.1 | 0.26.0 | `ordinary` | `requires_connection_and_download_client` |
 
 Its `requirements` strings are the published prerequisites, and they match current
 Bloem Server behaviour: a listed Bookwarehouse release is admitted automatically while
@@ -362,7 +363,7 @@ its checksum and version match an artifact pinned in the host's static approvals
 checksum, and the pinned manifest is used, never the served one. A Bookwarehouse
 row's manifest takes the row's checksum. Because a release's `manifest.json` carries
 the linux/amd64 digest, a Bloem Server older than `99a4a1133` (2026-11-01) offers the
-S3 0.4.0 catalog row only on linux/amd64; there, on linux/arm64, install S3 as a
+S3 catalog row only on linux/amd64; there, on linux/arm64, install S3 as a
 manually approved artifact. From `99a4a1133` on, a served manifest naming any binary
 of the same release passes, so the arm64 row is offered too. The
 artifact key is
@@ -441,7 +442,7 @@ root may hold at most 10,000 files (`audiobookMaxRootFiles`).
 (`bloem.storage.s3`): see [how to install Bookwarehouse](docs/bookwarehouse-installation.md)
 and Bloem Server's
 [native storage](https://github.com/Bloem-Studios/bloem-server/blob/main/docs/architecture/bloem-native-storage.md)
-page. S3 0.4.0 lets a source leave its bucket empty to cover every bucket its keys
+page. Since 0.4.0, S3 lets a source leave its bucket empty to cover every bucket its keys
 can list. It requires immutable object versions by default; checked ETag reads
 (`connection.revision_mode: "checked-etag"`) require explicit opt-in and cannot
 prove unchanged bytes.
