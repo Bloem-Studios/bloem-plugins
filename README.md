@@ -2,7 +2,7 @@
 
 > **Provenance and status.** Bloem plugin page, rewritten on 2026-11-01 and checked
 > against `main` at `acdd30d`. It covers this public catalog of Bloem Studios' five
-> proprietary plugins (Pastime 0.2.0, Bookwarehouse 0.3.10, S3 storage 0.4.1,
+> proprietary plugins (Pastime 0.4.0, Bookwarehouse 0.3.10, S3 storage 0.4.1,
 > Bookwarehouse ebook requests 0.1.3 and Audiobook requests 0.1.1) and how Bloem
 > Server `main` at `e0320078f` installs them; the technical rules are in the
 > [For developers](#for-developers) section.
@@ -74,7 +74,7 @@ flowchart LR
 
 | Plugin | What it does | How it is installed | Runs on |
 | --- | --- | --- | --- |
-| [Pastime 0.2.0](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/pastime-v0.2.0) | Sends what each connected profile watches to Pastime, a separate watch-tracking service, and brings Pastime favourites, watchlist and ratings back. | Ordinary plugin, from the feed | Linux (amd64, arm64), macOS (arm64) |
+| [Pastime 0.4.0](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/pastime-v0.4.0) | Sends what each connected profile watches to Pastime, a separate watch-tracking service, and brings Pastime's plays, resume points, favourites, watchlist and ratings back, with the removals made in Pastime. | Ordinary plugin, from the feed | Linux (amd64, arm64), macOS (arm64) |
 | [Bookwarehouse 0.3.10](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/bookwarehouse-v0.3.10) | Lets a library read EPUB and PDF ebooks, and audiobooks, from a Bookwarehouse book service. | Native storage provider, from the inventory | Linux (amd64, arm64), macOS (arm64) |
 | [S3 storage 0.4.1](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/s3-v0.4.1) | Lets a library read files from one S3 bucket, or from every bucket its keys can list. | Native storage provider, from the inventory, once the operator pins it | Linux (amd64, arm64) |
 | [Bookwarehouse ebook requests 0.1.3](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/requests-bookwarehouse-v0.1.3) | Sends approved ebook requests to Bookwarehouse. | Ordinary plugin, from the feed | Linux (amd64, arm64), macOS (arm64) |
@@ -102,8 +102,8 @@ fixed address of its own.
 
 ### Pastime
 
-1. Deploy **Pastime release A** (database schema 57) on the Pastime side first.
-   Plugin 0.2.0 needs it.
+1. Deploy Pastime at database schema 63 or later on the Pastime side first.
+   Plugin 0.4.0 needs it for removals; plugin 0.2.0 needs schema 57.
 2. Install **Pastime** from the Catalog tab. In its settings, set **Pastime
    address** to the HTTPS address people open Pastime at, for example
    `https://pastime.example.com`.
@@ -114,7 +114,11 @@ fixed address of its own.
 
 A new key replaces the profile's previous one. Disconnecting in Bloem stops
 sending, and so does revoking the key in Pastime. Pastime favourites, watchlist and
-ratings are added to Bloem; reading from Pastime never removes anything from Bloem.
+ratings are added to Bloem. From 0.4.0, a removal made in Pastime reaches Bloem for
+that profile only: a favourite, watchlist item or rating removed in Pastime goes when
+the connection synced it and its removal settings allow it, and a movie or show
+deleted from the Pastime library leaves that profile's Bloem watch history, up to the
+time of the deletion. An absent item never removes anything from Bloem.
 
 Pastime 0.2.0 uses Silo's own **watch sync**, the part of the server that talks to
 tracking services. Earlier 0.1.x releases needed a Bloem-only connection called
