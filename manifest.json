@@ -3,8 +3,8 @@
     {
       "manifest": {
         "plugin_id": "bloem.pastime",
-        "version": "0.2.0",
-        "checksum": "025acf00d4a934d1d51126e8bd3c9a9fe09f0c1664451b903fa7af4ef6234fee",
+        "version": "0.3.0",
+        "checksum": "56fa56c6dcf36182d94b911add29d815fb47a7bca8b3ba3c25faeef701ff547d",
         "silo_api_version": "v1",
         "supported_platforms": [
           {
@@ -25,12 +25,14 @@
             "type": "watch_sync_provider.v1",
             "id": "pastime",
             "display_name": "Pastime",
-            "description": "Sends what you watch to Pastime.",
+            "description": "Keeps what you watch in step with Pastime.",
             "watch_sync_provider": {
               "auth_methods": [
                 2
               ],
               "export_watched": true,
+              "import_watched": true,
+              "import_progress": true,
               "supported_media_types": [
                 1,
                 3,
@@ -81,8 +83,8 @@
         ],
         "presentation": {
           "display_name": "Pastime",
-          "summary": "Sends playback, history, favourites, watchlist and ratings to Pastime.",
-          "description_markdown": "Sends what each connected profile watches to Pastime: live playback, finished plays, favourites, watchlist and ratings. Pastime favourites, watchlist and ratings are added to Silo; a Pastime read never removes anything from Silo.",
+          "summary": "Sends playback, history, favourites, watchlist and ratings to Pastime, and brings in what you watched elsewhere.",
+          "description_markdown": "Sends what each connected profile watches to Pastime: live playback, finished plays, favourites, watchlist and ratings. Pastime favourites, watchlist and ratings are added to Silo, and so are plays and resume points Pastime recorded from other sources; plays Silo sent are never read back. A Pastime read never removes anything from Silo.",
           "setup_markdown": "1. Install the plugin and set **Pastime address** to the address people open Pastime at.\n2. Each person opens Pastime's **Connect Silo** page, creates a key for their Pastime profile, then in Silo switches to that profile, opens **Settings → Watch Providers**, chooses **Pastime** and pastes the key.\n\nA new key replaces the profile's previous one. Disconnecting in Silo stops sending; revoking the key in Pastime does too.",
           "homepage_url": "https://github.com/Bloem-Studios/bloem-plugins",
           "source_url": "https://github.com/Bloem-Studios/bloem-plugin-pastime",
@@ -94,19 +96,19 @@
         }
       },
       "repo_url": "https://github.com/Bloem-Studios/bloem-plugins",
-      "checksums_url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/pastime-v0.2.0/checksums.txt",
+      "checksums_url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/pastime-v0.3.0/checksums.txt",
       "binaries": {
         "darwin/arm64": {
-          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/pastime-v0.2.0/plugin-darwin-arm64",
-          "checksum": "f07e7818b8849d0d428e8b692cf02b869122762752dace7c05c37064cbc64374"
+          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/pastime-v0.3.0/plugin-darwin-arm64",
+          "checksum": "0b652999d3670981235a77ad47509e785cd004a2c5cb5d310e096c40606423d5"
         },
         "linux/amd64": {
-          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/pastime-v0.2.0/plugin-linux-amd64",
-          "checksum": "025acf00d4a934d1d51126e8bd3c9a9fe09f0c1664451b903fa7af4ef6234fee"
+          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/pastime-v0.3.0/plugin-linux-amd64",
+          "checksum": "56fa56c6dcf36182d94b911add29d815fb47a7bca8b3ba3c25faeef701ff547d"
         },
         "linux/arm64": {
-          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/pastime-v0.2.0/plugin-linux-arm64",
-          "checksum": "53d1fe1d0a123f8f03ac7c57d1bbeebbc19166c0ff7293c11dea3b083ae602e3"
+          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/pastime-v0.3.0/plugin-linux-arm64",
+          "checksum": "9a8cc09971ac8b89d83f23459951e936d371e27066ece90bc24ae4ccafa6e1c1"
         }
       }
     },
