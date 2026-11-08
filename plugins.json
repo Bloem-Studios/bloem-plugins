@@ -102,7 +102,7 @@
       "plugin_id": "bloem.requests.bookwarehouse",
       "display_name": "Bookwarehouse ebook requests",
       "repository_url": "https://github.com/Bloem-Studios/bloem-plugin-requests-bookwarehouse",
-      "source_version": "0.1.3",
+      "source_version": "0.1.4",
       "sdk_version": "0.26.0",
       "installation_mode": "ordinary",
       "status": "requires_connection_and_policy",
@@ -114,20 +114,20 @@
       ],
       "license_spdx": "LicenseRef-Bloem-Proprietary",
       "source_visibility": "private",
-      "release_url": "https://github.com/Bloem-Studios/bloem-plugins/releases/tag/requests-bookwarehouse-v0.1.3",
-      "checksums_url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/requests-bookwarehouse-v0.1.3/checksums.txt",
+      "release_url": "https://github.com/Bloem-Studios/bloem-plugins/releases/tag/requests-bookwarehouse-v0.1.4",
+      "checksums_url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/requests-bookwarehouse-v0.1.4/checksums.txt",
       "binaries": {
         "linux/amd64": {
-          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/requests-bookwarehouse-v0.1.3/plugin-linux-amd64",
-          "checksum": "f5b3e5083f54bbd3d54fe129d100b23452b461e63392d54d98df5778bf45df24"
+          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/requests-bookwarehouse-v0.1.4/plugin-linux-amd64",
+          "checksum": "2e9f32a29f9516124a0ae3b0e7e26b4ebc465cd12d704ba0441eb42a9434aeae"
         },
         "linux/arm64": {
-          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/requests-bookwarehouse-v0.1.3/plugin-linux-arm64",
-          "checksum": "e2e0c348c2ae216d5386f329f2d3db8320dc80e3784a8eb72eabda4fdd278a0c"
+          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/requests-bookwarehouse-v0.1.4/plugin-linux-arm64",
+          "checksum": "b8f6419c999ac44408c87f1956e849fc814bc70b2fb51e8049e722826eee137e"
         },
         "darwin/arm64": {
-          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/requests-bookwarehouse-v0.1.3/plugin-darwin-arm64",
-          "checksum": "1f1e7bdffa24b9deabe091f9ea660c62e5d1ea9d852a1eccf7eac17713a6511a"
+          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/requests-bookwarehouse-v0.1.4/plugin-darwin-arm64",
+          "checksum": "8b0ac5235be3546f174a0f97f56573becc402b09b2d72f2abc480ef96c592286"
         }
       }
     },
@@ -135,7 +135,7 @@
       "plugin_id": "bloem.requests.audiobooks",
       "display_name": "Audiobook requests",
       "repository_url": "https://github.com/Bloem-Studios/bloem-plugin-requests-audiobooks",
-      "source_version": "0.1.1",
+      "source_version": "0.1.2",
       "sdk_version": "0.26.0",
       "installation_mode": "ordinary",
       "status": "requires_connection_and_download_client",
@@ -148,16 +148,16 @@
       ],
       "license_spdx": "LicenseRef-Bloem-Proprietary",
       "source_visibility": "private",
-      "release_url": "https://github.com/Bloem-Studios/bloem-plugins/releases/tag/requests-audiobooks-v0.1.1",
-      "checksums_url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/requests-audiobooks-v0.1.1/checksums.txt",
+      "release_url": "https://github.com/Bloem-Studios/bloem-plugins/releases/tag/requests-audiobooks-v0.1.2",
+      "checksums_url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/requests-audiobooks-v0.1.2/checksums.txt",
       "binaries": {
         "linux/amd64": {
-          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/requests-audiobooks-v0.1.1/plugin-linux-amd64",
-          "checksum": "dc094a89327a932454363069246292892147998a25db9de1ecb09dd07bd08b04"
+          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/requests-audiobooks-v0.1.2/plugin-linux-amd64",
+          "checksum": "a5d8de5008764092f8afb66c05059ece3af62768ac85f1ac01d34f65225ec321"
         },
         "linux/arm64": {
-          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/requests-audiobooks-v0.1.1/plugin-linux-arm64",
-          "checksum": "d833f5460a8a32fa80f057402ea2e786278b330633d36536a07daa47659ba138"
+          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/requests-audiobooks-v0.1.2/plugin-linux-arm64",
+          "checksum": "789bc38449be72afd88fb79dc525053bdc6875dd9b4a1ace1c10a2eca608c178"
         }
       }
     }
