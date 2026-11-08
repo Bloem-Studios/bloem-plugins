@@ -2,7 +2,7 @@
 
 > **Provenance and status.** Bloem plugin page, rewritten on 2026-11-01 and checked
 > against `main` at `acdd30d`. It covers this public catalog of Bloem Studios' five
-> proprietary plugins (Pastime 0.4.0, Bookwarehouse 0.3.10, S3 storage 0.4.1,
+> proprietary plugins (Pastime 0.4.0, Bookwarehouse 0.3.11, S3 storage 0.4.2,
 > Bookwarehouse ebook requests 0.1.4 and Audiobook requests 0.1.2) and how Bloem
 > Server `main` at `e0320078f` installs them; the technical rules are in the
 > [For developers](#for-developers) section.
@@ -75,8 +75,8 @@ flowchart LR
 | Plugin | What it does | How it is installed | Runs on |
 | --- | --- | --- | --- |
 | [Pastime 0.4.0](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/pastime-v0.4.0) | Sends what each connected profile watches to Pastime, a separate watch-tracking service, and brings Pastime's plays, resume points, favourites, watchlist and ratings back, with the removals made in Pastime. | Ordinary plugin, from the feed | Linux (amd64, arm64), macOS (arm64) |
-| [Bookwarehouse 0.3.10](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/bookwarehouse-v0.3.10) | Lets a library read EPUB and PDF ebooks, and audiobooks, from a Bookwarehouse book service. | Native storage provider, from the inventory | Linux (amd64, arm64), macOS (arm64) |
-| [S3 storage 0.4.1](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/s3-v0.4.1) | Lets a library read files from one S3 bucket, or from every bucket its keys can list. | Native storage provider, from the inventory, once the operator pins it | Linux (amd64, arm64) |
+| [Bookwarehouse 0.3.11](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/bookwarehouse-v0.3.11) | Lets a library read EPUB and PDF ebooks, and audiobooks, from a Bookwarehouse book service. | Native storage provider, from the inventory | Linux (amd64, arm64), macOS (arm64) |
+| [S3 storage 0.4.2](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/s3-v0.4.2) | Lets a library read files from one S3 bucket, or from every bucket its keys can list. | Native storage provider, from the inventory, once the operator pins it | Linux (amd64, arm64) |
 | [Bookwarehouse ebook requests 0.1.4](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/requests-bookwarehouse-v0.1.4) | Sends approved ebook requests to Bookwarehouse. | Ordinary plugin, from the feed | Linux (amd64, arm64), macOS (arm64) |
 | [Audiobook requests 0.1.2](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/requests-audiobooks-v0.1.2) | Searches AudiobookBay, abook.link and NZBKing for approved audiobook requests and hands one release to qBittorrent or NZBGet. | Ordinary plugin, from the feed | Linux (amd64, arm64) |
 
@@ -228,8 +228,8 @@ flowchart TD
 | Release | Programs | Checksums | Licence terms and notices | Build record |
 | --- | --- | --- | --- | --- |
 | Pastime 0.2.0 | 3 | yes | no | no |
-| Bookwarehouse 0.3.10 | 3 | yes | yes | yes, plus the linux/amd64 manifest and an example approvals file |
-| S3 storage 0.4.1 | 2 | yes | yes | yes, plus the linux/amd64 manifest |
+| Bookwarehouse 0.3.11 | 3 | yes | yes | yes, plus the linux/amd64 manifest and an example approvals file |
+| S3 storage 0.4.2 | 2 | yes | yes | yes, plus the linux/amd64 manifest |
 | Bookwarehouse ebook requests 0.1.4 | 3 | yes | yes | yes, plus the linux/amd64 manifest |
 | Audiobook requests 0.1.2 | 2 | yes | yes | yes, plus the linux/amd64 manifest |
 
@@ -289,8 +289,8 @@ the club's ebooks on Bookwarehouse in Bloem, and members to ask for new ones.
 | Plugin | Version | Install path |
 | --- | --- | --- |
 | [Pastime](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/pastime-v0.2.0) | 0.2.0 | Plugin catalog; Pastime release A, Pastime address and one Connect Silo key per profile required |
-| [Bookwarehouse](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/bookwarehouse-v0.3.10) | 0.3.10 | Native storage installer; Bloem Server admits the listed release after verifying its URL, checksum and release manifest |
-| [S3 storage](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/s3-v0.4.1) | 0.4.1 | Native storage installer; exact-artifact approval (a pin in the host's static approvals) and source configuration required |
+| [Bookwarehouse](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/bookwarehouse-v0.3.11) | 0.3.11 | Native storage installer; Bloem Server admits the listed release after verifying its URL, checksum and release manifest |
+| [S3 storage](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/s3-v0.4.2) | 0.4.2 | Native storage installer; exact-artifact approval (a pin in the host's static approvals) and source configuration required |
 | [Bookwarehouse ebook requests](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/requests-bookwarehouse-v0.1.4) | 0.1.4 | Plugin catalog; connection, organization policy and native ebook library binding required |
 | [Audiobook requests](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/requests-audiobooks-v0.1.2) | 0.1.2 | Plugin catalog; audiobook acquisition connection, download client and audiobook library binding required |
 
@@ -301,7 +301,7 @@ also carry `BINARY_LICENSE.txt` (the Bloem Studios Proprietary Plugin License),
 `third-party-notices.tar.gz`, `<tag>-distribution.tar.gz`, `build.json`
 (`repository`, `revision`, `version` and the linux/amd64 `binary_sha256`) and
 `manifest.json`, the linux/amd64 executable's own manifest (its `checksum` is the
-linux/amd64 digest). Bookwarehouse 0.3.10 also carries
+linux/amd64 digest). Bookwarehouse 0.3.11 also carries
 `native-storage-approvals.example.json`. The Pastime 0.2.0 release has only
 `checksums.txt` and its three executables.
 
@@ -333,8 +333,8 @@ repository), `source_version`, `sdk_version`, `installation_mode`, `status`,
 | `plugin_id` | `source_version` | `sdk_version` | `installation_mode` | `status` |
 | --- | --- | --- | --- | --- |
 | `bloem.pastime` | 0.2.0 | 0.26.0 | `ordinary` | `requires_connection_and_policy` |
-| `bloem.storage.bookwarehouse` | 0.3.10 | 0.27.0 | `native` | `requires_native_approval` |
-| `bloem.storage.s3` | 0.4.1 | 0.27.0 | `native` | `requires_native_approval` |
+| `bloem.storage.bookwarehouse` | 0.3.11 | 0.27.0 | `native` | `requires_native_approval` |
+| `bloem.storage.s3` | 0.4.2 | 0.27.0 | `native` | `requires_native_approval` |
 | `bloem.requests.bookwarehouse` | 0.1.4 | 0.26.0 | `ordinary` | `requires_connection_and_policy` |
 | `bloem.requests.audiobooks` | 0.1.2 | 0.26.0 | `ordinary` | `requires_connection_and_download_client` |
 
