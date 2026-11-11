@@ -72,7 +72,7 @@
       "plugin_id": "bloem.storage.s3",
       "display_name": "S3 storage",
       "repository_url": "https://github.com/Bloem-Studios/bloem-storage-s3",
-      "source_version": "0.4.2",
+      "source_version": "0.4.3",
       "sdk_version": "0.27.0",
       "installation_mode": "native",
       "status": "requires_native_approval",
@@ -85,16 +85,16 @@
       ],
       "license_spdx": "LicenseRef-Bloem-Proprietary",
       "source_visibility": "private",
-      "release_url": "https://github.com/Bloem-Studios/bloem-plugins/releases/tag/s3-v0.4.2",
-      "checksums_url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/s3-v0.4.2/checksums.txt",
+      "release_url": "https://github.com/Bloem-Studios/bloem-plugins/releases/tag/s3-v0.4.3",
+      "checksums_url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/s3-v0.4.3/checksums.txt",
       "binaries": {
         "linux/amd64": {
-          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/s3-v0.4.2/plugin-linux-amd64",
-          "checksum": "a46e2e2c3af5a4bf6c356709675b9cfae4f12bd906194a4c0c33f6f38ad17a21"
+          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/s3-v0.4.3/plugin-linux-amd64",
+          "checksum": "1e8389cc5f19882e541489986a08fd66f4cc39a26b09df8384d3e61ab7fe112d"
         },
         "linux/arm64": {
-          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/s3-v0.4.2/plugin-linux-arm64",
-          "checksum": "5b3b4e4d7b10c46b565b7d224af5d54de4ff4f990059b2e192cfe0a156f1469e"
+          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/s3-v0.4.3/plugin-linux-arm64",
+          "checksum": "2dd2b8c7fe535c27bac03fdecc7c4a6d8aa7c834d50d61ee5eacca9bcc1918a6"
         }
       }
     },
