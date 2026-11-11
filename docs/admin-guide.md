@@ -24,7 +24,7 @@ offers to a server is on [how the Bloem plugin catalog works](../README.md).
   version, installation mode, status and prerequisites. `manifest.json` is the
   **feed** for ordinary plugins. Keep them separate.
 
-Pastime 0.2.0, Bookwarehouse ebook requests 0.1.4 and Audiobook requests 0.1.2 are
+Pastime 0.4.1, Bookwarehouse ebook requests 0.1.4 and Audiobook requests 0.1.2 are
 in the feed. Bookwarehouse 0.3.11 and S3 storage 0.4.2 are only in the inventory:
 they use Bloem Server's separate native storage path.
 
@@ -141,8 +141,8 @@ status and a nonempty requirements list.
 Bookwarehouse uses native StorageProvider admission: Bloem Server admits a listed
 release automatically after verifying it, and an approval that pins the exact
 artifact version and SHA-256 is needed only for a manually supplied executable. S3
-needs that pin for catalog releases too. Pastime 0.2.0 is an ordinary
-`watch_sync_provider.v1` plugin; it needs Pastime release A (database schema 57),
+needs that pin for catalog releases too. Pastime 0.4.1 is an ordinary
+`watch_sync_provider.v1` plugin; it needs Pastime at database schema 63 or later,
 and no Bloem host extension. Publishing binaries is not production activation.
 
 `manifest.json` must list exactly `bloem.pastime`, `bloem.requests.audiobooks` and
@@ -227,7 +227,7 @@ Verify those separately during an actual server rollout.
 
 Official custom binary releases are hosted in this public catalog repository.
 Plugin source repositories remain private. Releases contain platform executables
-and verified SHA-256 checksums; all except Pastime 0.2.0 also contain proprietary
+and verified SHA-256 checksums; all except Pastime 0.4.1 also contain proprietary
 terms and third-party notices. The ordinary updater remains disabled for private
 source repositories. The catalog's own code is Apache-2.0; [NOTICE](../NOTICE)
 records its import from Silo's plugin catalog.

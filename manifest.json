@@ -3,8 +3,8 @@
     {
       "manifest": {
         "plugin_id": "bloem.pastime",
-        "version": "0.4.0",
-        "checksum": "b179f9547ed5cf85f1b2100b6294062f0661ac33ed030e77dc832f78a4792a2a",
+        "version": "0.4.1",
+        "checksum": "e3fc0f22c68a8893eb13a81fe5d912caa2b30ef1bb5aa4a3e6d529890c2853c7",
         "silo_api_version": "v1",
         "supported_platforms": [
           {
@@ -96,19 +96,19 @@
         }
       },
       "repo_url": "https://github.com/Bloem-Studios/bloem-plugins",
-      "checksums_url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/pastime-v0.4.0/checksums.txt",
+      "checksums_url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/pastime-v0.4.1/checksums.txt",
       "binaries": {
         "darwin/arm64": {
-          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/pastime-v0.4.0/plugin-darwin-arm64",
-          "checksum": "62a403b5ae36985e8845c6505b77c3722124804fe61857958c36eb5e55c6058c"
+          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/pastime-v0.4.1/plugin-darwin-arm64",
+          "checksum": "174fecc5f17cdb79be905aeebdb775d7712cadac2fd3a91fb56bf26dcc1ee099"
         },
         "linux/amd64": {
-          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/pastime-v0.4.0/plugin-linux-amd64",
-          "checksum": "b179f9547ed5cf85f1b2100b6294062f0661ac33ed030e77dc832f78a4792a2a"
+          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/pastime-v0.4.1/plugin-linux-amd64",
+          "checksum": "e3fc0f22c68a8893eb13a81fe5d912caa2b30ef1bb5aa4a3e6d529890c2853c7"
         },
         "linux/arm64": {
-          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/pastime-v0.4.0/plugin-linux-arm64",
-          "checksum": "b0893a0dbdc306b510bbb979f3e4895897389eb1846a5f888b5edc8bade1573c"
+          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/pastime-v0.4.1/plugin-linux-arm64",
+          "checksum": "1da5d527946b90db1919666dd2ee50fb426a7223382132b939f3534caa3ea737"
         }
       }
     },
