@@ -131,7 +131,7 @@ and key in its settings, sends a test request, and only then removes the old cop
   plugin, its configuration, its database repository association or its binary.
   Verify those separately during an actual server rollout.
 - The feed `manifest.json` lists Pastime 0.4.1, Audiobook requests 0.1.3 and
-  Bookwarehouse ebook requests 0.1.3. The inventory `plugins.json` includes all five
+  Bookwarehouse ebook requests 0.1.5. The inventory `plugins.json` includes all five
   custom plugins, their public binary download URLs, checksums and prerequisites.
   It is not an ordinary installer feed, but Bloem Server reads it directly for the
   two native storage providers (`internal/plugins/bloem_storage_catalog.go`).
