@@ -135,7 +135,7 @@
       "plugin_id": "bloem.requests.audiobooks",
       "display_name": "Audiobook requests",
       "repository_url": "https://github.com/Bloem-Studios/bloem-plugin-requests-audiobooks",
-      "source_version": "0.1.2",
+      "source_version": "0.1.3",
       "sdk_version": "0.26.0",
       "installation_mode": "ordinary",
       "status": "requires_connection_and_download_client",
@@ -148,16 +148,16 @@
       ],
       "license_spdx": "LicenseRef-Bloem-Proprietary",
       "source_visibility": "private",
-      "release_url": "https://github.com/Bloem-Studios/bloem-plugins/releases/tag/requests-audiobooks-v0.1.2",
-      "checksums_url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/requests-audiobooks-v0.1.2/checksums.txt",
+      "release_url": "https://github.com/Bloem-Studios/bloem-plugins/releases/tag/requests-audiobooks-v0.1.3",
+      "checksums_url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/requests-audiobooks-v0.1.3/checksums.txt",
       "binaries": {
         "linux/amd64": {
-          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/requests-audiobooks-v0.1.2/plugin-linux-amd64",
-          "checksum": "a5d8de5008764092f8afb66c05059ece3af62768ac85f1ac01d34f65225ec321"
+          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/requests-audiobooks-v0.1.3/plugin-linux-amd64",
+          "checksum": "b064953a1343c4f5c3eee42536f62220c260da014e2bad886807f7246f529714"
         },
         "linux/arm64": {
-          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/requests-audiobooks-v0.1.2/plugin-linux-arm64",
-          "checksum": "789bc38449be72afd88fb79dc525053bdc6875dd9b4a1ace1c10a2eca608c178"
+          "url": "https://github.com/Bloem-Studios/bloem-plugins/releases/download/requests-audiobooks-v0.1.3/plugin-linux-arm64",
+          "checksum": "c0097e6bc21bf5c0fb9f9d608ea74dec36b61ddad327e96819a24f6059357f55"
         }
       }
     }

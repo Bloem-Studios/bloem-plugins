@@ -3,7 +3,7 @@
 > **Provenance and status.** Bloem plugin page, rewritten on 2026-11-01 and checked
 > against `main` at `acdd30d`. It covers this public catalog of Bloem Studios' five
 > proprietary plugins (Pastime 0.4.1, Bookwarehouse 0.3.11, S3 storage 0.4.2,
-> Bookwarehouse ebook requests 0.1.4 and Audiobook requests 0.1.2) and how Bloem
+> Bookwarehouse ebook requests 0.1.4 and Audiobook requests 0.1.3) and how Bloem
 > Server `main` at `e0320078f` installs them; the technical rules are in the
 > [For developers](#for-developers) section.
 
@@ -78,7 +78,7 @@ flowchart LR
 | [Bookwarehouse 0.3.11](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/bookwarehouse-v0.3.11) | Lets a library read EPUB and PDF ebooks, and audiobooks, from a Bookwarehouse book service. | Native storage provider, from the inventory | Linux (amd64, arm64), macOS (arm64) |
 | [S3 storage 0.4.2](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/s3-v0.4.2) | Lets a library read files from one S3 bucket, or from every bucket its keys can list. | Native storage provider, from the inventory, once the operator pins it | Linux (amd64, arm64) |
 | [Bookwarehouse ebook requests 0.1.4](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/requests-bookwarehouse-v0.1.4) | Sends approved ebook requests to Bookwarehouse. | Ordinary plugin, from the feed | Linux (amd64, arm64), macOS (arm64) |
-| [Audiobook requests 0.1.2](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/requests-audiobooks-v0.1.2) | Searches AudiobookBay, abook.link and NZBKing for approved audiobook requests and hands one release to qBittorrent or NZBGet. | Ordinary plugin, from the feed | Linux (amd64, arm64) |
+| [Audiobook requests 0.1.3](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/requests-audiobooks-v0.1.3) | Searches AudiobookBay, abook.link and NZBKing for approved audiobook requests and hands one release to qBittorrent or NZBGet. | Ordinary plugin, from the feed | Linux (amd64, arm64) |
 
 ## Installing the plugins
 
@@ -231,7 +231,7 @@ flowchart TD
 | Bookwarehouse 0.3.11 | 3 | yes | yes | yes, plus the linux/amd64 manifest and an example approvals file |
 | S3 storage 0.4.2 | 2 | yes | yes | yes, plus the linux/amd64 manifest |
 | Bookwarehouse ebook requests 0.1.4 | 3 | yes | yes | yes, plus the linux/amd64 manifest |
-| Audiobook requests 0.1.2 | 2 | yes | yes | yes, plus the linux/amd64 manifest |
+| Audiobook requests 0.1.3 | 2 | yes | yes | yes, plus the linux/amd64 manifest |
 
 The **build record** names the source revision a release was built from. No
 plugin source is published here.
@@ -292,7 +292,7 @@ the club's ebooks on Bookwarehouse in Bloem, and members to ask for new ones.
 | [Bookwarehouse](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/bookwarehouse-v0.3.11) | 0.3.11 | Native storage installer; Bloem Server admits the listed release after verifying its URL, checksum and release manifest |
 | [S3 storage](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/s3-v0.4.2) | 0.4.2 | Native storage installer; exact-artifact approval (a pin in the host's static approvals) and source configuration required |
 | [Bookwarehouse ebook requests](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/requests-bookwarehouse-v0.1.4) | 0.1.4 | Plugin catalog; connection, organization policy and native ebook library binding required |
-| [Audiobook requests](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/requests-audiobooks-v0.1.2) | 0.1.2 | Plugin catalog; audiobook acquisition connection, download client and audiobook library binding required |
+| [Audiobook requests](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/requests-audiobooks-v0.1.3) | 0.1.3 | Plugin catalog; audiobook acquisition connection, download client and audiobook library binding required |
 
 S3 and Audiobook requests support Linux amd64 and arm64; the other releases also
 include macOS arm64. Each release has `plugin-<os>-<arch>` executables and
@@ -306,9 +306,9 @@ linux/amd64 digest). Bookwarehouse 0.3.11 also carries
 `checksums.txt` and its three executables.
 
 Every executable prints its manifest with `plugin-<os>-<arch> manifest`. Audiobook
-requests 0.1.2 also reports its source commit with `plugin-<os>-<arch> version`
+requests 0.1.3 also reports its source commit with `plugin-<os>-<arch> version`
 and in its manifest's `metadata.source_revision`
-(`32f3bddfb57727ae6dc991b36ee61cad26e2b595`); the other releases record theirs only
+(`88e9057e46e432b9223ad96969d5224d7ce26e0b`); the other releases record theirs only
 in `build.json`.
 
 ### The two files
@@ -336,7 +336,7 @@ repository), `source_version`, `sdk_version`, `installation_mode`, `status`,
 | `bloem.storage.bookwarehouse` | 0.3.11 | 0.27.0 | `native` | `requires_native_approval` |
 | `bloem.storage.s3` | 0.4.2 | 0.27.0 | `native` | `requires_native_approval` |
 | `bloem.requests.bookwarehouse` | 0.1.4 | 0.26.0 | `ordinary` | `requires_connection_and_policy` |
-| `bloem.requests.audiobooks` | 0.1.2 | 0.26.0 | `ordinary` | `requires_connection_and_download_client` |
+| `bloem.requests.audiobooks` | 0.1.3 | 0.26.0 | `ordinary` | `requires_connection_and_download_client` |
 
 Its `requirements` strings are the published prerequisites, and they match current
 Bloem Server behaviour: a listed Bookwarehouse release is admitted automatically while

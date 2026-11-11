@@ -130,7 +130,7 @@ and key in its settings, sends a test request, and only then removes the old cop
   whether to adopt a release. Removing a fork does not migrate an existing installed
   plugin, its configuration, its database repository association or its binary.
   Verify those separately during an actual server rollout.
-- The feed `manifest.json` lists Pastime 0.4.1, Audiobook requests 0.1.0 and
+- The feed `manifest.json` lists Pastime 0.4.1, Audiobook requests 0.1.3 and
   Bookwarehouse ebook requests 0.1.3. The inventory `plugins.json` includes all five
   custom plugins, their public binary download URLs, checksums and prerequisites.
   It is not an ordinary installer feed, but Bloem Server reads it directly for the

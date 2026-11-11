@@ -24,7 +24,7 @@ offers to a server is on [how the Bloem plugin catalog works](../README.md).
   version, installation mode, status and prerequisites. `manifest.json` is the
   **feed** for ordinary plugins. Keep them separate.
 
-Pastime 0.4.1, Bookwarehouse ebook requests 0.1.4 and Audiobook requests 0.1.2 are
+Pastime 0.4.1, Bookwarehouse ebook requests 0.1.4 and Audiobook requests 0.1.3 are
 in the feed. Bookwarehouse 0.3.11 and S3 storage 0.4.2 are only in the inventory:
 they use Bloem Server's separate native storage path.
 
