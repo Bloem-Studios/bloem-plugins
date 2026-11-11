@@ -136,7 +136,7 @@ and key in its settings, sends a test request, and only then removes the old cop
   It is not an ordinary installer feed, but Bloem Server reads it directly for the
   two native storage providers (`internal/plugins/bloem_storage_catalog.go`).
 - **Bookwarehouse:** native EPUB/PDF and audiobook StorageProvider. Bloem Server
-  admits the listed [0.3.11 release](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/bookwarehouse-v0.3.11)
+  admits the listed [0.3.12 release](https://github.com/Bloem-Studios/bloem-plugins/releases/tag/bookwarehouse-v0.3.12)
   after verifying it; a manually supplied executable needs an exact-artifact approval
   ([how to install Bookwarehouse](bookwarehouse-installation.md)).
 - **Pastime:** watch sync through Silo's `watch_sync_provider.v1`. Pastime at database
