@@ -261,7 +261,7 @@ the club's ebooks on Bookwarehouse in Bloem, and members to ask for new ones.
 | Organization administrator | Storage sources for their own organization, at public internet addresses only. They cannot upgrade an S3 source from the catalog. Their organization's request queues. |
 | A profile | Its own Pastime key under **Settings → Watch Providers**; its own requests. |
 | The operator who installs the server | The approvals file that pins S3 releases, the cover cache, and restarts. |
-| The storefront (Bloem Garden) | Nothing in this catalog. |
+| The storefront (Bloem HQ) | Nothing in this catalog. |
 | Bloem Studios maintainers | The releases, `plugins.json` and `manifest.json` in this repository. |
 
 ## Words used in the code
