@@ -12,10 +12,8 @@ offers to a server is on [how the Bloem plugin catalog works](../README.md).
   and its own community catalog, are archived; servers use Silo's catalogs for those
   plugins.
 - **Programs, not source.** Official binary releases are hosted in this public
-  repository; the plugins' source is not. Pastime, Bookwarehouse,
-  S3 storage and Bookwarehouse ebook requests are open source (AGPL v3), each in its
-  own public repository. Releases are built from each plugin's own source. Audiobook
-  requests' source is private.
+  repository; the plugins' source is not. Every plugin is open source (AGPL v3), each
+  in its own public repository. Releases are built from each plugin's own source.
 - **Two files with two jobs.** `plugins.json` is the **inventory**: every release,
   its source repository, public binary release, source version, SDK
   version, installation mode, status and prerequisites. `manifest.json` is the
@@ -225,7 +223,7 @@ Verify those separately during an actual server rollout.
 Official custom binary releases are hosted in this public catalog repository.
 Releases contain platform executables and verified SHA-256 checksums; all except
 Pastime 0.4.1 also contain their licence terms (proprietary for every release listed
-here; the AGPL v3 for later releases of the four open-source plugins) and
+here; the AGPL v3 for later releases) and
 third-party notices. The ordinary updater stays disabled. The catalog's own code is Apache-2.0; [NOTICE](../NOTICE)
 records its import from Silo's plugin catalog.
 

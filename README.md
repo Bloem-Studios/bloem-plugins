@@ -26,16 +26,16 @@ This repository is Bloem Studios' plugin catalog. It publishes three things:
   the two **native storage providers**: plugins that let a library read files from
   a book service or an S3 bucket instead of a folder on the server.
 
-Four of the plugins are open source under the GNU AGPL v3, each in its
+All five plugins are open source under the GNU AGPL v3, each in its
 own public repository: [Pastime](https://github.com/Bloem-Studios/bloem-plugin-pastime)
 (and the [Pastime service](https://github.com/Bloem-Studios/pastime) it connects to),
 [Bookwarehouse](https://github.com/Bloem-Studios/bloem-plugin-bookwarehouse),
-[S3 storage](https://github.com/Bloem-Studios/bloem-storage-s3) and
-[Bookwarehouse ebook requests](https://github.com/Bloem-Studios/bloem-plugin-requests-bookwarehouse).
+[S3 storage](https://github.com/Bloem-Studios/bloem-storage-s3),
+[Bookwarehouse ebook requests](https://github.com/Bloem-Studios/bloem-plugin-requests-bookwarehouse) and
+[Audiobook requests](https://github.com/Bloem-Studios/bloem-plugin-requests-audiobooks).
 They are offered without support. The releases listed on this page were built under
 the Bloem Studios Proprietary Plugin License and stay under it; later releases are
-AGPL v3. Audiobook requests stays proprietary and its source
-private. This repository publishes the programs and their descriptions; GitHub's
+AGPL v3. This repository publishes the programs and their descriptions; GitHub's
 source archives of it contain only this metadata.
 
 ## Where Bloem gets its plugins
@@ -448,8 +448,8 @@ prove unchanged bytes.
 The catalog code (`catalog/`, `cmd/update-catalog/`) is Apache-2.0 ([LICENSE](LICENSE),
 provenance in [NOTICE](NOTICE)). Each plugin release carries its own licence: the
 releases listed here are under the Bloem Studios Proprietary Plugin License, and
-later releases of Pastime, Bookwarehouse, S3 storage and Bookwarehouse ebook requests
-are under the GNU AGPL v3, like their public source repositories.
+later releases of every plugin are under the GNU AGPL v3, like their public source
+repositories.
 Third-party components retain their own licenses.
 
 Go 1.26 or newer (`go.mod` declares `go 1.26.0` and the Bloem SDK `v0.26.0`).
