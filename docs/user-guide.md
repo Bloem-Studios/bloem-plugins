@@ -121,7 +121,7 @@ and key in its settings, sends a test request, and only then removes the old cop
   whether to adopt a release. Removing a fork does not migrate an existing installed
   plugin, its configuration, its database repository association or its binary.
   Verify those separately during an actual server rollout.
-- The feed `manifest.json` lists Pastime 0.4.1, Audiobook requests 0.1.3 and
+- The feed `manifest.json` lists Pastime 0.4.2, Audiobook requests 0.1.3 and
   Bookwarehouse ebook requests 0.1.5. The inventory `plugins.json` includes all five
   custom plugins, their public binary download URLs, checksums and prerequisites.
   It is not an ordinary installer feed, but Bloem Server reads it directly for the
@@ -131,7 +131,7 @@ and key in its settings, sends a test request, and only then removes the old cop
   after verifying it; a manually supplied executable needs an exact-artifact approval
   ([how to install Bookwarehouse](bookwarehouse-installation.md)).
 - **Pastime:** watch sync through Silo's `watch_sync_provider.v1`. Pastime at database
-  schema 63 or later must be deployed before plugin 0.4.1.
+  schema 63 or later must be deployed before plugin 0.4.2.
 - Catalog publication does not change live installed plugins or customer accounts.
   Keep secrets in protected backend configuration, never catalog metadata.
 

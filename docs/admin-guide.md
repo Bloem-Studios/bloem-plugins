@@ -19,7 +19,7 @@ offers to a server is on [how the Bloem plugin catalog works](../README.md).
   version, installation mode, status and prerequisites. `manifest.json` is the
   **feed** for ordinary plugins. Keep them separate.
 
-Pastime 0.4.1, Bookwarehouse ebook requests 0.1.5 and Audiobook requests 0.1.3 are
+Pastime 0.4.2, Bookwarehouse ebook requests 0.1.5 and Audiobook requests 0.1.3 are
 in the feed. Bookwarehouse 0.3.12 and S3 storage 0.4.3 are only in the inventory:
 they use Bloem Server's separate native storage path.
 
@@ -136,7 +136,7 @@ status and a nonempty requirements list.
 Bookwarehouse uses native StorageProvider admission: Bloem Server admits a listed
 release automatically after verifying it, and an approval that pins the exact
 artifact version and SHA-256 is needed only for a manually supplied executable. S3
-needs that pin for catalog releases too. Pastime 0.4.1 is an ordinary
+needs that pin for catalog releases too. Pastime 0.4.2 is an ordinary
 `watch_sync_provider.v1` plugin; it needs Pastime at database schema 63 or later,
 and no Bloem host extension. Publishing binaries is not production activation.
 
@@ -179,7 +179,7 @@ string out. For an allowed repository it:
    sorted by plugin ID (`catalog.UpsertPackage`).
 
 Because the tag must be `v<version>`, the prefixed tags of the releases hosted here
-(`pastime-v0.4.1` and so on) are outside its path; they are maintained by hand.
+(`pastime-v0.4.2` and so on) are outside its path; they are maintained by hand.
 
 ### Update Catalog workflow
 
@@ -222,9 +222,8 @@ Verify those separately during an actual server rollout.
 
 Official custom binary releases are hosted in this public catalog repository.
 Releases contain platform executables and verified SHA-256 checksums; all except
-Pastime 0.4.1 also contain their licence terms (proprietary for every release listed
-here; the AGPL v3 for later releases) and
-third-party notices. The ordinary updater stays disabled. The catalog's own code is Apache-2.0; [NOTICE](../NOTICE)
+Pastime also contain proprietary licence terms and third-party notices. Pastime 0.4.2
+carries the AGPL v3 text as `LICENSE`, plus `build.json`. The ordinary updater stays disabled. The catalog's own code is Apache-2.0; [NOTICE](../NOTICE)
 records its import from Silo's plugin catalog.
 
 Related pages:
