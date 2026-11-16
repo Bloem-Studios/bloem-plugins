@@ -1,13 +1,5 @@
 # How the Bloem plugin catalog works
 
-> **Provenance and status.** Bloem plugin page, rewritten on 2026-11-01 and checked
-> against `main` at `acdd30d`; its licence and source notes were updated on 2026-11-16, when
-> four of the plugins became open source. It covers this public catalog of Bloem Studios' five
-> plugins (Pastime 0.4.1, Bookwarehouse 0.3.12, S3 storage 0.4.3,
-> Bookwarehouse ebook requests 0.1.5 and Audiobook requests 0.1.3) and how Bloem
-> Server `main` at `e0320078f` installs them; the technical rules are in the
-> [For developers](#for-developers) section.
-
 This page walks through what the catalog publishes, where a Bloem server gets each
 kind of plugin, how to install each of the five plugins, and what a release
 contains. Two more pages go into detail:
@@ -34,15 +26,15 @@ This repository is Bloem Studios' plugin catalog. It publishes three things:
   the two **native storage providers**: plugins that let a library read files from
   a book service or an S3 bucket instead of a folder on the server.
 
-Since 2026-11-16 four of the plugins are open source under the GNU AGPL v3, each in its
+Four of the plugins are open source under the GNU AGPL v3, each in its
 own public repository: [Pastime](https://github.com/Bloem-Studios/bloem-plugin-pastime)
 (and the [Pastime service](https://github.com/Bloem-Studios/pastime) it connects to),
 [Bookwarehouse](https://github.com/Bloem-Studios/bloem-plugin-bookwarehouse),
 [S3 storage](https://github.com/Bloem-Studios/bloem-storage-s3) and
 [Bookwarehouse ebook requests](https://github.com/Bloem-Studios/bloem-plugin-requests-bookwarehouse).
-They are offered without support. The releases listed on this page were built before
-that, under the Bloem Studios Proprietary Plugin License, and stay under it; their
-later releases are AGPL v3. Audiobook requests stays proprietary and its source
+They are offered without support. The releases listed on this page were built under
+the Bloem Studios Proprietary Plugin License and stay under it; later releases are
+AGPL v3. Audiobook requests stays proprietary and its source
 private. This repository publishes the programs and their descriptions; GitHub's
 source archives of it contain only this metadata.
 
@@ -73,10 +65,9 @@ flowchart LR
   plugins**; the Arr and Seerr request plugins are offered only from there.
 - **Bloem's own plugins come from here.** This catalog lists only plugins Bloem
   Studios writes, never a copy of one of Silo's.
-- **Bloem's former copies are archived.** Bloem once kept its own copies of Silo's
-  plugins, and a community catalog of its own. Both were archived on 2026-11-01; use
-  Silo's catalogs for those plugins. Archiving a copy changes nothing on a server
-  that already has it installed; see
+- **Bloem's own copies of Silo's plugins are archived.** So is Bloem's own community
+  catalog. Use Silo's catalogs for those plugins. A server that already has a copy
+  installed keeps it; see
   [how to use the plugin catalogs](docs/user-guide.md).
 
 ## The five plugins
@@ -112,7 +103,7 @@ fixed address of its own.
 ### Pastime
 
 1. Deploy Pastime at database schema 63 or later on the Pastime side first.
-   Plugin 0.4.0 needs it for removals; plugin 0.2.0 needs schema 57.
+   The plugin needs it for removals.
 2. Install **Pastime** from the Catalog tab. In its settings, set **Pastime
    address** to the HTTPS address people open Pastime at, for example
    `https://pastime.example.com`.
@@ -123,18 +114,17 @@ fixed address of its own.
 
 A new key replaces the profile's previous one. Disconnecting in Bloem stops
 sending, and so does revoking the key in Pastime. Pastime favourites, watchlist and
-ratings are added to Bloem. From 0.4.0, a removal made in Pastime reaches Bloem for
+ratings are added to Bloem. A removal made in Pastime reaches Bloem for
 that profile only: a favourite, watchlist item or rating removed in Pastime goes when
 the connection synced it and its removal settings allow it, and a movie or show
 deleted from the Pastime library leaves that profile's Bloem watch history, up to the
 time of the deletion. An absent item never removes anything from Bloem.
 
-Pastime 0.2.0 uses Silo's own **watch sync**, the part of the server that talks to
-tracking services. Earlier 0.1.x releases needed a Bloem-only connection called
-**managed tracking**, which Bloem Server removed on 2026-10-13, so a 0.1.x plugin
-can no longer start. Keep a 0.1.x installation disabled and upgrade it in place to
-0.2.0 instead of uninstalling it: it keeps the same plugin, so each profile's
-connection carries over.
+Pastime uses Silo's own **watch sync**, the part of the server that talks to
+tracking services. Bloem Server has no Bloem-only **managed tracking**, so an older
+Pastime plugin that needs it cannot start. If you have one, keep it disabled and
+upgrade it in place to the current release instead of uninstalling it: it keeps the
+same plugin, so each profile's connection carries over.
 
 ### Bookwarehouse ebook requests
 
@@ -226,11 +216,10 @@ flowchart TD
   server program, pins its checksum in the server's approvals file. See Bloem
   Server's
   [storage sources](https://github.com/Bloem-Studios/bloem-server/blob/main/docs/architecture/bloem-storage-sources.md)
-  page. A Bloem Server older than `99a4a1133` offers the catalog release only on
-  Linux amd64; on Linux arm64 the operator then installs it by hand as an approved
-  upload. S3 reads
-  **immutable object versions** by default, so a file can't change under a reader. **Checked ETag** reads, for buckets without versions, need an
-  explicit opt-in and cannot prove the bytes are unchanged.
+  page. The server offers the release for its own platform, Linux amd64 or arm64. S3 reads
+  **immutable object versions** by default, so a file can't change under a reader.
+  **Checked ETag** reads, for buckets without versions, need an explicit opt-in and
+  cannot prove the bytes are unchanged.
 
 ## What a release contains
 
@@ -282,7 +271,7 @@ the club's ebooks on Bookwarehouse in Bloem, and members to ask for new ones.
 | Inventory | `plugins.json`, `schema_version` 1 |
 | Ordinary plugin | `installation_mode: "ordinary"` in `plugins.json` |
 | Native storage provider | `installation_mode: "native"`, serving `bloem.plugin.v1.StorageProvider`; plugin IDs `bloem.storage.bookwarehouse` and `bloem.storage.s3` |
-| Release | a GitHub release in this repository, tagged `<name>-v<version>`, such as `bookwarehouse-v0.3.10` |
+| Release | a GitHub release in this repository, tagged `<name>-v<version>`, such as `bookwarehouse-v0.3.12` |
 | Checksum | SHA-256, in each release's `checksums.txt` and in `binaries["<os>/<arch>"].checksum` |
 | Silo maintained, Approved community | Bloem Server's `DefaultRepositoryURL` and `ApprovedCommunityRepositoryURL` (`internal/plugins/catalog_channels.go`); the switch is the setting `plugins.include_approved_community_plugins` |
 | Watch sync | the `watch_sync_provider.v1` capability |
@@ -316,9 +305,8 @@ linux/amd64 digest). Bookwarehouse 0.3.12 also carries
 
 Every executable prints its manifest with `plugin-<os>-<arch> manifest`. Audiobook
 requests 0.1.3 also reports its source commit with `plugin-<os>-<arch> version`
-and in its manifest's `metadata.source_revision`
-(`88e9057e46e432b9223ad96969d5224d7ce26e0b`); the other releases record theirs only
-in `build.json`.
+and in its manifest's `metadata.source_revision`; the other releases record theirs
+only in `build.json`.
 
 ### The two files
 
@@ -335,9 +323,9 @@ per-platform checksums.
 
 [`plugins.json`](plugins.json) (`schema_version` 1) lists all five releases. Each
 entry has `plugin_id`, `display_name`, `repository_url` (the source
-repository; public for all but Audiobook requests since 2026-11-16), `source_version`, `sdk_version`, `installation_mode`, `status`,
+repository; public for all but Audiobook requests), `source_version`, `sdk_version`, `installation_mode`, `status`,
 `summary`, `requirements`, `license_spdx` (`LicenseRef-Bloem-Proprietary` for every
-release listed today), `source_visibility` (`private`, describing the release's own
+release listed here), `source_visibility` (`private`, describing the release's own
 source revision), `release_url`, `checksums_url` and `binaries`.
 
 | `plugin_id` | `source_version` | `sdk_version` | `installation_mode` | `status` |
@@ -351,9 +339,7 @@ source revision), `release_url`, `checksums_url` and `binaries`.
 Its `requirements` strings are the published prerequisites, and they match current
 Bloem Server behaviour: a listed Bookwarehouse release is admitted automatically while
 S3 needs its digest pinned, and an audiobook download folder may hold at most 10,000
-catalogued, non-missing files. Bookwarehouse ebook requests 0.1.3 and Bookwarehouse
-0.3.10 carry corrected setup texts; earlier releases said audiobook requests "have no
-automatic acquisition backend" and that audiobooks need audio-sized cache limits.
+catalogued, non-missing files.
 
 ### How Bloem Server reads the inventory
 
@@ -375,11 +361,8 @@ which must name the same plugin ID and version. An S3 row is considered only whe
 its checksum and version match an artifact pinned in the host's static approvals
 (`BLOEM_NATIVE_STORAGE_APPROVALS`); its served manifest must also carry that
 checksum, and the pinned manifest is used, never the served one. A Bookwarehouse
-row's manifest takes the row's checksum. Because a release's `manifest.json` carries
-the linux/amd64 digest, a Bloem Server older than `99a4a1133` (2026-11-01) offers the
-S3 catalog row only on linux/amd64; there, on linux/arm64, install S3 as a
-manually approved artifact. From `99a4a1133` on, a served manifest naming any binary
-of the same release passes, so the arm64 row is offered too. The
+row's manifest takes the row's checksum. A served manifest that names any binary of the same
+release passes, so the row is offered on every platform the release builds. The
 artifact key is
 `<prefix>-<version>-<os>-<arch>-<sha256>`. Verified rows are cached in
 `native-catalog.json` under the native installation root. Installing downloads the
@@ -400,10 +383,9 @@ Auth method API key; media types movie, episode and series; external IDs `tmdb`,
 (scrobbling); imports, exports and removes favourites and watchlist; imports and
 exports ratings. Global config `pastime` has one required field, `pastime_url`
 (label **Pastime address**), at most 255 characters, matching
-`^https://[^/?#@\s]+/?$`. Bloem Server removed Pastime managed tracking on
-2026-10-13 (migration `20261013231500_remove_pastime_managed_tracking`); a 0.1.x
-plugin fails at `BindHostBroker` with `FailedPrecondition`. Replace it in place with
-the same plugin ID and capability ID, so provider `plugin:<installation>:pastime`
+`^https://[^/?#@\s]+/?$`. Bloem Server has no Pastime managed tracking; an older
+plugin that needs it fails at `BindHostBroker` with `FailedPrecondition`. Replace it
+in place with the same plugin ID and capability ID, so provider `plugin:<installation>:pastime`
 and its `watch_provider_connections` carry over.
 
 **Bookwarehouse ebook requests** (`bloem.requests.bookwarehouse`, capability
@@ -412,7 +394,7 @@ and its `watch_provider_connections` carry over.
 `preferred_format` (`epub` or `pdf`, default `epub`). Progress wording: step
 "Acquiring", queued "Searching", downloading "Downloading". Bloem Server gates the
 lane on `bloem.requests.ebooks_enabled` (exactly `true`; default `false`, set
-through `PUT /api/bloem/v1/admin/organization/ebook-request-policy`), admits only
+through `PUT /api/bloem/v2/admin/organization/ebook-request-policy`), admits only
 the default organization (`organizations.is_default`), and requires a connection
 that advertises `book`, bound to a native Bookwarehouse ebook library.
 
@@ -456,7 +438,7 @@ root may hold at most 10,000 files (`audiobookMaxRootFiles`).
 (`bloem.storage.s3`): see [how to install Bookwarehouse](docs/bookwarehouse-installation.md)
 and Bloem Server's
 [native storage](https://github.com/Bloem-Studios/bloem-server/blob/main/docs/architecture/bloem-native-storage.md)
-page. Since 0.4.0, S3 lets a source leave its bucket empty to cover every bucket its keys
+page. S3 lets a source leave its bucket empty to cover every bucket its keys
 can list. It requires immutable object versions by default; checked ETag reads
 (`connection.revision_mode: "checked-etag"`) require explicit opt-in and cannot
 prove unchanged bytes.
@@ -465,9 +447,9 @@ prove unchanged bytes.
 
 The catalog code (`catalog/`, `cmd/update-catalog/`) is Apache-2.0 ([LICENSE](LICENSE),
 provenance in [NOTICE](NOTICE)). Each plugin release carries its own licence: the
-releases listed today are under the Bloem Studios Proprietary Plugin License, and
-releases of Pastime, Bookwarehouse, S3 storage and Bookwarehouse ebook requests made
-after 2026-11-16 are under the GNU AGPL v3, like their public source repositories.
+releases listed here are under the Bloem Studios Proprietary Plugin License, and
+later releases of Pastime, Bookwarehouse, S3 storage and Bookwarehouse ebook requests
+are under the GNU AGPL v3, like their public source repositories.
 Third-party components retain their own licenses.
 
 Go 1.26 or newer (`go.mod` declares `go 1.26.0` and the Bloem SDK `v0.26.0`).
@@ -505,8 +487,7 @@ updater does not grant automation access to private plugin source. See
   [native storage](https://github.com/Bloem-Studios/bloem-server/blob/main/docs/architecture/bloem-native-storage.md),
   [requests](https://github.com/Bloem-Studios/bloem-server/blob/main/docs/architecture/bloem-requests.md),
   [audiobook requests](https://github.com/Bloem-Studios/bloem-server/blob/main/docs/architecture/bloem-audiobook-requests.md),
-  [ebook requests](https://github.com/Bloem-Studios/bloem-server/blob/main/docs/architecture/bloem-ebook-request-foundation.md)
-  and [Pastime removal](https://github.com/Bloem-Studios/bloem-server/blob/main/docs/architecture/bloem-pastime-removal.md).
+  and [ebook requests](https://github.com/Bloem-Studios/bloem-server/blob/main/docs/architecture/bloem-ebook-request-foundation.md).
 - Silo's catalogs, where shared metadata, autoscan, marker and request plugins
   come from: [Silo maintained](https://github.com/Silo-Server/silo-plugins) and
   [Approved community](https://github.com/Silo-Community/silo-plugins).
