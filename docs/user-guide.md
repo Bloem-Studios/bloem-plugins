@@ -1,14 +1,8 @@
 # How to use the plugin catalogs in Bloem
 
-> **Provenance and status.** Bloem plugin page, rewritten on 2026-11-01 and checked
-> against `main` at `acdd30d`. It covers which plugin catalog a Bloem Server (`main`
-> at `e0320078f`) administrator uses for each kind of plugin, and what publishing a
-> catalog does and does not change; the technical rules are in the
-> [For developers](#for-developers) section.
-
 A Bloem server can read plugins from three catalogs. This page walks through which
 one to use for which plugin, how to add Bloem's own catalog, and what happens to
-plugins installed from Bloem's former copies, which were archived on 2026-11-01.
+plugins installed from Bloem's archived copies.
 The plugins themselves are described on
 [how the Bloem plugin catalog works](../README.md).
 
@@ -35,11 +29,11 @@ flowchart TD
 
 - **Silo maintained.** Silo's own catalog. Every Bloem server lists it, and it is
   where ordinary Silo plugins come from: metadata providers, autoscan, skip markers,
-  sign-in and watch sync. Its programs speak the same plugin protocol (v1) as
+  sign-in and watch sync. Its programs speak the same plugin protocol as
   Bloem's.
 - **Approved community.** Silo's catalog of community plugins that Silo's
   maintainers reviewed. It is off until an administrator switches on **Include
-  approved community plugins** on the **Catalog** tab. Silo moved its Arr and Seerr
+  approved community plugins** on the **Catalog** tab. Silo keeps its Arr and Seerr
   request plugins there, and Bloem offers them only from there.
 - **Bloem's catalog.** This repository, for Bloem Studios' own plugins. Its
   **feed** lists Pastime, Bookwarehouse ebook requests and Audiobook requests once
@@ -61,18 +55,18 @@ flowchart TD
 The repository's front page is
 [github.com/Bloem-Studios/bloem-plugins](https://github.com/Bloem-Studios/bloem-plugins).
 
-## Bloem's former copies
+## Bloem's archived copies
 
-Bloem once kept its own copies of Silo's plugins, and a community catalog of its
-own. Both were archived on 2026-11-01; use Silo's catalogs for those plugins.
+Bloem's own copies of Silo's plugins, and its own community catalog, are archived.
+Use Silo's catalogs for those plugins.
 
-Archiving does not touch a server. A plugin installed from a former copy keeps
+Archiving does not touch a server. A plugin installed from an archived copy keeps
 running with its settings, its link to the repository it came from, and its
 program, until an administrator changes it. Moving to Silo's version is a change
 to make on purpose, and to check afterwards:
 
 - A larger version number on a Bloem copy does not mean newer code. Bloem's copies
-  and Silo's releases were numbered independently.
+  and Silo's releases are numbered independently.
 - The same plugin protocol does not mean the same settings or the same behaviour.
   Compare a Silo release with the copy before relying on it.
 
@@ -87,8 +81,8 @@ to make on purpose, and to check afterwards:
 
 This example is made up.
 
-Priya administers a Bloem server that used Bloem's former copy of the Seerr request
-plugin. After the archive, she opens the **Catalog** tab and finds no Seerr plugin
+Priya administers a Bloem server that has Bloem's archived copy of the Seerr request
+plugin installed. She opens the **Catalog** tab and finds no Seerr plugin
 listed. She switches on **Include approved community plugins**, and Seerr appears
 from Silo's Approved community catalog. She installs it, enters the Seerr address
 and key in its settings, sends a test request, and only then removes the old copy.
@@ -119,9 +113,6 @@ and key in its settings, sends a test request, and only then removes the old cop
   `silo.requests.arr` and `silo.requests.seerr` are approved-community plugins: the
   catalog offers them only from a repository whose source kind is
   `approved_community` (`catalogEntriesForDiscovery` in `internal/plugins/service.go`).
-  When the setting first applied, existing installations were moved to that
-  repository without changing configuration
-  (`plugins.approved_community_migrated_plugin_count`).
 - Silo's plugin binaries use the same v1 plugin protocol (`silo_api_version` `v1`).
   Runtime compatibility does not imply identical configuration or provider behavior
   between an older fork and a newer upstream release.
