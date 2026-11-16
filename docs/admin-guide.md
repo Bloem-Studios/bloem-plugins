@@ -1,11 +1,5 @@
 # How the catalog is maintained
 
-> **Provenance and status.** Bloem plugin page, rewritten on 2026-11-01 and checked
-> against `main` at `acdd30d`. It covers how Bloem Studios maintainers publish the
-> five plugin releases in this catalog, keep `plugins.json` and `manifest.json`
-> right, and use the release updater and its workflow; the technical rules are in
-> the [For developers](#for-developers) section.
-
 This catalog lists only Bloem Studios' own plugins. This page walks through what
 belongs here, how a new release gets listed, what the automatic updater may and may
 not do, and how credentials stay out of the public repository. What the catalog
@@ -14,15 +8,14 @@ offers to a server is on [how the Bloem plugin catalog works](../README.md).
 ## What belongs here
 
 - **Only Bloem's own plugins.** Silo's plugins belong in Silo's catalogs, and Bloem
-  servers take them from there directly. Bloem's former copies of Silo's plugins,
-  and its former community catalog, were archived on 2026-11-01; servers use Silo's
-  catalogs for those plugins.
+  servers take them from there directly. Bloem's own copies of Silo's plugins,
+  and its own community catalog, are archived; servers use Silo's catalogs for those
+  plugins.
 - **Programs, not source.** Official binary releases are hosted in this public
-  repository; the plugins' source is not. Since 2026-11-16 Pastime, Bookwarehouse,
-  S3 storage and Bookwarehouse ebook requests are open source (AGPL v3): each has a
-  private development repository (`<name>-private`) and a public repository under its
-  original name that receives snapshots. Releases are built from the private
-  repository. Audiobook requests stays private.
+  repository; the plugins' source is not. Pastime, Bookwarehouse,
+  S3 storage and Bookwarehouse ebook requests are open source (AGPL v3), each in its
+  own public repository. Releases are built from each plugin's own source. Audiobook
+  requests' source is private.
 - **Two files with two jobs.** `plugins.json` is the **inventory**: every release,
   its source repository, public binary release, source version, SDK
   version, installation mode, status and prerequisites. `manifest.json` is the
@@ -51,7 +44,7 @@ flowchart LR
    `checksums.txt`, the licence terms, the third-party notices, the build record and
    the program's own manifest.
 2. Publish a GitHub release in this repository, tagged with the plugin's name and
-   version, such as `bookwarehouse-v0.3.10`.
+   version, such as `bookwarehouse-v0.3.12`.
 3. Point the plugin's `plugins.json` entry at the new release: version, release
    links and checksums. Check every checksum against the published files.
 4. For an ordinary plugin, update its `manifest.json` entry the same way.
@@ -95,12 +88,12 @@ tests, and commits only `manifest.json`.
 
 This example is made up.
 
-A maintainer builds Bookwarehouse 0.3.11. She publishes a release tagged
-`bookwarehouse-v0.3.11` with the three programs and the release files, points the
+A maintainer builds Bookwarehouse 0.3.13. She publishes a release tagged
+`bookwarehouse-v0.3.13` with the three programs and the release files, points the
 `bloem.storage.bookwarehouse` entry in `plugins.json` at it with the new
 checksums, changes the expected version in the inventory test, and runs the tests.
-The next time a server refreshes its storage catalog, **Add source** offers 0.3.11;
-existing Bookwarehouse sources stay on 0.3.10 until an administrator upgrades them.
+The next time a server refreshes its storage catalog, **Add source** offers 0.3.13;
+existing Bookwarehouse sources stay on 0.3.12 until an administrator upgrades them.
 
 ## Who can change what
 
@@ -128,8 +121,8 @@ existing Bookwarehouse sources stay on 0.3.10 until an administrator upgrades th
 
 ### Inventory and feed
 
-Maintain `plugins.json` as the custom source inventory: stable plugin ID, private
-source repository, public binary release, source version, SDK version,
+Maintain `plugins.json` as the custom source inventory: stable plugin ID, source
+repository, public binary release, source version, SDK version,
 installation mode, status and prerequisites. Keep it separate from the installable
 `manifest.json` feed. Bloem Server reads `plugins.json` from `main` for the two
 native storage providers, so their entries must keep the exact release URLs
@@ -160,7 +153,7 @@ requires module `github.com/Bloem-Studios/bloem-plugins`, SDK
 
 `go run ./cmd/update-catalog -repo <owner/name> -tag <tag> [-manifest manifest.json]`
 refuses a repository that is not in `allowedRepositories` (empty).
-`TestDuplicateAndUnreadyRepositoriesCannotReenterCatalog` keeps Bloem's former
+`TestDuplicateAndUnreadyRepositoriesCannotReenterCatalog` keeps Bloem's archived
 copies of Silo's plugins, Bookwarehouse, Pastime, any other repository and the empty
 string out. For an allowed repository it:
 
@@ -188,7 +181,7 @@ string out. For an allowed repository it:
    sorted by plugin ID (`catalog.UpsertPackage`).
 
 Because the tag must be `v<version>`, the prefixed tags of the releases hosted here
-(`pastime-v0.2.0` and so on) are outside its path; they are maintained by hand.
+(`pastime-v0.4.1` and so on) are outside its path; they are maintained by hand.
 
 ### Update Catalog workflow
 
@@ -232,9 +225,8 @@ Verify those separately during an actual server rollout.
 Official custom binary releases are hosted in this public catalog repository.
 Releases contain platform executables and verified SHA-256 checksums; all except
 Pastime 0.4.1 also contain their licence terms (proprietary for every release listed
-before 2026-11-16; the AGPL v3 for the four open-source plugins' later releases) and
-third-party notices. The ordinary updater remains disabled for private
-source repositories. The catalog's own code is Apache-2.0; [NOTICE](../NOTICE)
+here; the AGPL v3 for later releases of the four open-source plugins) and
+third-party notices. The ordinary updater stays disabled. The catalog's own code is Apache-2.0; [NOTICE](../NOTICE)
 records its import from Silo's plugin catalog.
 
 Related pages:
