@@ -1,11 +1,5 @@
 # How to install Bookwarehouse 0.3.12
 
-> **Provenance and status.** Bloem plugin page, rewritten on 2026-11-01 and checked
-> against `main` at `acdd30d`. It covers installing the Bookwarehouse 0.3.12 native
-> storage provider on Bloem Server `main` at `e0320078f`, from the catalog or by hand,
-> and its cover cache; the technical rules are in the
-> [For developers](#for-developers) section.
-
 **Bookwarehouse** is a book service. Its storage plugin lets a Bloem library read
 EPUB and PDF ebooks, or audiobooks, straight from Bookwarehouse instead of from a
 folder on the server. This page walks through the usual way to install it, the
@@ -110,7 +104,7 @@ own copies.
 | Approvals file | the JSON file named by `BLOEM_NATIVE_STORAGE_APPROVALS` (`nativestorage.LoadApprovals`) |
 | Storage source | `bloem_storage_sources`; an installation in `plugin_installations` marked native in `bloem_storage_installations` |
 | Ebooks or audiobooks | `config.connection.content`: `ebooks` (the default) or `audiobooks` |
-| Native storage administration | `/api/bloem/v1/admin/platform/native-storage` and `/api/bloem/v1/admin/organization/native-storage` |
+| Native storage administration | `/api/bloem/v2/admin/platform/native-storage` and `/api/bloem/v2/admin/organization/native-storage` |
 | Cover cache | the Redis named by `BLOEM_STORAGE_COVER_CACHE_URL` |
 
 ## For developers
@@ -152,9 +146,9 @@ use its exact manifest and SHA-256 in the operator-reviewed map.
 
 ### Install through native storage administration
 
-Obtain a current signed administrative context from `POST /api/bloem/v1/admin/session`.
-Use `/api/bloem/v1/admin/organization/native-storage` or the corresponding platform
-scope, `/api/bloem/v1/admin/platform/native-storage`. `GET /artifacts` lists the
+Obtain a current signed administrative context from `POST /api/bloem/v2/admin/session`.
+Use `/api/bloem/v2/admin/organization/native-storage` or the corresponding platform
+scope, `/api/bloem/v2/admin/platform/native-storage`. `GET /artifacts` lists the
 artifacts available to that server process (catalog releases and static approvals);
 it adds `catalog` and `config_schema` to each.
 
@@ -191,10 +185,9 @@ it. Backend acceptance must verify real listing, metadata, cover and download
 behavior. Browsing below the ebook format folders also requires the Bookwarehouse
 `GET /api/v1/books/folders` operation; a root listing alone does not exercise it.
 
-`plugins.json` still lists, for this release, "Operator approval of the exact
-packaged plugin version and binary SHA-256" among its requirements. That text
-predates automatic catalog admission (Bloem Server `5268a8ce5`, 2026-10-09); it now
-applies only to the manual path.
+The `plugins.json` requirements for this release include "Operator approval of the
+exact packaged plugin version and binary SHA-256". That approval applies only to the
+manual path; the catalog path needs none.
 
 <a id="ebook-cover-cache"></a>
 
