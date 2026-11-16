@@ -33,9 +33,9 @@ own public repository: [Pastime](https://github.com/Bloem-Studios/bloem-plugin-p
 [S3 storage](https://github.com/Bloem-Studios/bloem-storage-s3),
 [Bookwarehouse ebook requests](https://github.com/Bloem-Studios/bloem-plugin-requests-bookwarehouse) and
 [Audiobook requests](https://github.com/Bloem-Studios/bloem-plugin-requests-audiobooks).
-They are offered without support. The releases listed on this page were built under
-the Bloem Studios Proprietary Plugin License and stay under it; later releases are
-AGPL v3. This repository publishes the programs and their descriptions; GitHub's
+They are offered without support. Pastime 0.4.2 is released under the AGPL v3. The
+other releases listed on this page were built under the Bloem Studios Proprietary Plugin
+License and stay under it; their later releases are AGPL v3. This repository publishes the programs and their descriptions; GitHub's
 source archives of it contain only this metadata.
 
 ## Where Bloem gets its plugins
@@ -294,8 +294,9 @@ the club's ebooks on Bookwarehouse in Bloem, and members to ask for new ones.
 
 S3 and Audiobook requests support Linux amd64 and arm64; the other releases also
 include macOS arm64. Each release has `plugin-<os>-<arch>` executables and
-`checksums.txt` (`<sha256>  plugin-<os>-<arch>` per line). All except Pastime
-also carry `BINARY_LICENSE.txt` (the Bloem Studios Proprietary Plugin License, under which these releases were made),
+`checksums.txt` (`<sha256>  plugin-<os>-<arch>` per line). Pastime 0.4.2 also carries
+the AGPL v3 text as `LICENSE` and a `build.json`. The other releases also carry
+`BINARY_LICENSE.txt` (the Bloem Studios Proprietary Plugin License, under which they were made),
 `third-party-notices.tar.gz`, `<tag>-distribution.tar.gz`, `build.json`
 (`repository`, `revision`, `version` and the linux/amd64 `binary_sha256`) and
 `manifest.json`, the linux/amd64 executable's own manifest (its `checksum` is the
@@ -322,11 +323,12 @@ the linux/amd64 digest in `manifest.checksum`; the others leave it empty and rel
 per-platform checksums.
 
 [`plugins.json`](plugins.json) (`schema_version` 1) lists all five releases. Each
-entry has `plugin_id`, `display_name`, `repository_url` (the source
-repository; public for all but Audiobook requests), `source_version`, `sdk_version`, `installation_mode`, `status`,
-`summary`, `requirements`, `license_spdx` (`LicenseRef-Bloem-Proprietary` for every
-release listed here), `source_visibility` (`private`, describing the release's own
-source revision), `release_url`, `checksums_url` and `binaries`.
+entry has `plugin_id`, `display_name`, `repository_url` (the plugin's
+public source repository), `source_version`, `sdk_version`, `installation_mode`, `status`,
+`summary`, `requirements`, `license_spdx` (`AGPL-3.0-only` for Pastime 0.4.2,
+`LicenseRef-Bloem-Proprietary` for the other releases listed here), `source_visibility`
+(`public` for Pastime 0.4.2, `private` for the others: it describes the release's own source
+revision), `release_url`, `checksums_url` and `binaries`.
 
 | `plugin_id` | `source_version` | `sdk_version` | `installation_mode` | `status` |
 | --- | --- | --- | --- | --- |
@@ -446,10 +448,10 @@ prove unchanged bytes.
 ### Development
 
 The catalog code (`catalog/`, `cmd/update-catalog/`) is Apache-2.0 ([LICENSE](LICENSE),
-provenance in [NOTICE](NOTICE)). Each plugin release carries its own licence: the
-releases listed here are under the Bloem Studios Proprietary Plugin License, and
-later releases of every plugin are under the GNU AGPL v3, like their public source
-repositories.
+provenance in [NOTICE](NOTICE)). Each plugin release carries its own licence: Pastime 0.4.2
+is under the GNU AGPL v3; the other releases listed here are under the Bloem Studios
+Proprietary Plugin License, and later releases of every plugin are under the AGPL v3,
+like their public source repositories.
 Third-party components retain their own licenses.
 
 Go 1.26 or newer (`go.mod` declares `go 1.26.0` and the Bloem SDK `v0.26.0`).
