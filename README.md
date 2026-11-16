@@ -1,8 +1,9 @@
 # How the Bloem plugin catalog works
 
 > **Provenance and status.** Bloem plugin page, rewritten on 2026-11-01 and checked
-> against `main` at `acdd30d`. It covers this public catalog of Bloem Studios' five
-> proprietary plugins (Pastime 0.4.1, Bookwarehouse 0.3.12, S3 storage 0.4.3,
+> against `main` at `acdd30d`; its licence and source notes were updated on 2026-11-16, when
+> four of the plugins became open source. It covers this public catalog of Bloem Studios' five
+> plugins (Pastime 0.4.1, Bookwarehouse 0.3.12, S3 storage 0.4.3,
 > Bookwarehouse ebook requests 0.1.5 and Audiobook requests 0.1.3) and how Bloem
 > Server `main` at `e0320078f` installs them; the technical rules are in the
 > [For developers](#for-developers) section.
@@ -33,9 +34,17 @@ This repository is Bloem Studios' plugin catalog. It publishes three things:
   the two **native storage providers**: plugins that let a library read files from
   a book service or an S3 bucket instead of a folder on the server.
 
-The plugins' source code is private. Only the programs and their descriptions are
-published here, and GitHub's source archives of this repository contain only this
-metadata.
+Since 2026-11-16 four of the plugins are open source under the GNU AGPL v3, each in its
+own public repository: [Pastime](https://github.com/Bloem-Studios/bloem-plugin-pastime)
+(and the [Pastime service](https://github.com/Bloem-Studios/pastime) it connects to),
+[Bookwarehouse](https://github.com/Bloem-Studios/bloem-plugin-bookwarehouse),
+[S3 storage](https://github.com/Bloem-Studios/bloem-storage-s3) and
+[Bookwarehouse ebook requests](https://github.com/Bloem-Studios/bloem-plugin-requests-bookwarehouse).
+They are offered without support. The releases listed on this page were built before
+that, under the Bloem Studios Proprietary Plugin License, and stay under it; their
+later releases are AGPL v3. Audiobook requests stays proprietary and its source
+private. This repository publishes the programs and their descriptions; GitHub's
+source archives of it contain only this metadata.
 
 ## Where Bloem gets its plugins
 
@@ -297,7 +306,7 @@ the club's ebooks on Bookwarehouse in Bloem, and members to ask for new ones.
 S3 and Audiobook requests support Linux amd64 and arm64; the other releases also
 include macOS arm64. Each release has `plugin-<os>-<arch>` executables and
 `checksums.txt` (`<sha256>  plugin-<os>-<arch>` per line). All except Pastime 0.4.1
-also carry `BINARY_LICENSE.txt` (the Bloem Studios Proprietary Plugin License),
+also carry `BINARY_LICENSE.txt` (the Bloem Studios Proprietary Plugin License, under which these releases were made),
 `third-party-notices.tar.gz`, `<tag>-distribution.tar.gz`, `build.json`
 (`repository`, `revision`, `version` and the linux/amd64 `binary_sha256`) and
 `manifest.json`, the linux/amd64 executable's own manifest (its `checksum` is the
@@ -325,10 +334,11 @@ the linux/amd64 digest in `manifest.checksum`; the others leave it empty and rel
 per-platform checksums.
 
 [`plugins.json`](plugins.json) (`schema_version` 1) lists all five releases. Each
-entry has `plugin_id`, `display_name`, `repository_url` (the private source
-repository), `source_version`, `sdk_version`, `installation_mode`, `status`,
-`summary`, `requirements`, `license_spdx` (`LicenseRef-Bloem-Proprietary`),
-`source_visibility` (`private`), `release_url`, `checksums_url` and `binaries`.
+entry has `plugin_id`, `display_name`, `repository_url` (the source
+repository; public for all but Audiobook requests since 2026-11-16), `source_version`, `sdk_version`, `installation_mode`, `status`,
+`summary`, `requirements`, `license_spdx` (`LicenseRef-Bloem-Proprietary` for every
+release listed today), `source_visibility` (`private`, describing the release's own
+source revision), `release_url`, `checksums_url` and `binaries`.
 
 | `plugin_id` | `source_version` | `sdk_version` | `installation_mode` | `status` |
 | --- | --- | --- | --- | --- |
@@ -454,9 +464,11 @@ prove unchanged bytes.
 ### Development
 
 The catalog code (`catalog/`, `cmd/update-catalog/`) is Apache-2.0 ([LICENSE](LICENSE),
-provenance in [NOTICE](NOTICE)). The proprietary license applies to the separately
-packaged custom plugin binaries; third-party components retain their own licenses.
-Previously published open-source versions retain their licenses.
+provenance in [NOTICE](NOTICE)). Each plugin release carries its own licence: the
+releases listed today are under the Bloem Studios Proprietary Plugin License, and
+releases of Pastime, Bookwarehouse, S3 storage and Bookwarehouse ebook requests made
+after 2026-11-16 are under the GNU AGPL v3, like their public source repositories.
+Third-party components retain their own licenses.
 
 Go 1.26 or newer (`go.mod` declares `go 1.26.0` and the Bloem SDK `v0.26.0`).
 Commands assume the repository root is the cwd:
